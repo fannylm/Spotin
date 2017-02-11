@@ -341,7 +341,8 @@
 	}
 
 	.row.\35 0\25 {
-		margin: -25px 0 -1px -25px;
+		/*margin: -25px 0 -1px -25px;*/
+    margin:-10px;
 	}
 
 	.row.uniform.\35 0\25 > * {
@@ -550,11 +551,14 @@
 		}
 
 		.row.\35 0\25 > * {
-			padding: 20px 0 0 20px;
+			/*padding: 20px 0 0 20px;*/
+
 		}
 
 		.row.\35 0\25 {
-			margin: -20px 0 -1px -20px;
+			/*margin: -20px 0 -1px -20px;*/
+        /*margin: -40px;*/
+                      margin:-1px -95px -1px -15px;
 		}
 
 		.row.uniform.\35 0\25 > * {
@@ -1806,13 +1810,20 @@
 			animation: none !important;
 		}
 
-	body, input, select, textarea {
+	body, select, textarea {
 		color: #474747;
 		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 16pt;
 		font-weight: 300;
-		line-height: 1.65em;
+        line-height: 1.65em;
 	}
+
+    input {
+        color: #474747;
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 16pt;
+        font-weight: 300;
+    }
 
 
 	a {
@@ -1939,8 +1950,28 @@
 /* Form */
 
 	input[type="text"],
-	input[type="password"],
-	input[type="email"],
+    input[type="email"],
+	input[type="password"]{
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        -ms-appearance: none;
+        appearance: none;
+        -moz-transition: border-color 0.2s ease-in-out;
+        -webkit-transition: border-color 0.2s ease-in-out;
+        -ms-transition: border-color 0.2s ease-in-out;
+        transition: border-color 0.2s ease-in-out;
+        background: #fff;
+        border: solid 1px #e0e0e0;
+        border-radius: 5px;
+        color: inherit;
+        display: block;
+        outline: 0;
+        text-decoration: none;
+        width: 100%;
+        padding: 0.6em;
+        line-height: 1.4em;
+    }
+
 	textarea {
 		-moz-appearance: none;
 		-webkit-appearance: none;
@@ -1971,7 +2002,7 @@
 	input[type="text"],
 	input[type="password"],
 	input[type="email"] {
-		line-height: 0.5em;
+		line-height: 5px;
 	}
 
 	label {
@@ -2735,7 +2766,7 @@
 
 		/* Basic */
 
-			body, input, select, textarea {
+			body, select, textarea {
 				font-size: 12pt;
 				line-height: 1.5em;
 			}
@@ -2756,7 +2787,7 @@
 				overflow-x: hidden;
 			}
 
-			body, input, select, textarea {
+			body, select, textarea {
 				font-size: 13pt;
 			}
 
@@ -3040,7 +3071,7 @@
 
 		/* Basic */
 
-			body, input, select, textarea {
+			body, select, textarea {
 				font-size: 11pt;
 				line-height: 1.35em;
 			}
@@ -3186,16 +3217,21 @@
 /* Formulaire de connexion */
 
 table.connexion{
-    margin-left: auto;
+    margin-left: 30%;
     margin-right: auto;
     border-spacing : 10px;
-    width: 30%;
+    width: 80%;
+}
+
+tr{
+    padding-bottom: 40px;
 }
 
 td{
-    text-align: center;
-    padding-right: 20px
+    text-align: right;
+    padding-right: 50px;
 }
+
 
 /* Formulaire d'inscription */
 
@@ -3216,14 +3252,6 @@ label.small{
 
 #ok{display:none;color:green;}
 
-
-/*
-.info {
-    display: inline-block;
-    color: #DB1702;
-    font-size: small;
-}
-*/
 
 
 

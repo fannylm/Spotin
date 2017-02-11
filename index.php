@@ -1,3 +1,4 @@
+<?php require 'connect.php'; session_start(); ?>
 <!DOCTYPE HTML>
 <!--
 	Arcana by HTML5 UP
@@ -52,7 +53,15 @@
 								<li><a href="projets.php">Projets</a></li>
 								<li><a href="voyages.php">Voyages</a></li>
 								<li><a href="contact.php">Contact</a></li>
-                                <li><a href="connexion.php" class="button">Connexion</a></li>
+                                <?php
+                                if(empty($_SESSION['user'])){ // si la variable de session identifiant est nulle ou inexistante
+                                    ?><li><a href="connexion.php" class="button">Connexion</a></li><?php
+                                }
+                                else{
+                                    ?><li><a href="compte.php">Mon compte</a></li>
+                                    <li><a href="connexion.php?deco=true" class="button">Deconnexion</a></li><?php
+                                }
+                                ?>
 							</ul>
 						</nav>
 

@@ -102,12 +102,14 @@
                             // Fonction qui vérifie que le nom n'est pas un nombre est que sa taille est supérieure ou égale à 2
                             function checkname(name){
                                 if (isNaN(name) && name.value.length>=2){
+                                    var msg = document.createTextNode("Correct");
+                                    document.getElementById("nameerror").replaceWith(msg);
                                     underline(name,false);
                                     return true;
                                 }
                                 else{
                                     var msg = document.createTextNode("Format du nom incorrect. Il doit comporter plus de 2 caractères");
-                                    document.getElementById("nameerror").appendChild(msg);
+                                    document.getElementById("nameerror").replaceWith(msg);
                                     underline(name,true);
                                     return false;
                                 }
@@ -135,6 +137,7 @@
                                 }
                                 else{
                                     var msg = document.createTextNode("Format du pseudo incorrect. Il doit être compris entre 4 et 8 caractères");
+                                    // récupérer l'élément ID et changer la valeur du texte à l'intérieur
                                     document.getElementById("pseudoerror").appendChild(msg);
                                     underline(pseudo,true);
                                     return false;
@@ -310,15 +313,15 @@
 
                                     pseudo=$('#pseudo').val(); // on récupère la valeur du pseudo
                                     $.ajax({
-                                        url : 'inscription.php', // La ressource ciblée
+                                        url : 'inscrit.php', // La ressource ciblée
                                         type : 'POST', // Le type de la requête HTTP.
                                         data : 'pseudo=' + pseudo,
                                             success:function(data){ // dès qu'on est bien rentré dans le fichier php
                                                 if(data==1){ // si le php retourne 1 le pseudo existe déjà
                                                     $('#pseudo').next('#error').fadeIn().text('Ce pseudo est déjà pris');
                                                     $('#error').next('#ok').fadeOut(); // pour eviter d'écrire deux textes à la suite
-                                                } else {
-                                                    $('#error').next('#ok').fadeIn.text('Ok');
+                                                } else if(data==0){
+                                                    $('#error').next('#ok').fadeIn().text('Ok');
                                                     $('#pseudo').next('#error').fadeOut();
                                                 }
                                             }
@@ -332,7 +335,7 @@
 
                         <p><em>Merci de remplir ces champs pour continuer.</em></p>
                         <!-- <form action="inscrit.php" method="post" onsubmit="return checkform(this)" name="Inscription" id="form"> -->
-                        <form action="inscrit.php" method="post" name="Inscription" id="form">
+                        <form action=".php" method="post" name="Inscription" id="form">
                              <label>Sexe</label>
                              <input name="sex" type="radio" value="H" />Homme
                              <input name="sex" type="radio" value="F" />Femme

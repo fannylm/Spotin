@@ -1,10 +1,5 @@
-<?php session_start(); ?>
+<?php require 'connect.php'; session_start(); ?>
 <!DOCTYPE HTML>
-<!--
-	Arcana by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 <head>
 
@@ -20,6 +15,19 @@
 
 </head>
 <body>
+<?php
+if($_GET['deco']==true) {
+    // On détruit les variables de notre session
+    session_unset ();
+    // On détruit notre session
+    session_destroy ();?>
+<script>
+    function redirection(){
+        self.location.href="index.php"
+    }
+    setTimeout(redirection,5000);
+</script>
+<?php } ?>
 <div id="page-wrapper">
 
     <!-- Header -->
@@ -67,46 +75,125 @@
 
                 <!-- Content -->
                 <article>
-                    <header>
-                        <h2 style="text-align: center">Connexion</h2>
-                    </header>
-                    <p style="text-align: center">Pas encore inscrit ? Inscrivez-vous vite <a href="inscription.php">ici</a></p>
-
                     <?php
-
-                    require 'connect.php';
-
-                    if($_GET['deco']==true) {
-                        // On détruit les variables de notre session
-                        session_unset ();
-                        // On détruit notre session
-                        session_destroy ();
-                    }
-
-                    if(!isset($_POST['identifiant'])){
-                    ?>
-                    <div id="rectangle">
-                        <form method="post">
-                            <input type="hidden" name='id' value="<?php echo $_POST['id'] ?>">
+                    if(!isset($_POST['username'])) {
+                        ?>
+                        <header>
+                            <h2 style="text-align: center">Connexion</h2>
+                        </header>
+                        <p style="text-align: center">Pas encore inscrit ? Inscrivez-vous vite <a href="inscription.php">ici</a></p>
+                        <form name="mail" action="connexion.php" method="POST">
                             <table class="connexion">
                                 <tr>
-                                    <td align="center"><label>Identifiant</label></td>
-                                    <td><input id="username" name="username" type="text"></td>
-                                </tr>
-                                <tr>
-                                    <td><label>Mot de passe</label></td>
-                                    <td><input id="password" name="password" type="password"></td>
+                                    <td style="text-align: right; padding-right: 20px;">
+                                        <div class="row 50%">
+                                            <div class="6u 12u(mobilep)">
+                                                <label>Identifiant</label>
+                                            </div>
+                                        </div>
+                                        <div class="row 50%">
+                                            <div class="6u 12u(mobilep)">
+                                                <label>Mot de passe</label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="text-align: left">
+                                        <div class="row 50%">
+                                            <div class="6u 12u(mobilep)">
+                                                <input style="width: 60%" type="text" name="username" id="username"/>
+                                            </div>
+                                        </div>
+                                        <div class="row 50%">
+                                            <div class="6u 12u(mobilep)">
+                                                <input style="width: 60%" type="password" name="password" id="password"/>
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                             </table>
-                            <p style="text-align: center"><input id="submit" type="submit" value="Envoyer"/></p>
+                            <br/>
+
+                            <p style="text-align: center"><input type="submit" class="button alt" value="Envoyer"/></p>
                         </form>
-                    </div>
+                    <?php
+                    } else {
+                        if (empty($_POST['username']) || empty($_POST['password'])) { ?>
+                            <script>
+                                alert('Vous devez remplir tous les champs pour vous connecter !');
+                            </script>
+                            <header>
+                                <h2 style="text-align: center">Connexion</h2>
+                            </header>
+                            <p style="text-align: center">Pas encore inscrit ? Inscrivez-vous vite <a href="inscription.php">ici</a></p>
+                            <form action="connexion.php" method="POST">
+                                <table class="connexion">
+                                    <tr>
+                                        <td style="text-align: right; padding-right: 20px;">
+                                            <div class="row 50%">
+                                                <div class="6u 12u(mobilep)">
+                                                    <label>Identifiant</label>
+                                                </div>
+                                            </div>
+                                            <div class="row 50%">
+                                                <div class="6u 12u(mobilep)">
+                                                    <label>Mot de passe</label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="text-align: left">
+                                            <div class="row 50%">
+                                                <div class="6u 12u(mobilep)">
+                                                    <input style="width: 60%" type="text" name="username" id="username"/>
+                                                </div>
+                                            </div>
+                                            <div class="row 50%">
+                                                <div class="6u 12u(mobilep)">
+                                                    <input style="width: 60%" type="password" name="password" id="password"/>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <br/>
 
-                    <div id="resultat">
+                                <p style="text-align: center"><input type="submit" class="button alt" value="Envoyer"/></p>
+                            </form>
 
-                    </div>
+                            <?php
+                            } else {
+                            $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
+
+                            $req=$bdd -> query("SELECT * FROM Client");
+                            $res=$req -> fetch();
+                            $username = $res['identifiant'];
+                            $password = $res['mdp'];
+
+
+                            if( isset($_POST['username']) && isset($_POST['password']) ) {
+
+                                if ($_POST['username'] == $username && $_POST['password'] == $password) { // Si les valeurs correspondent
+                                    $_SESSION['user'] = $username;
+                                    $_SESSION['prenom'] = $res['Prenom'];
+                                    $_SESSION['nom'] = $res['Nom'];
+                                    $_SESSION['mail'] = $res['Mail'];
+                                    $_SESSION['id'] = $res['Id'];
+                                    session_start(); // démarrage de la session?>
+                                    <script>
+                                        function redirection(){
+                                            self.location.href="index.php"
+                                        }
+                                        setTimeout(redirection,5000);
+                                    </script><?php
+                                    echo "<p style='text-align: center'>Vous êtes maintenant connecté " . $_SESSION['prenom'] . " ! Vous allez être automatiquement redirigé vers la page d'accueil. Si ça ne fonctionne pas, veuillez cliquer <a href='index.php'>ici</a></p>";
+                                    } else {
+                                    echo "<p style='text-align: center'>Une erreur s'est produite pendant votre identification.</br>Cliquez <a href='./connexion.php'>ici</a> pour revenir à la page précédente<br />Cliquez <a href='./index.php'>ici</a> pour revenir à la page d'accueil</p>";
+                                }
+                            }
+                        }
+                    ?>
 
                     <script>
+                        /*
                         $(document).ready(function(){
                             $("#submit").click(function{
                                 $.post('traitconnexion.php', {
@@ -125,44 +212,18 @@
 
                             });
 
-                        });
+                        });*/
                     </script>
 
-
-                    <?php } ?>
                     <br/>
                     <br/>
 
-<!--
-                    <span class="image featured"><img src="images/banner.jpg" alt="" /></span>
-
-                    <p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus.
-                        Praesent semper mod quis eget mi. Etiam eu ante risus. Aliquam erat volutpat.
-                        Aliquam luctus et mattis lectus sit amet pulvinar. Nam turpis nisi
-                        consequat etiam lorem ipsum dolor sit amet nullam.</p>
-
-                    <h3>And Yet Another Subheading</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac quam risus, at tempus
-                        justo. Sed dictum rutrum massa eu volutpat. Quisque vitae hendrerit sem. Pellentesque lorem felis,
-                        ultricies a bibendum id, bibendum sit amet nisl. Mauris et lorem quam. Maecenas rutrum imperdiet
-                        vulputate. Nulla quis nibh ipsum, sed egestas justo. Morbi ut ante mattis orci convallis tempor.
-                        Etiam a lacus a lacus pharetra porttitor quis accumsan odio. Sed vel euismod nisi. Etiam convallis
-                        rhoncus dui quis euismod. Maecenas lorem tellus, congue et condimentum ac, ullamcorper non sapien.
-                        Donec sagittis massa et leo semper a scelerisque metus faucibus. Morbi congue mattis mi.
-                        Phasellus sed nisl vitae risus tristique volutpat. Cras rutrum commodo luctus.</p>
-
-                    <p>Phasellus odio risus, faucibus et viverra vitae, eleifend ac purus. Praesent mattis, enim
-                        quis hendrerit porttitor, sapien tortor viverra magna, sit amet rhoncus nisl lacus nec arcu.
-                        Suspendisse laoreet metus ut metus imperdiet interdum aliquam justo tincidunt. Mauris dolor urna,
-                        fringilla vel malesuada ac, dignissim eu mi. Praesent mollis massa ac nulla pretium pretium.
-                        Maecenas tortor mauris, consectetur pellentesque dapibus eget, tincidunt vitae arcu.
-                        Vestibulum purus augue, tincidunt sit amet iaculis id, porta eu purus.</p>-->
 
                 </article>
             </div>
         </div>
     </section>
-
+<?php } ?>
     <?php require("footer.html"); ?>
 
 </div>

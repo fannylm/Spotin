@@ -20,7 +20,7 @@ if( isset($_POST['username']) && isset($_POST['password']) ) {
     }
 }
 
-header('Location: connexion.php');
+/*header('Location: connexion.php');*/
 
 ?>
 
