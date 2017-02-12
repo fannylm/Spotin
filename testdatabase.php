@@ -10,10 +10,10 @@ $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root'
 
 $pseudo=$_POST['pseudo'];
 
-$req=$bdd -> query("SELECT identifiant FROM Client WHERE identifiant='$pseudo'");
+$req=$bdd -> query("SELECT pseudo FROM Client WHERE pseudo='$pseudo'");
 $res=$req -> fetch();
 
-$username = $res['identifiant'];
+$username = $res['pseudo'];
 $password = $res['mdp'];
 
 $num=$req -> rowCount();

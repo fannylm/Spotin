@@ -102,14 +102,14 @@
                             // Fonction qui vérifie que le nom n'est pas un nombre est que sa taille est supérieure ou égale à 2
                             function checkname(name){
                                 if (isNaN(name) && name.value.length>=2){
-                                    var msg = document.createTextNode("Correct");
-                                    document.getElementById("nameerror").replaceWith(msg);
+                                    $('#nom').next('#nom-correct').fadeIn().text('');
+                                    $('#nom-correct').next('#nom-incorrect').fadeOut(); // pour eviter d'écrire deux textes à la suite
                                     underline(name,false);
                                     return true;
                                 }
                                 else{
-                                    var msg = document.createTextNode("Format du nom incorrect. Il doit comporter plus de 2 caractères");
-                                    document.getElementById("nameerror").replaceWith(msg);
+                                    $('#nom-correct').next('#nom-incorrect').fadeIn().text('Format du nom incorrect. Il doit comporter plus de 2 caractères');
+                                    $('#nom').next('#nom-correct').fadeOut();
                                     underline(name,true);
                                     return false;
                                 }
@@ -118,12 +118,14 @@
                             // Fonction qui vérifie que le prénom n'est pas un nombre est que sa taille est supérieure ou égale à 2
                             function checkfirstname(firstname){
                                 if (isNaN(firstname) && firstname.value.length>=2){
+                                    $('#prenom').next('#prenom-correct').fadeIn().text('');
+                                    $('#prenom-correct').next('#prenom-incorrect').fadeOut(); // pour eviter d'écrire deux textes à la suite
                                     underline(firstname,false);
                                     return true;
                                 }
                                 else{
-                                    var msg = document.createTextNode("Format du prénom incorrect. Il doit comporter plus de 2 caractères");
-                                    document.getElementById("firstnameerror").appendChild(msg);
+                                    $('#prenom-correct').next('#prenom-incorrect').fadeIn().text('Format du prenom incorrect. Il doit comporter plus de 2 caractères');
+                                    $('#prenom').next('#prenom-correct').fadeOut();
                                     underline(firstname,true);
                                     return false;
                                 }
@@ -147,12 +149,14 @@
                             // Fonction qui vérifie que la taille du mot de passe est supérieure ou égale à 4 et inférieure à 12
                             function checkpw(password){
                                 if (password.value.length>=4 && password.value.length<=12){
+                                    $('#mdp1').next('#mdp1-correct').fadeIn().text('');
+                                    $('#mdp1-correct').next('#mdp1-incorrect').fadeOut(); // pour eviter d'écrire deux textes à la suite
                                     underline(password,false);
                                     return true;
                                 }
                                 else{
-                                    var msg = document.createTextNode("Format du mot de passe incorrect. Il doit être compris entre 4 et 12 caractères");
-                                    document.getElementById("pwerror").appendChild(msg);
+                                    $('#mdp1-correct').next('#mdp1-incorrect').fadeIn().text('Format du mot de passe incorrect. Il doit être compris entre 4 et 12 caractères');
+                                    $('#mdp1').next('#mdp1-correct').fadeOut();
                                     underline(password,true);
                                     return false;
                                 }
@@ -163,24 +167,31 @@
                                 var mdp = document.getElementById("mdp1").value;
                                 var mdp2 = document.getElementById("mdp2").value;
                                 if (mdp!=mdp2) {
-                                    var msg = document.createTextNode("Confirmation du mot de passe invalide");
-                                    document.getElementById("mdperror").appendChild(msg);
+                                    $('#mdp2-correct').next('#mdp2-incorrect').fadeIn().text('Confirmation du mot de passe invalide');
+                                    $('#mdp2').next('#mdp2-correct').fadeOut();
                                     underline(pw2, true);
                                     return false;
                                 }
-                                return true;
+                                else{
+                                    $('#mdp2').next('#mdp2-correct').fadeIn().text('');
+                                    $('#mdp2-correct').next('#mdp2-incorrect').fadeOut(); // pour eviter d'écrire deux textes à la suite
+                                    underline(pw2,false);
+                                    return true;
+                                }
                             }
 
                             // Fonction qui vérifie que le format du mail est bien valide
                             function checkmail(mail) {
                                 var regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
                                 if (!regex.test(mail.value)){
-                                    var msg = document.createTextNode("Format de l'adresse mail invalide");
-                                    document.getElementById("mailerror").appendChild(msg);
+                                    $('#mail-correct').next('#mail-incorrect').fadeIn().text('Format de l\'adresse mail invalide');
+                                    $('#mail').next('#mail-correct').fadeOut();
                                     underline(mail,true);
                                     return false;
                                 }
                                 else{
+                                    $('#mail').next('#mail-correct').fadeIn().text('');
+                                    $('#mail-correct').next('#mail-incorrect').fadeOut();
                                     underline(mail,false);
                                     return true;
                                 }
@@ -273,38 +284,53 @@
 
                             // Fonction qui vérifie que le numéro de téléphone est bien un nombre
                             function checkphonenumber(phonenumber){
-                                if (isNaN(phonenumber)){
+                                var regex = new RegExp(/^(01|02|03|04|05|06|08)[0-9]{8}/gi);
+                                if(regex.test(phonenumber)){
+                                    $('#phone').next('#phone-correct').fadeIn().text('');
+                                    $('#phone-correct').next('#phone-incorrect').fadeOut();
                                     underline(phonenumber,false);
                                     return true;
                                 }
                                 else{
-                                    var msg = document.createTextNode("Format du numéro de téléphone invalide");
-                                    document.getElementById("phoneerror").appendChild(msg);
+                                    $('#phone-correct').next('#phone-incorrect').fadeIn().text('Format du numéro de téléphone incorrect');
+                                    $('#phone').next('#phone-correct').fadeOut();
                                     underline(phonenumber,true);
                                     return false;
                                 }
+                                /*if (isNaN(phonenumber)){
+                                    $('#phone-correct').next('#phone-incorrect').fadeIn().text('Format du numéro de téléphone incorrect');
+                                    $('#phone').next('#phone-correct').fadeOut();
+                                    underline(phonenumber,true);
+                                    return false;
+                                } else {
+                                    $('#phone').next('#phone-correct').fadeIn().text('');
+                                    $('#phone-correct').next('#phone-incorrect').fadeOut();
+                                    underline(phonenumber,false);
+                                    return true;
+                                }*/
                             }
 
-                            function checkform(f)
+                            /*function checkform(f)
                             {
                                 var pseudoOk = checkpseudo(f.pseudo),
                                         mailOk = checkmail(f.mail),
-                                        ageOk = checkDate(f.date_naissance),
+                                        //ageOk = checkDate(f.date-naissance),
                                         nomOk = checkname(f.nom),
                                         prenomOk = checkfirstname(f.prenom),
                                         mdp1Ok = checkpw(f.mdp1),
                                         mdp2Ok = checkMdp(f.mdp2),
-                                        numeroOk = checkphonenumber(f.phone);
+                                        //numeroOk = checkphonenumber(f.phone);
 
 
-                                if(pseudoOk && mailOk && ageOk && nomOk && prenomOk && mdp1Ok && mdp2Ok && numeroOk){
+                                //if(pseudoOk && mailOk && ageOk && nomOk && prenomOk && mdp1Ok && mdp2Ok&& numeroOk){
+                                if(pseudoOk && mailOk && nomOk && prenomOk && mdp1Ok && mdp2Ok){
                                     alert("Veuillez remplir correctement tous les champs");
                                     return true;
                                 } else {
                                     alert("Veuillez remplir correctement tous les champs");
                                     return false;
                                 }
-                            }
+                            }*/
 
                             // Fonction ajax qui permet d'afficher instantanément si le pseudo est déjà utilisé ou non
                             $(function(){
@@ -327,30 +353,37 @@
                                             }
                                     });
 
-                                })
+                                });
+
                             })
+
+
 
 
                         </script>
 
                         <p><em>Merci de remplir ces champs pour continuer.</em></p>
-                        <!-- <form action="inscrit.php" method="post" onsubmit="return checkform(this)" name="Inscription" id="form"> -->
-                        <form action=".php" method="post" name="Inscription" id="form">
+                        <form action="add-inscrit.php" method="post" name="Inscription" id="form">
                              <label>Sexe</label>
                              <input name="sex" type="radio" value="H" />Homme
                              <input name="sex" type="radio" value="F" />Femme
                              <label class="small" id="sexerror"></label>
                              <br/><br/>
-                             <label class="required" for="nom">Nom</label> <input class="input" type="text" name="nom" id="nom" onblur="checkname(this)"/><label class="small" id="nameerror"></label><br/>
-                             <label class="required" for="prenom">Prénom</label> <input type="text" name="prenom" id="prenom" onblur="checkfirstname(this)"/><label class="small" id="firstnameerror"></label><br/>
+                             <label class="required" for="nom">Nom</label> <input class="input" type="text" name="nom" id="nom" onblur="checkname(this)"/>
+                             <span id="nom-correct"></span><span id="nom-incorrect"></span>
+                             <label class="required" for="prenom">Prénom</label> <input type="text" name="prenom" id="prenom" onblur="checkfirstname(this)"/>
+                             <span id="prenom-correct"></span><span id="prenom-incorrect"></span>
                              <label class="required" for="pseudo">Pseudo</label> <input type="text" name="pseudo" id="pseudo" size="30" placeholder="compris entre 4 et 8 caractères""/>
                              <span id="error"></span><span id="ok"></span><br/>
-                             <?php //<label class="small" id="pseudoerror"></label> <br/> ?>
-                             <label class="required" for="mdp1">Mot de passe</label> <input type="password" name="mdp1" id="mdp1" size="30" placeholder="compris entre 4 et 12 caractères" onblur="checkpw(this)" /><label class="small" id="pwerror"></label> <br/>
-                             <label class="required" for="mdp2">Confirmation de mot de passe</label> <input type="password" name="mdp2" id="mdp2" size="30" onblur="checkMdp(this)"/><label class="small" id="mdperror"></label><br/>
-                             <label class="required" for="mail">Mail</label> <input type="text" name="mail" id="mail" size="30" placeholder="mr.dupont@gmail.com" onblur="checkmail(this)"/> <label class="small" id="mailerror"></label><br />
-                             <label class="required" for="date_naissance">Date de nasissance</label><input type="date" name="date_naissance" id="date_naissance" size="30" onblur="checkDate(this)"/><br/><br/>
-                             <label for="phone" class="float">Numéro de téléphone</label> <input type="text" name="phone" id="phone" size="30" placeholder="+33 7 56 92 XX XX" onblur="checkphonenumber(this)"/> <label class="small" id="phoneerror"></label><br />
+                             <label class="required" for="mdp1">Mot de passe</label> <input type="password" name="mdp1" id="mdp1" size="30" placeholder="compris entre 4 et 12 caractères" onblur="checkpw(this)" />
+                             <span id="mdp1-correct"></span><span id="mdp1-incorrect"></span>
+                             <label class="required" for="mdp2">Confirmation de mot de passe</label> <input type="password" name="mdp2" id="mdp2" size="30" onblur="checkMdp(this)"/>
+                             <span id="mdp2-correct"></span><span id="mdp2-incorrect"></span>
+                             <label class="required" for="mail">Mail</label> <input type="text" name="mail" id="mail" size="30" placeholder="mr.dupont@gmail.com" onblur="checkmail(this)"/>
+                             <span id="mail-correct"></span><span id="mail-incorrect"></span>
+                             <label class="required" for="date_naissance">Date de naissance</label><input type="date" name="date-naissance" id="date-naissance" size="30"/><br/><br/>
+                             <label for="phone" class="float">Numéro de téléphone</label> <input type="text" name="phone" id="phone" size="30" placeholder="+33 7 56 92 XX XX" onblur="checkphonenumber(this)"/>
+                             <span id="phone-correct"></span><span id="phone-incorrect"></span>
                          <br/>
                              <div class="center"><input type="submit" value="Inscription"><br/><br/><input type="reset" value="Réinitialisation"></div>
                      </form>
@@ -359,7 +392,7 @@
                  <br/>
 
 
-                 <span class="image featured"><img src="images/banner.jpg" alt="" /></span>
+                 <!--<span class="image featured"><img src="images/banner.jpg" alt="" /></span>
 
                  <p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus.
                      Praesent semper mod quis eget mi. Etiam eu ante risus. Aliquam erat volutpat.
@@ -381,7 +414,7 @@
                      Suspendisse laoreet metus ut metus imperdiet interdum aliquam justo tincidunt. Mauris dolor urna,
                      fringilla vel malesuada ac, dignissim eu mi. Praesent mollis massa ac nulla pretium pretium.
                      Maecenas tortor mauris, consectetur pellentesque dapibus eget, tincidunt vitae arcu.
-                     Vestibulum purus augue, tincidunt sit amet iaculis id, porta eu purus.</p>
+                     Vestibulum purus augue, tincidunt sit amet iaculis id, porta eu purus.</p>-->
 
              </article>
          </div>

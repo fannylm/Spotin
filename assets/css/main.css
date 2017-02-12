@@ -3229,7 +3229,7 @@ tr{
 
 td{
     text-align: right;
-    padding-right: 50px;
+    padding-right: 35px;
 }
 
 
@@ -3248,9 +3248,27 @@ label.small{
     color: red;
 }
 
-#error{display:none;color:red;}
+#error,#incorrect,#prenom-incorrect,#nom-incorrect,#mdp1-incorrect,#mdp2-incorrect,#mail-incorrect,#phone-incorrect{
+    color:red;
+    display: inline-block;
+    margin-left: 20px;
+    padding: 2px 4px;
+    font-weight: normal;
+    font-size: small;
+    font-style: italic;
+}
 
-#ok{display:none;color:green;}
+#ok,#correct,#prenom-correct,#nom-correct,#mdp1-correct,#mdp2-correct,#mail-correct,#phone-correct{
+    /*display:none;*/
+    color:green;
+    display: inline-block;
+    margin-left: 20px;
+    padding: 2px 4px;
+    font-weight: normal;
+    font-size: small;
+    font-style: italic;
+}
+
 
 
 

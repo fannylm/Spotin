@@ -75,8 +75,34 @@ if($_GET['deco']==true) {
 
                 <!-- Content -->
                 <article>
+                    <script>
+                        // Fonction ajax qui permet d'afficher instantanément si le pseudo est déjà utilisé ou non
+                        $(function(){
+
+                            $('#pseudo').keyup(function(){ // à chaque fois qu'on "lache" le clavier
+
+                                pseudo=$('#pseudo').val(); // on récupère la valeur du pseudo
+                                $.ajax({
+                                    url : 'inscrit.php', // La ressource ciblée
+                                    type : 'POST', // Le type de la requête HTTP.
+                                    data : 'pseudo=' + pseudo,
+                                    success:function(data){ // dès qu'on est bien rentré dans le fichier php
+                                        if(data==1){ // si le php retourne 1 le pseudo existe déjà
+                                            $('#pseudo').next('#correct').fadeIn().text('Correct');
+                                            $('#correct').next('#incorrect').fadeOut(); // pour eviter d'écrire deux textes à la suite
+                                        } else if(data==0){
+                                            $('#correct').next('#incorrect').fadeIn().text('Pseudo innexistant');
+                                            $('#pseudo').next('#correct').fadeOut();
+                                        }
+                                    }
+                                });
+
+                            });
+
+                        })
+                    </script>
                     <?php
-                    if(!isset($_POST['username'])) {
+                    if(!isset($_POST['pseudo'])) {
                         ?>
                         <header>
                             <h2 style="text-align: center">Connexion</h2>
@@ -88,7 +114,7 @@ if($_GET['deco']==true) {
                                     <td style="text-align: right; padding-right: 20px;">
                                         <div class="row 50%">
                                             <div class="6u 12u(mobilep)">
-                                                <label>Identifiant</label>
+                                                <label>Pseudo</label>
                                             </div>
                                         </div>
                                         <div class="row 50%">
@@ -100,12 +126,24 @@ if($_GET['deco']==true) {
                                     <td style="text-align: left">
                                         <div class="row 50%">
                                             <div class="6u 12u(mobilep)">
-                                                <input style="width: 60%" type="text" name="username" id="username"/>
+                                                <input style="width: 60%" type="text" name="pseudo" id="pseudo"/><span id="correct"></span><span id="incorrect"></span>
                                             </div>
                                         </div>
                                         <div class="row 50%">
                                             <div class="6u 12u(mobilep)">
                                                 <input style="width: 60%" type="password" name="password" id="password"/>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="text-align: left">
+                                        <div class="row 50%">
+                                            <div class="6u 12u(mobilep)">
+                                                <span id="correct"></span><span id="incorrect"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row 50%">
+                                            <div class="6u 12u(mobilep)">
+                                                <label></label>
                                             </div>
                                         </div>
                                     </td>
@@ -117,7 +155,7 @@ if($_GET['deco']==true) {
                         </form>
                     <?php
                     } else {
-                        if (empty($_POST['username']) || empty($_POST['password'])) { ?>
+                        if (empty($_POST['pseudo']) || empty($_POST['password'])) { ?>
                             <script>
                                 alert('Vous devez remplir tous les champs pour vous connecter !');
                             </script>
@@ -131,7 +169,7 @@ if($_GET['deco']==true) {
                                         <td style="text-align: right; padding-right: 20px;">
                                             <div class="row 50%">
                                                 <div class="6u 12u(mobilep)">
-                                                    <label>Identifiant</label>
+                                                    <label>Pseudo</label>
                                                 </div>
                                             </div>
                                             <div class="row 50%">
@@ -143,7 +181,7 @@ if($_GET['deco']==true) {
                                         <td style="text-align: left">
                                             <div class="row 50%">
                                                 <div class="6u 12u(mobilep)">
-                                                    <input style="width: 60%" type="text" name="username" id="username"/>
+                                                    <input style="width: 60%" type="text" name="pseudo" id="pseudo"/>
                                                 </div>
                                             </div>
                                             <div class="row 50%">
@@ -165,18 +203,18 @@ if($_GET['deco']==true) {
 
                             $req=$bdd -> query("SELECT * FROM Client");
                             $res=$req -> fetch();
-                            $username = $res['identifiant'];
+                            $username = $res['pseudo'];
                             $password = $res['mdp'];
 
 
-                            if( isset($_POST['username']) && isset($_POST['password']) ) {
+                            if( isset($_POST['pseudo']) && isset($_POST['password']) ) {
 
-                                if ($_POST['username'] == $username && $_POST['password'] == $password) { // Si les valeurs correspondent
+                                if ($_POST['pseudo'] == $username && $_POST['password'] == $password) { // Si les valeurs correspondent
                                     $_SESSION['user'] = $username;
-                                    $_SESSION['prenom'] = $res['Prenom'];
-                                    $_SESSION['nom'] = $res['Nom'];
-                                    $_SESSION['mail'] = $res['Mail'];
-                                    $_SESSION['id'] = $res['Id'];
+                                    $_SESSION['prenom'] = $res['prenom'];
+                                    $_SESSION['nom'] = $res['nom'];
+                                    $_SESSION['mail'] = $res['mail'];
+                                    $_SESSION['id'] = $res['id'];
                                     session_start(); // démarrage de la session?>
                                     <script>
                                         function redirection(){
@@ -191,30 +229,6 @@ if($_GET['deco']==true) {
                             }
                         }
                     ?>
-
-                    <script>
-                        /*
-                        $(document).ready(function(){
-                            $("#submit").click(function{
-                                $.post('traitconnexion.php', {
-                                        login : $("#username").val(),  // Récupération des valeurs de l'identifiant et du mdp
-                                        password : $("#password").val()
-                                    },
-                                    function(data){
-                                        if(data == 'Success'){
-                                            $("#resultat").html("<p>Connexion réussie !</p>");
-                                        } else{
-                                            $("#resultat").html("<p>Erreur lors de la connexion...</p>");
-                                        }
-                                    },
-                                    'text' // affiche la réussite ou non de la connexion
-                                );
-
-                            });
-
-                        });*/
-                    </script>
-
                     <br/>
                     <br/>
 
