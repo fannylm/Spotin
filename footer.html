@@ -1,8 +1,25 @@
+<!DOCTYPE html>
+<html>
+<body onload="initialize()">
 <!-- Footer -->
 <div id="footer">
     <div class="container">
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDnSPt_Pwr_yqSwru4v29sED66kozQPUM&callback=myMap"></script>
         <div class="row">
-            <section class="3u 6u(narrower) 12u$(mobilep)">
+            <section class="6u 12u(narrower)">
+            <script type="text/javascript">
+                function initialize() {
+                    var map = new google.maps.Map(document.getElementById("map_canvas"), {
+                        zoom: 16,
+                        center: new google.maps.LatLng(44.8220752,-0.5525643),
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    });
+                }
+            </script>
+                <div style=" width: 100%;HEIGHT: 400px;" id="map_canvas"></div>
+            </section>
+            <!--<section class="3u 6u(narrower) 12u$(mobilep)">
                 <h3>Links to Stuff</h3>
                 <ul class="links">
                     <li><a href="#">Mattis et quis rutrum</a></li>
@@ -25,7 +42,7 @@
                     <li><a href="#">Sed et dapibus quis</a></li>
                     <li><a href="#">Rutrum amet varius</a></li>
                 </ul>
-            </section>
+            </section>-->
             <section class="6u 12u(narrower)">
                 <i class="fa fa-paper-plane" aria-hidden="true"></i><strong>&nbsp;&nbsp;&nbsp;Contact</strong>
                 <br/><br/>
@@ -57,7 +74,7 @@
 
     <!-- Icons -->
     <ul class="icons">
-        <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
         <li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
         <!--<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>-->
         <li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
@@ -72,3 +89,5 @@
     </div>
 
 </div>
+</body>
+</html>

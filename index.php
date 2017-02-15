@@ -31,7 +31,6 @@
 						<nav id="nav">
 							<ul>
 								<li class="current"><a href="index.php">Accueil</a></li>
-                                <li><a href="a-propos.php">À propos</a></li>
 								<li>
 									<a href="prestations.php">Prestations</a>
 									<ul>
@@ -53,6 +52,7 @@
 								<li><a href="projets.php">Projets</a></li>
 								<li><a href="voyages.php">Voyages</a></li>
 								<li><a href="contact.php">Contact</a></li>
+                                <li><a href="a-propos.php">À propos</a></li>
                                 <?php
                                 if(empty($_SESSION['user'])){ // si la variable de session identifiant est nulle ou inexistante
                                     ?><li><a href="connexion.php" class="button">Connexion</a></li><?php
@@ -96,8 +96,8 @@
 							<section class="4u 12u(narrower)">
 								<div class="box highlight">
 									<i class="icon major fa-pencil"></i>
-									<h3>?</h3>
-									<p>Duis neque nisi, dapibus sed mattis et quis, nibh. Sed et dapibus nisl amet mattis, sed a rutrum accumsan sed. Suspendisse eu.</p>
+									<h3>Design</h3>
+									<p>Toutes les prestations réalisées respectent un design épuré et prend en compte vos attentes</p>
 								</div>
 							</section>
 						</div>
@@ -105,62 +105,62 @@
 				</section>
 
 			<!-- Gigantic Heading -->
-				<section class="wrapper style2">
-					<div class="container">
-						<header class="major">
-							<h2>A gigantic heading you can use for whatever</h2>
-							<p>With a much smaller subtitle hanging out just below it</p>
-						</header>
-					</div>
-				</section>
+            <!--<section class="wrapper style2">
+                <div class="container">
+                    <header class="major">
+                        <h2>A gigantic heading you can use for whatever</h2>
+                        <p>With a much smaller subtitle hanging out just below it</p>
+                    </header>
+                </div>
+            </section>-->
 
-			<!-- Posts -->
-				<section class="wrapper style1">
-					<div class="container">
-						<div class="row">
-							<section class="6u 12u(narrower)">
-								<div class="box post">
-									<a href="#" class="image left"><img src="images/pic01.jpg" alt="" /></a>
-									<div class="inner">
-										<h3>New York</h3>
-										<p>Aout 2014, blabla</p>
-									</div>
-								</div>
-							</section>
-							<section class="6u 12u(narrower)">
-								<div class="box post">
-									<a href="#" class="image left"><img src="images/pic02.jpg" alt="" /></a>
-									<div class="inner">
-										<h3>Londres</h3>
-										<p>Duis neque nisi, dapibus sed mattis et quis, nibh. Sed et dapibus nisl amet mattis, sed a rutrum accumsan sed. Suspendisse eu.</p>
-									</div>
-								</div>
-							</section>
-						</div>
-						<div class="row">
-							<section class="6u 12u(narrower)">
-								<div class="box post">
-									<a href="#" class="image left"><img src="images/pic03.jpg" alt="" /></a>
-									<div class="inner">
-										<h3>Nom du projet</h3>
-										<p>Court-métrage de ..</p>
-									</div>
-								</div>
-							</section>
-							<section class="6u 12u(narrower)">
-								<div class="box post">
-									<a href="#" class="image left"><img src="images/pic04.jpg" alt="" /></a>
-									<div class="inner">
-										<h3>Singapour</h3>
-										<p>Duis neque nisi, dapibus sed mattis et quis, nibh. Sed et dapibus nisl amet mattis, sed a rutrum accumsan sed. Suspendisse eu.</p>
-									</div>
-								</div>
-							</section>
-						</div>
-					</div>
-				</section>
+        <!-- Posts -->
+            <!--<section class="wrapper style1">
+                <div class="container">
+                    <div class="row">
+                        <section class="6u 12u(narrower)">
+                            <div class="box post">
+                                <a href="#" class="image left"><img src="images/pic01.jpg" alt="" /></a>
+                                <div class="inner">
+                                    <h3>New York</h3>
+                                    <p>Aout 2014, blabla</p>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="6u 12u(narrower)">
+                            <div class="box post">
+                                <a href="#" class="image left"><img src="images/pic02.jpg" alt="" /></a>
+                                <div class="inner">
+                                    <h3>Londres</h3>
+                                    <p>Duis neque nisi, dapibus sed mattis et quis, nibh. Sed et dapibus nisl amet mattis, sed a rutrum accumsan sed. Suspendisse eu.</p>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="6u 12u(narrower)">
+                            <div class="box post">
+                                <a href="#" class="image left"><img src="images/pic03.jpg" alt="" /></a>
+                                <div class="inner">
+                                    <h3>Nom du projet</h3>
+                                    <p>Court-métrage de ..</p>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="6u 12u(narrower)">
+                            <div class="box post">
+                                <a href="#" class="image left"><img src="images/pic04.jpg" alt="" /></a>
+                                <div class="inner">
+                                    <h3>Singapour</h3>
+                                    <p>Duis neque nisi, dapibus sed mattis et quis, nibh. Sed et dapibus nisl amet mattis, sed a rutrum accumsan sed. Suspendisse eu.</p>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </section>-->
 
-			<!-- CTA -->
+        <!-- CTA -->
 				<section id="cta" class="wrapper style3">
 					<div class="container">
 						<header>

@@ -15,7 +15,7 @@
 		border: 0;
 		font-size: 100%;
 		font: inherit;
-		vertical-align: baseline;
+		/*vertical-align: baseline;*/
 	}
 
 	article, aside, details, figcaption, figure, footer, header, menu, nav, section {
@@ -551,7 +551,7 @@
 		}
 
 		.row.\35 0\25 > * {
-			/*padding: 20px 0 0 20px;*/
+			padding: 20px 0 0 20px;
 
 		}
 
@@ -3229,7 +3229,6 @@ tr{
 
 td{
     text-align: right;
-    padding-right: 35px;
 }
 
 
@@ -3248,7 +3247,7 @@ label.small{
     color: red;
 }
 
-#error,#incorrect,#prenom-incorrect,#nom-incorrect,#mdp1-incorrect,#mdp2-incorrect,#mail-incorrect,#phone-incorrect{
+#error,#incorrect,#prenom-incorrect,#nom-incorrect,#mdp1-incorrect,#mdp2-incorrect,#mail-incorrect,#phone-incorrect,#date-incorrect{
     color:red;
     display: inline-block;
     margin-left: 20px;
@@ -3258,7 +3257,7 @@ label.small{
     font-style: italic;
 }
 
-#ok,#correct,#prenom-correct,#nom-correct,#mdp1-correct,#mdp2-correct,#mail-correct,#phone-correct{
+#ok,#correct,#prenom-correct,#nom-correct,#mdp1-correct,#mdp2-correct,#mail-correct,#phone-correct,#date-correct{
     /*display:none;*/
     color:green;
     display: inline-block;

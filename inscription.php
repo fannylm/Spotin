@@ -1,10 +1,5 @@
 <?php session_start(); ?>
 <!DOCTYPE HTML>
-<!--
-	Arcana by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 <head>
 
@@ -16,7 +11,7 @@
     <script src="assets/js/jquery-2.1.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
     <link rel="stylesheet" href="assets/css/main.css" />
-    <?php //include('connect.php');?>
+    <?php include('connect.php');?>
     <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
     <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 
@@ -74,299 +69,367 @@
                         <h2 style="text-align: center">Inscription</h2>
                     </header>
 
+                    <script>
+                    // Fonction qui permet de changer la couleur de l'arrière plan pour faire ressortir les erreurs
+                    function underline(champ, erreur)
+                    {
+                        if(erreur)
+                            champ.style.backgroundColor = "#FDE3E3";
+                        else
+                            champ.style.backgroundColor = "";
+                    }
+
+                    /*// Fonction qui vérifie que un genre a été sélectionné
+                     function checksex(sex){
+                     var sexe = document.getElementsByName('sex'),
+                     tooltipStyle = getTooltip(sexe[1].parentNode).style;
+
+                     if (sexe[0].checked || sexe[1].checked) {
+                     return true;
+                     } else {
+                     var msg = document.createTextNode("Ce champ est obligatoire");
+                     document.getElementById("sexerror").appendChild(msg);
+                     return false;
+                     }
+                     }*/
+
+                    // Fonction qui vérifie que le nom n'est pas un nombre est que sa taille est supérieure ou égale à 2
+                    function checkname(name){
+                        if (isNaN(name) && name.value.length>=2){
+                            $('#nom').next('#nom-correct').fadeIn().text('');
+                            $('#nom-correct').next('#nom-incorrect').fadeOut(); // pour eviter d'écrire deux textes à la suite
+                            underline(name,false);
+                            return true;
+                        }
+                        else{
+                            $('#nom-correct').next('#nom-incorrect').fadeIn().text('Format du nom incorrect. Il doit comporter plus de 2 caractères');
+                            $('#nom').next('#nom-correct').fadeOut();
+                            underline(name,true);
+                            return false;
+                        }
+                    }
+
+                    // Fonction qui vérifie que le prénom n'est pas un nombre est que sa taille est supérieure ou égale à 2
+                    function checkfirstname(firstname){
+                        if (isNaN(firstname) && firstname.value.length>=2){
+                            $('#prenom').next('#prenom-correct').fadeIn().text('');
+                            $('#prenom-correct').next('#prenom-incorrect').fadeOut(); // pour eviter d'écrire deux textes à la suite
+                            underline(firstname,false);
+                            return true;
+                        }
+                        else{
+                            $('#prenom-correct').next('#prenom-incorrect').fadeIn().text('Format du prenom incorrect. Il doit comporter plus de 2 caractères');
+                            $('#prenom').next('#prenom-correct').fadeOut();
+                            underline(firstname,true);
+                            return false;
+                        }
+                    }
+
+                    // Fonction qui vérifie que la taille du pseudo est supérieure ou égale à 4 et inférieure à 8
+                    /*function checkpseudo(pseudo){
+                        if (pseudo.value.length>=4 && pseudo.value.length<=8){
+                            underline(pseudo,false);
+                            return true;
+                        }
+                        else{
+                            var msg = document.createTextNode("Format du pseudo incorrect. Il doit être compris entre 4 et 8 caractères");
+                            // récupérer l'élément ID et changer la valeur du texte à l'intérieur
+                            document.getElementById("pseudoerror").appendChild(msg);
+                            underline(pseudo,true);
+                            return false;
+                        }
+                    }*/
+
+                    // Fonction ajax qui permet d'afficher instantanément si le pseudo est déjà utilisé ou non
+                    $(function(){
+
+                        $('#pseudo').keyup(function(){ // à chaque fois qu'on "lache" le clavier
+
+                            var pseudo=$('#pseudo').val(); // on récupère la valeur du pseudo
+                            $.ajax({
+                                url : 'inscrit.php', // La ressource ciblée
+                                type : 'POST', // Le type de la requête HTTP.
+                                data : 'pseudo=' + pseudo,
+                                success:function(data){ // dès qu'on est bien rentré dans le fichier php
+                                    if(data==1){ // si le php retourne 1 le pseudo existe déjà
+                                        $('#pseudo').next('#error').fadeIn().text('Ce pseudo est déjà pris');
+                                        $('#error').next('#ok').fadeOut(); // pour eviter d'écrire deux textes à la suite
+                                        underline(pseudo,true);
+                                        return false;
+                                    } else if(data==0){
+                                        $('#error').next('#ok').fadeIn().text('Pseudo disponible');
+                                        $('#pseudo').next('#error').fadeOut();
+                                        underline(pseudo,false);
+                                        return true;
+                                    } else if(pseudo.value.length>=4 && pseudo.value.length<=8) {
+                                        $('#error').next('#ok').fadeIn().text('Ok');
+                                        $('#pseudo').next('#error').fadeOut();
+                                        underline(pseudo,false);
+                                        return true;
+                                    }
+                                    else {
+                                        $('#pseudo').next('#error').fadeIn().text('Format du pseudo incorrect. Il doit être compris entre 4 et 8 caractères');
+                                        $('#error').next('#ok').fadeOut();
+                                        underline(pseudo,true);
+                                        return false;
+                                    }
+                                }
+                            });
+
+                        });
+
+                    })
+
+                    // Fonction qui vérifie que la taille du mot de passe est supérieure ou égale à 4 et inférieure à 12
+                    function checkpw(password){
+                        if (password.value.length>=4 && password.value.length<=12){
+                            $('#mdp1').next('#mdp1-correct').fadeIn().text('');
+                            $('#mdp1-correct').next('#mdp1-incorrect').fadeOut(); // pour eviter d'écrire deux textes à la suite
+                            underline(password,false);
+                            return true;
+                        }
+                        else{
+                            $('#mdp1-correct').next('#mdp1-incorrect').fadeIn().text('Format du mot de passe incorrect. Il doit être compris entre 4 et 12 caractères');
+                            $('#mdp1').next('#mdp1-correct').fadeOut();
+                            underline(password,true);
+                            return false;
+                        }
+                    }
+
+                    // Fonction qui vérifie que les deux mots de passe entrés sont les mêmes
+                    function checkMdp(pw2) {
+                        var mdp = document.getElementById("mdp1").value;
+                        var mdp2 = document.getElementById("mdp2").value;
+                        if (mdp!=mdp2) {
+                            $('#mdp2-correct').next('#mdp2-incorrect').fadeIn().text('Confirmation du mot de passe invalide');
+                            $('#mdp2').next('#mdp2-correct').fadeOut();
+                            underline(pw2, true);
+                            return false;
+                        }
+                        else{
+                            $('#mdp2').next('#mdp2-correct').fadeIn().text('');
+                            $('#mdp2-correct').next('#mdp2-incorrect').fadeOut(); // pour eviter d'écrire deux textes à la suite
+                            underline(pw2,false);
+                            return true;
+                        }
+                    }
+
+                    // Fonction qui vérifie que le format du mail est bien valide
+                    function checkmail(mail) {
+                        var regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
+                        if (!regex.test(mail.value)) {
+                            $('#mail-correct').next('#mail-incorrect').fadeIn().text('Format de l\'adresse mail invalide');
+                            $('#mail').next('#mail-correct').fadeOut();
+                            underline(mail, true);
+                            return false;
+                        }
+                        else {
+                            $('#mail').next('#mail-correct').fadeIn().text('');
+                            $('#mail-correct').next('#mail-incorrect').fadeOut();
+                            underline(mail, false);
+                            return true;
+                        }
+                    }
+
+
+                        /*function CheckDate(d) {
+                         // Cette fonction vérifie le format JJ/MM/AAAA saisi et la validité de la date.
+                         // Le séparateur est défini dans la variable separateur
+                         var amin=1999; // année mini
+                         var amax=2005; // année maxi
+                         var separateur="/"; // separateur entre jour/mois/annee
+                         var j=(d.substring(0,2));
+                         var m=(d.substring(3,5));
+                         var a=(d.substring(6));
+                         var ok=1;
+                         if ( ((isNaN(j))||(j<1)||(j>31)) && (ok==1) ) {
+                         $('#date-correct').next('#date-incorrect').fadeIn().text('Format de l\'adresse mail invalide');
+                         $('#date-naissance').next('#date-correct').fadeOut();
+                         underline(d,true);
+                         ok=0;
+                         return false;
+                         }
+                         if ( ((isNaN(m))||(m<1)||(m>12)) && (ok==1) ) {
+                         $('#date-correct').next('#date-incorrect').fadeIn().text('Format de l\'adresse mail invalide');
+                         $('#date-naissance').next('#date-correct').fadeOut();
+                         underline(d,true);
+                         ok=0;
+                         return false;
+                         }
+                         if ( ((isNaN(a))||(a<amin)||(a>amax)) && (ok==1) ) {
+                         $('#date-correct').next('#date-incorrect').fadeIn().text('Format de l\'adresse mail invalide');
+                         $('#date-naissance').next('#date-correct').fadeOut();
+                         underline(d,true);
+                         ok=0;
+                         return false;
+                         }
+                         if ( ((d.substring(2,3)!=separateur)||(d.substring(5,6)!=separateur)) && (ok==1) ) {
+                         $('#date-correct').next('#date-incorrect').fadeIn().text('Format de l\'adresse mail invalide');
+                         $('#date-naissance').next('#date-correct').fadeOut();
+                         underline(d,true);
+                         ok=0;
+                         return false;
+                         }
+                         if (ok==1) {
+                         var d2=new Date(a,m-1,j);
+                         j2=d2.getDate();
+                         m2=d2.getMonth()+1;
+                         a2=d2.getFullYear();
+                         if (a2<=100) {a2=1900+a2}
+                         if ( (j!=j2)||(m!=m2)||(a!=a2) ) {
+                         $('#date-correct').next('#date-incorrect').fadeIn().text('Format de l\'adresse mail invalide');
+                         $('#date-naissance').next('#date-correct').fadeOut();
+                         underline(d,true);
+                         ok=0;
+                         return false;
+                         }
+                         }
+                         return ok;
+                         }*/
+
+// Fonction qui vérifie que la date entrée est correcte
+                        /*function checkDate(d) {
+                         var amin=1900; // année mini
+                         var amax=2002; // année maxi
+                         var separateur="/"; // separateur entre jour/mois/annee
+                         var j=(d.substring(0,2));
+                         var m=(d.substring(3,5));
+                         var a=(d.substring(6));
+                         var ok=1;
+                         if ( ((isNaN(j))||(j<1)||(j>31)) && (ok==1) ) {
+                         underline(d, true);
+                         return false; ok=0;
+                         }
+                         if ( ((isNaN(m))||(m<1)||(m>12)) && (ok==1) ) {
+                         underline(d, true);
+                         return false; ok=0;
+                         }
+                         if ( ((isNaN(a))||(a<amin)||(a>amax)) && (ok==1) ) {
+                         underline(d, true);
+                         return false; ok=0;
+                         }
+                         if ( ((d.substring(2,3)!=separateur)||(d.substring(5,6)!=separateur)) && (ok==1) ) {
+                         underline(d, true);
+                         return false; ok=0;
+                         }
+                         if (ok==1) {
+                         var d2=new Date(a,m-1,j);
+                         j2=d2.getDate();
+                         m2=d2.getMonth()+1;
+                         a2=d2.getFullYear();
+                         if (a2<=100) {a2=1900+a2}
+                         if ( (j!=j2)||(m!=m2)||(a!=a2) ) {
+                         underline(d, true);
+                         return false;
+                         ok=0;
+                         }
+                         }
+                         underline(d, false);
+                         return true;
+
+
+                         /*var now = new Date(), // date du jour
+                         amax = now.getFullYear(), // récupération de l'année actuelle qui correspond à la date max qui peut être rentrée
+                         amin = amax - 15, // année min qui peut être rentrée (année actuelle moins 15 ans)
+                         mois = now.getMonth(),
+                         jour = now.getDate(),
+                         separateur = "/", // separateur entre jour/mois/annee
+                         j = (d.substring(0, 2)), // récupère le jour de la date entrée
+                         m = (d.substring(3, 5)), // récupère le mois de la date entrée
+                         a = (d.substring(6)), // récupère l'année de la date entrée
+                         date = new Date(j,m,a);
+
+                         if (date>now+15){
+                         underline(d, true);
+                         return false;
+                         }
+
+                         /*
+                         if (a==amax){
+                         if (m>mois){
+                         underline(d, true);
+                         return false;
+                         }
+                         else if (j>jour){
+                         underline(d, true);
+                         return false;
+                         }
+                         }
+
+                         // si le jour n'est pas un nombre, est inférieur à 1 ou supérieur à 31
+                         else if ( (isNaN(j) || (j < 1) || (j > 31)) ||
+                         ((isNaN(m)) || (m < 1) || (m > 12)) ||
+                         ((isNaN(a)) || (a > amin)) ||
+                         ((d.substring(2, 3) != separateur) || (d.substring(5, 6) != separateur))
+
+                         ) {
+                         underline(d, true);
+                         return false;
+                         }
+                         else {
+                         underline(d, false);
+                         return true;
+                         }*/
+//}
+
+// Fonction qui vérifie que le numéro de téléphone est bien un nombre
+                        /*function checkphonenumber(phonenumber){
+                         var regex = new RegExp(/^(01|02|03|04|05|06|08)[0-9]{8}/gi);
+                         if(regex.test(phonenumber)){
+                         $('#phone').next('#phone-correct').fadeIn().text('');
+                         $('#phone-correct').next('#phone-incorrect').fadeOut();
+                         underline(phonenumber,false);
+                         return true;
+                         }
+                         else{
+                         $('#phone-correct').next('#phone-incorrect').fadeIn().text('Format du numéro de téléphone incorrect');
+                         $('#phone').next('#phone-correct').fadeOut();
+                         underline(phonenumber,true);
+                         return false;
+                         }
+                         /*if (isNaN(phonenumber)){
+                         $('#phone-correct').next('#phone-incorrect').fadeIn().text('Format du numéro de téléphone incorrect');
+                         $('#phone').next('#phone-correct').fadeOut();
+                         underline(phonenumber,true);
+                         return false;
+                         } else {
+                         $('#phone').next('#phone-correct').fadeIn().text('');
+                         $('#phone-correct').next('#phone-incorrect').fadeOut();
+                         underline(phonenumber,false);
+                         return true;
+                         }*/
+                    //}
+
+                    /*function checkform(f)
+                     {
+                     var pseudoOk = checkpseudo(f.pseudo),
+                     mailOk = checkmail(f.mail),
+                     //ageOk = checkDate(f.date-naissance),
+                     nomOk = checkname(f.nom),
+                     prenomOk = checkfirstname(f.prenom),
+                     mdp1Ok = checkpw(f.mdp1),
+                     mdp2Ok = checkMdp(f.mdp2),
+                     //numeroOk = checkphonenumber(f.phone);
+
+
+                     //if(pseudoOk && mailOk && ageOk && nomOk && prenomOk && mdp1Ok && mdp2Ok&& numeroOk){
+                     if(pseudoOk && mailOk && nomOk && prenomOk && mdp1Ok && mdp2Ok){
+                     alert("Veuillez remplir correctement tous les champs");
+                     return true;
+                     } else {
+                     alert("Veuillez remplir correctement tous les champs");
+                     return false;
+                     }
+                     }*/
+                    </script>
+
                     <div id="contenu">
-                        <script>
-                            // Fonction qui permet de changer la couleur de l'arrière plan pour faire ressortir les erreurs
-                            function underline(champ, erreur)
-                            {
-                                if(erreur)
-                                    champ.style.backgroundColor = "#FDE3E3";
-                                else
-                                    champ.style.backgroundColor = "";
-                            }
-
-                            // Fonction qui vérifie que un genre a été sélectionné
-                            function checksex(sex){
-                                var sexe = document.getElementsByName('sex'),
-                                        tooltipStyle = getTooltip(sexe[1].parentNode).style;
-
-                                if (sexe[0].checked || sexe[1].checked) {
-                                    return true;
-                                } else {
-                                    var msg = document.createTextNode("Ce champ est obligatoire");
-                                    document.getElementById("sexerror").appendChild(msg);
-                                    return false;
-                                }
-                            }
-
-                            // Fonction qui vérifie que le nom n'est pas un nombre est que sa taille est supérieure ou égale à 2
-                            function checkname(name){
-                                if (isNaN(name) && name.value.length>=2){
-                                    $('#nom').next('#nom-correct').fadeIn().text('');
-                                    $('#nom-correct').next('#nom-incorrect').fadeOut(); // pour eviter d'écrire deux textes à la suite
-                                    underline(name,false);
-                                    return true;
-                                }
-                                else{
-                                    $('#nom-correct').next('#nom-incorrect').fadeIn().text('Format du nom incorrect. Il doit comporter plus de 2 caractères');
-                                    $('#nom').next('#nom-correct').fadeOut();
-                                    underline(name,true);
-                                    return false;
-                                }
-                            }
-
-                            // Fonction qui vérifie que le prénom n'est pas un nombre est que sa taille est supérieure ou égale à 2
-                            function checkfirstname(firstname){
-                                if (isNaN(firstname) && firstname.value.length>=2){
-                                    $('#prenom').next('#prenom-correct').fadeIn().text('');
-                                    $('#prenom-correct').next('#prenom-incorrect').fadeOut(); // pour eviter d'écrire deux textes à la suite
-                                    underline(firstname,false);
-                                    return true;
-                                }
-                                else{
-                                    $('#prenom-correct').next('#prenom-incorrect').fadeIn().text('Format du prenom incorrect. Il doit comporter plus de 2 caractères');
-                                    $('#prenom').next('#prenom-correct').fadeOut();
-                                    underline(firstname,true);
-                                    return false;
-                                }
-                            }
-
-                            // Fonction qui vérifie que la taille du pseudo est supérieure ou égale à 4 et inférieure à 8
-                            function checkpseudo(pseudo){
-                                if (pseudo.value.length>=4 && pseudo.value.length<=8){
-                                    underline(pseudo,false);
-                                    return true;
-                                }
-                                else{
-                                    var msg = document.createTextNode("Format du pseudo incorrect. Il doit être compris entre 4 et 8 caractères");
-                                    // récupérer l'élément ID et changer la valeur du texte à l'intérieur
-                                    document.getElementById("pseudoerror").appendChild(msg);
-                                    underline(pseudo,true);
-                                    return false;
-                                }
-                            }
-
-                            // Fonction qui vérifie que la taille du mot de passe est supérieure ou égale à 4 et inférieure à 12
-                            function checkpw(password){
-                                if (password.value.length>=4 && password.value.length<=12){
-                                    $('#mdp1').next('#mdp1-correct').fadeIn().text('');
-                                    $('#mdp1-correct').next('#mdp1-incorrect').fadeOut(); // pour eviter d'écrire deux textes à la suite
-                                    underline(password,false);
-                                    return true;
-                                }
-                                else{
-                                    $('#mdp1-correct').next('#mdp1-incorrect').fadeIn().text('Format du mot de passe incorrect. Il doit être compris entre 4 et 12 caractères');
-                                    $('#mdp1').next('#mdp1-correct').fadeOut();
-                                    underline(password,true);
-                                    return false;
-                                }
-                            }
-
-                            // Fonction qui vérifie que les deux mots de passe entrés sont les mêmes
-                            function checkMdp(pw2) {
-                                var mdp = document.getElementById("mdp1").value;
-                                var mdp2 = document.getElementById("mdp2").value;
-                                if (mdp!=mdp2) {
-                                    $('#mdp2-correct').next('#mdp2-incorrect').fadeIn().text('Confirmation du mot de passe invalide');
-                                    $('#mdp2').next('#mdp2-correct').fadeOut();
-                                    underline(pw2, true);
-                                    return false;
-                                }
-                                else{
-                                    $('#mdp2').next('#mdp2-correct').fadeIn().text('');
-                                    $('#mdp2-correct').next('#mdp2-incorrect').fadeOut(); // pour eviter d'écrire deux textes à la suite
-                                    underline(pw2,false);
-                                    return true;
-                                }
-                            }
-
-                            // Fonction qui vérifie que le format du mail est bien valide
-                            function checkmail(mail) {
-                                var regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
-                                if (!regex.test(mail.value)){
-                                    $('#mail-correct').next('#mail-incorrect').fadeIn().text('Format de l\'adresse mail invalide');
-                                    $('#mail').next('#mail-correct').fadeOut();
-                                    underline(mail,true);
-                                    return false;
-                                }
-                                else{
-                                    $('#mail').next('#mail-correct').fadeIn().text('');
-                                    $('#mail-correct').next('#mail-incorrect').fadeOut();
-                                    underline(mail,false);
-                                    return true;
-                                }
-                            }
-
-                            // Fonction qui vérifie que la date entrée est correcte
-                            function checkDate(d) {
-                                var amin=1900; // année mini
-                                var amax=2002; // année maxi
-                                var separateur="/"; // separateur entre jour/mois/annee
-                                var j=(d.substring(0,2));
-                                var m=(d.substring(3,5));
-                                var a=(d.substring(6));
-                                var ok=1;
-                                if ( ((isNaN(j))||(j<1)||(j>31)) && (ok==1) ) {
-                                    underline(d, true);
-                                    return false; ok=0;
-                                }
-                                if ( ((isNaN(m))||(m<1)||(m>12)) && (ok==1) ) {
-                                    underline(d, true);
-                                    return false; ok=0;
-                                }
-                                if ( ((isNaN(a))||(a<amin)||(a>amax)) && (ok==1) ) {
-                                    underline(d, true);
-                                    return false; ok=0;
-                                }
-                                if ( ((d.substring(2,3)!=separateur)||(d.substring(5,6)!=separateur)) && (ok==1) ) {
-                                    underline(d, true);
-                                    return false; ok=0;
-                                }
-                                if (ok==1) {
-                                    var d2=new Date(a,m-1,j);
-                                    j2=d2.getDate();
-                                    m2=d2.getMonth()+1;
-                                    a2=d2.getFullYear();
-                                    if (a2<=100) {a2=1900+a2}
-                                    if ( (j!=j2)||(m!=m2)||(a!=a2) ) {
-                                        underline(d, true);
-                                        return false;
-                                        ok=0;
-                                    }
-                                }
-                                underline(d, false);
-                                return true;
-
-
-                                /*var now = new Date(), // date du jour
-                                        amax = now.getFullYear(), // récupération de l'année actuelle qui correspond à la date max qui peut être rentrée
-                                        amin = amax - 15, // année min qui peut être rentrée (année actuelle moins 15 ans)
-                                        mois = now.getMonth(),
-                                        jour = now.getDate(),
-                                        separateur = "/", // separateur entre jour/mois/annee
-                                        j = (d.substring(0, 2)), // récupère le jour de la date entrée
-                                        m = (d.substring(3, 5)), // récupère le mois de la date entrée
-                                        a = (d.substring(6)), // récupère l'année de la date entrée
-                                        date = new Date(j,m,a);
-
-                                if (date>now+15){
-                                    underline(d, true);
-                                    return false;
-                                }
-
-                                /*
-                                if (a==amax){
-                                    if (m>mois){
-                                        underline(d, true);
-                                        return false;
-                                    }
-                                    else if (j>jour){
-                                        underline(d, true);
-                                        return false;
-                                    }
-                                }
-
-                                // si le jour n'est pas un nombre, est inférieur à 1 ou supérieur à 31
-                                else if ( (isNaN(j) || (j < 1) || (j > 31)) ||
-                                        ((isNaN(m)) || (m < 1) || (m > 12)) ||
-                                        ((isNaN(a)) || (a > amin)) ||
-                                        ((d.substring(2, 3) != separateur) || (d.substring(5, 6) != separateur))
-
-                                ) {
-                                    underline(d, true);
-                                    return false;
-                                }
-                                else {
-                                    underline(d, false);
-                                    return true;
-                                }*/
-                            }
-
-                            // Fonction qui vérifie que le numéro de téléphone est bien un nombre
-                            function checkphonenumber(phonenumber){
-                                var regex = new RegExp(/^(01|02|03|04|05|06|08)[0-9]{8}/gi);
-                                if(regex.test(phonenumber)){
-                                    $('#phone').next('#phone-correct').fadeIn().text('');
-                                    $('#phone-correct').next('#phone-incorrect').fadeOut();
-                                    underline(phonenumber,false);
-                                    return true;
-                                }
-                                else{
-                                    $('#phone-correct').next('#phone-incorrect').fadeIn().text('Format du numéro de téléphone incorrect');
-                                    $('#phone').next('#phone-correct').fadeOut();
-                                    underline(phonenumber,true);
-                                    return false;
-                                }
-                                /*if (isNaN(phonenumber)){
-                                    $('#phone-correct').next('#phone-incorrect').fadeIn().text('Format du numéro de téléphone incorrect');
-                                    $('#phone').next('#phone-correct').fadeOut();
-                                    underline(phonenumber,true);
-                                    return false;
-                                } else {
-                                    $('#phone').next('#phone-correct').fadeIn().text('');
-                                    $('#phone-correct').next('#phone-incorrect').fadeOut();
-                                    underline(phonenumber,false);
-                                    return true;
-                                }*/
-                            }
-
-                            /*function checkform(f)
-                            {
-                                var pseudoOk = checkpseudo(f.pseudo),
-                                        mailOk = checkmail(f.mail),
-                                        //ageOk = checkDate(f.date-naissance),
-                                        nomOk = checkname(f.nom),
-                                        prenomOk = checkfirstname(f.prenom),
-                                        mdp1Ok = checkpw(f.mdp1),
-                                        mdp2Ok = checkMdp(f.mdp2),
-                                        //numeroOk = checkphonenumber(f.phone);
-
-
-                                //if(pseudoOk && mailOk && ageOk && nomOk && prenomOk && mdp1Ok && mdp2Ok&& numeroOk){
-                                if(pseudoOk && mailOk && nomOk && prenomOk && mdp1Ok && mdp2Ok){
-                                    alert("Veuillez remplir correctement tous les champs");
-                                    return true;
-                                } else {
-                                    alert("Veuillez remplir correctement tous les champs");
-                                    return false;
-                                }
-                            }*/
-
-                            // Fonction ajax qui permet d'afficher instantanément si le pseudo est déjà utilisé ou non
-                            $(function(){
-
-                                $('#pseudo').keyup(function(){ // à chaque fois qu'on "lache" le clavier
-
-                                    pseudo=$('#pseudo').val(); // on récupère la valeur du pseudo
-                                    $.ajax({
-                                        url : 'inscrit.php', // La ressource ciblée
-                                        type : 'POST', // Le type de la requête HTTP.
-                                        data : 'pseudo=' + pseudo,
-                                            success:function(data){ // dès qu'on est bien rentré dans le fichier php
-                                                if(data==1){ // si le php retourne 1 le pseudo existe déjà
-                                                    $('#pseudo').next('#error').fadeIn().text('Ce pseudo est déjà pris');
-                                                    $('#error').next('#ok').fadeOut(); // pour eviter d'écrire deux textes à la suite
-                                                } else if(data==0){
-                                                    $('#error').next('#ok').fadeIn().text('Ok');
-                                                    $('#pseudo').next('#error').fadeOut();
-                                                }
-                                            }
-                                    });
-
-                                });
-
-                            })
-
-
-
-
-                        </script>
 
                         <p><em>Merci de remplir ces champs pour continuer.</em></p>
                         <form action="add-inscrit.php" method="post" name="Inscription" id="form">
                              <label>Sexe</label>
-                             <input name="sex" type="radio" value="H" />Homme
-                             <input name="sex" type="radio" value="F" />Femme
+                             <input id="sex" name="sex" type="radio" value="H" />Homme
+                             <input id="sex" name="sex" type="radio" value="F" />Femme
                              <label class="small" id="sexerror"></label>
                              <br/><br/>
                              <label class="required" for="nom">Nom</label> <input class="input" type="text" name="nom" id="nom" onblur="checkname(this)"/>
@@ -382,9 +445,9 @@
                              <label class="required" for="mail">Mail</label> <input type="text" name="mail" id="mail" size="30" placeholder="mr.dupont@gmail.com" onblur="checkmail(this)"/>
                              <span id="mail-correct"></span><span id="mail-incorrect"></span>
                              <label class="required" for="date_naissance">Date de naissance</label><input type="date" name="date-naissance" id="date-naissance" size="30"/><br/><br/>
-                             <label for="phone" class="float">Numéro de téléphone</label> <input type="text" name="phone" id="phone" size="30" placeholder="+33 7 56 92 XX XX" onblur="checkphonenumber(this)"/>
+                             <label for="phone" class="float">Numéro de téléphone</label> <input type="text" name="phone" id="phone" size="30" placeholder="+33 7 56 92 XX XX" />
                              <span id="phone-correct"></span><span id="phone-incorrect"></span>
-                         <br/>
+                             <br/>
                              <div class="center"><input type="submit" value="Inscription"><br/><br/><input type="reset" value="Réinitialisation"></div>
                      </form>
                  </div>
@@ -392,7 +455,7 @@
                  <br/>
 
 
-                 <!--<span class="image featured"><img src="images/banner.jpg" alt="" /></span>
+                 <span class="image featured"><img src="images/banner.jpg" alt="" /></span>
 
                  <p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus.
                      Praesent semper mod quis eget mi. Etiam eu ante risus. Aliquam erat volutpat.
@@ -414,7 +477,7 @@
                      Suspendisse laoreet metus ut metus imperdiet interdum aliquam justo tincidunt. Mauris dolor urna,
                      fringilla vel malesuada ac, dignissim eu mi. Praesent mollis massa ac nulla pretium pretium.
                      Maecenas tortor mauris, consectetur pellentesque dapibus eget, tincidunt vitae arcu.
-                     Vestibulum purus augue, tincidunt sit amet iaculis id, porta eu purus.</p>-->
+                     Vestibulum purus augue, tincidunt sit amet iaculis id, porta eu purus.</p>
 
              </article>
          </div>
@@ -426,6 +489,7 @@
 </div>
 
 <!-- Scripts -->
+<script src="assets/js/jquery-2.1.1.js"></script>
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/jquery.dropotron.min.js"></script>
 <script src="assets/js/skel.min.js"></script>

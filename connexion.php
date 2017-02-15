@@ -13,6 +13,15 @@
     <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
     <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.dropotron.min.js"></script>
+    <script src="assets/js/skel.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+    <script src="assets/js/main.js"></script>
+
+
 </head>
 <body>
 <?php
@@ -75,13 +84,14 @@ if($_GET['deco']==true) {
 
                 <!-- Content -->
                 <article>
+                    <div id="resultat"></div>
                     <script>
                         // Fonction ajax qui permet d'afficher instantanément si le pseudo est déjà utilisé ou non
                         $(function(){
 
                             $('#pseudo').keyup(function(){ // à chaque fois qu'on "lache" le clavier
 
-                                pseudo=$('#pseudo').val(); // on récupère la valeur du pseudo
+                                var pseudo=$('#pseudo').val(); // on récupère la valeur du pseudo
                                 $.ajax({
                                     url : 'inscrit.php', // La ressource ciblée
                                     type : 'POST', // Le type de la requête HTTP.
@@ -99,7 +109,7 @@ if($_GET['deco']==true) {
 
                             });
 
-                        })
+                        });
                     </script>
                     <?php
                     if(!isset($_POST['pseudo'])) {
@@ -111,7 +121,7 @@ if($_GET['deco']==true) {
                         <form name="mail" action="connexion.php" method="POST">
                             <table class="connexion">
                                 <tr>
-                                    <td style="text-align: right; padding-right: 20px;">
+                                    <td style="text-align: right; padding-right: 40px;">
                                         <div class="row 50%">
                                             <div class="6u 12u(mobilep)">
                                                 <label>Pseudo</label>
@@ -119,14 +129,14 @@ if($_GET['deco']==true) {
                                         </div>
                                         <div class="row 50%">
                                             <div class="6u 12u(mobilep)">
-                                                <label>Mot de passe</label>
+                                                <label style="display: inline-block;">Mot de passe</label>
                                             </div>
                                         </div>
                                     </td>
                                     <td style="text-align: left">
                                         <div class="row 50%">
                                             <div class="6u 12u(mobilep)">
-                                                <input style="width: 60%" type="text" name="pseudo" id="pseudo"/><span id="correct"></span><span id="incorrect"></span>
+                                                <input style="width: 60%;display: inline-block;" type="text" name="pseudo" id="pseudo"/><span style="display: inline-block;" id="correct"></span><span style="display: inline-block;" id="incorrect"></span>
                                             </div>
                                         </div>
                                         <div class="row 50%">
@@ -151,11 +161,11 @@ if($_GET['deco']==true) {
                             </table>
                             <br/>
 
-                            <p style="text-align: center"><input type="submit" class="button alt" value="Envoyer"/></p>
+                            <p style="text-align: center"><input id="submit" class="button alt" value="Envoyer"/></p>
                         </form>
                     <?php
                     } else {
-                        if (empty($_POST['pseudo']) || empty($_POST['password'])) { ?>
+                        /*if (empty($_POST['pseudo']) || empty($_POST['password'])) { ?>
                             <script>
                                 alert('Vous devez remplir tous les champs pour vous connecter !');
                             </script>
@@ -166,7 +176,7 @@ if($_GET['deco']==true) {
                             <form action="connexion.php" method="POST">
                                 <table class="connexion">
                                     <tr>
-                                        <td style="text-align: right; padding-right: 20px;">
+                                        <td style="text-align: right; padding-right: 40px;">
                                             <div class="row 50%">
                                                 <div class="6u 12u(mobilep)">
                                                     <label>Pseudo</label>
@@ -194,7 +204,7 @@ if($_GET['deco']==true) {
                                 </table>
                                 <br/>
 
-                                <p style="text-align: center"><input type="submit" class="button alt" value="Envoyer"/></p>
+                                <p style="text-align: center"><input id="submit" class="button alt" value="Envoyer"/></p>
                             </form>
 
                             <?php
@@ -226,7 +236,7 @@ if($_GET['deco']==true) {
                                     } else {
                                     echo "<p style='text-align: center'>Une erreur s'est produite pendant votre identification.</br>Cliquez <a href='./connexion.php'>ici</a> pour revenir à la page précédente<br />Cliquez <a href='./index.php'>ici</a> pour revenir à la page d'accueil</p>";
                                 }
-                            }
+                            }*/
                         }
                     ?>
                     <br/>
@@ -237,18 +247,88 @@ if($_GET['deco']==true) {
             </div>
         </div>
     </section>
-<?php } ?>
+<?php /*}*/ ?>
     <?php require("footer.html"); ?>
 
 </div>
 
-<!-- Scripts -->
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/jquery.dropotron.min.js"></script>
-<script src="assets/js/skel.min.js"></script>
-<script src="assets/js/util.js"></script>
-<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-<script src="assets/js/main.js"></script>
+<script>
+
+    $('#submit').click(function() {
+        var pseudo = $('#pseudo').val();
+        var password = $('#password').val();
+
+        if (pseudo = '' || password == '') { // si les champs pseudo et mot de passe sont vides
+            alert('Vous devez remplir tous les champs pour vous connecter !');
+        }
+        /*else {
+            alert(pseudo+''+password+''+'ok');
+            $.ajax({
+                url: 'trait-connexion.php',
+                type: 'POST',
+                data: 'pseudo=' + pseudo,
+                success: function (data) {
+                    if (data == 'Success') {
+                        $("#resultat").html("<p>Vous avez été connecté avec succès !</p>");
+                    }
+                    else {
+                        $("#resultat").html("<p>Erreur lors de la connexion...</p>");
+                    }
+                },
+                'text'
+            });
+        }*/
+    });
+
+
+        // else : traitement connexion serveur dans trait-connexion.php
+        /*$.ajax({
+            url : 'trait-connexion.php',
+            type : 'POST',
+            data : {
+                pseudo: pseudo,
+                password: password
+            },
+            success:function(data){
+                if(data==1) {
+                    alert('Vous devez remplir tous les champs pour vous connecter !');
+                }
+            }
+        });*/
+    /*})
+
+        $("#submit").click(function{
+
+            $.post(
+                'connexion.php', // Un script PHP que l'on va créer juste après
+                {
+                    login : $("#username").val(),  // Nous récupérons la valeur de nos input que l'on fait passer à connexion.php
+                    password : $("#password").val()
+                },
+
+                function(data){
+
+                    if(data == 'Success'){
+                        // Le membre est connecté. Ajoutons lui un message dans la page HTML.
+
+                        $("#resultat").html("<p>Vous avez été connecté avec succès !</p>");
+                    }
+                    else{
+                        // Le membre n'a pas été connecté. (data vaut ici "failed")
+
+                        $("#resultat").html("<p>Erreur lors de la connexion...</p>");
+                    }
+
+                },
+
+                'text'
+            );
+
+        });
+
+    });
+
+</script>
 
 </body>
 </html>
