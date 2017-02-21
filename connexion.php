@@ -34,7 +34,7 @@ if($_GET['deco']==true) {
     function redirection(){
         self.location.href="index.php"
     }
-    setTimeout(redirection,5000);
+    setTimeout(redirection,1000);
 </script>
 <?php } ?>
 <div id="page-wrapper">
@@ -115,11 +115,11 @@ if($_GET['deco']==true) {
                     if(!isset($_POST['pseudo'])) {
                         ?>
                         <header>
-                            <h2 style="text-align: center">Connexion</h2>
+                            <h2 id="titre" style="text-align: center">Connexion</h2>
                         </header>
-                        <p style="text-align: center">Pas encore inscrit ? Inscrivez-vous vite <a href="inscription.php">ici</a></p>
-                        <form name="mail" action="connexion.php" method="POST">
-                            <table class="connexion">
+                        <p id="inscription" style="text-align: center">Pas encore inscrit ? Inscrivez-vous vite <a href="inscription.php">ici</a></p>
+                        <form name="mail" style="visibility: visible" action="connexion.php" method="POST">
+                            <table id="connexion" class="connexion">
                                 <tr>
                                     <td style="text-align: right; padding-right: 40px;">
                                         <div class="row 50%">
@@ -164,7 +164,7 @@ if($_GET['deco']==true) {
                             <p style="text-align: center"><input id="submit" class="button alt" value="Envoyer"/></p>
                         </form>
                     <?php
-                    } else {
+                    }/* else {
                         /*if (empty($_POST['pseudo']) || empty($_POST['password'])) { ?>
                             <script>
                                 alert('Vous devez remplir tous les champs pour vous connecter !');
@@ -236,8 +236,8 @@ if($_GET['deco']==true) {
                                     } else {
                                     echo "<p style='text-align: center'>Une erreur s'est produite pendant votre identification.</br>Cliquez <a href='./connexion.php'>ici</a> pour revenir à la page précédente<br />Cliquez <a href='./index.php'>ici</a> pour revenir à la page d'accueil</p>";
                                 }
-                            }*/
-                        }
+                            }
+                        }*/
                     ?>
                     <br/>
                     <br/>
@@ -247,7 +247,6 @@ if($_GET['deco']==true) {
             </div>
         </div>
     </section>
-<?php /*}*/ ?>
     <?php require("footer.html"); ?>
 
 </div>
@@ -255,78 +254,53 @@ if($_GET['deco']==true) {
 <script>
 
     $('#submit').click(function() {
-        var pseudo = $('#pseudo').val();
+        var username = $('#pseudo').val();
         var password = $('#password').val();
-
-        if (pseudo = '' || password == '') { // si les champs pseudo et mot de passe sont vides
+        console.log('pseudo : '+username);
+        if (username == '' || password == '') { // si les champs pseudo et mot de passe sont vides
+            console.log('pseudo if : '+username);
             alert('Vous devez remplir tous les champs pour vous connecter !');
         }
-        /*else {
-            alert(pseudo+''+password+''+'ok');
+        else {
+            console.log('pseudo else : '+username);
             $.ajax({
                 url: 'trait-connexion.php',
                 type: 'POST',
-                data: 'pseudo=' + pseudo,
+                data : {
+                    pseudo: username,
+                    password: password
+                },
                 success: function (data) {
-                    if (data == 'Success') {
-                        $("#resultat").html("<p>Vous avez été connecté avec succès !</p>");
+                    if (data == 'success') {
+                        console.log('data :'+data);
+                        // cacher le formulaire de connexion
+                        document.getElementById('connexion').style.display = "none";
+                        document.getElementById('inscription').style.display = "none";
+                        document.getElementById('submit').style.display = "none";
+                        document.getElementById('titre').style.display = "none";
+                        $("#resultat").html("<p style='text-align: center'>Vous êtes maintenant connecté <?php echo $_SESSION['prenom'];?> ! Vous allez être automatiquement redirigé vers la page d'accueil. Si ça ne fonctionne pas, veuillez cliquer <a href='index.php'>ici</a></p>");
+                        function redirection(){
+                            self.location.href="index.php"
+                        }
+                        setTimeout(redirection,3000);
                     }
                     else {
-                        $("#resultat").html("<p>Erreur lors de la connexion...</p>");
+                        console.log('data :'+data);
+                        document.getElementById('connexion').style.display = "none";
+                        document.getElementById('inscription').style.display = "none";
+                        document.getElementById('submit').style.display = "none";
+                        document.getElementById('titre').style.display = "none";
+                        $("#resultat").html("<p style='text-align: center'>Une erreur s'est produite pendant votre identification.</br>Cliquez <a href='./connexion.php'>ici</a> pour revenir à la page précédente<br />Cliquez <a href='./index.php'>ici</a> pour revenir à la page d'accueil</p>");
+                        function redirection2(){
+                            self.location.href="connexion.php"
+                        }
+                        setTimeout(redirection2,3000);
                     }
-                },
-                'text'
-            });
-        }*/
-    });
-
-
-        // else : traitement connexion serveur dans trait-connexion.php
-        /*$.ajax({
-            url : 'trait-connexion.php',
-            type : 'POST',
-            data : {
-                pseudo: pseudo,
-                password: password
-            },
-            success:function(data){
-                if(data==1) {
-                    alert('Vous devez remplir tous les champs pour vous connecter !');
                 }
-            }
-        });*/
-    /*})
-
-        $("#submit").click(function{
-
-            $.post(
-                'connexion.php', // Un script PHP que l'on va créer juste après
-                {
-                    login : $("#username").val(),  // Nous récupérons la valeur de nos input que l'on fait passer à connexion.php
-                    password : $("#password").val()
-                },
-
-                function(data){
-
-                    if(data == 'Success'){
-                        // Le membre est connecté. Ajoutons lui un message dans la page HTML.
-
-                        $("#resultat").html("<p>Vous avez été connecté avec succès !</p>");
-                    }
-                    else{
-                        // Le membre n'a pas été connecté. (data vaut ici "failed")
-
-                        $("#resultat").html("<p>Erreur lors de la connexion...</p>");
-                    }
-
-                },
-
-                'text'
-            );
-
-        });
-
+            });
+        }
     });
+
 
 </script>
 

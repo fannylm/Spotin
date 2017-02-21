@@ -16,6 +16,15 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>-->
+        <!-- Scripts -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/jquery.dropotron.min.js"></script>
+        <script src="assets/js/skel.min.js"></script>
+        <script src="assets/js/util.js"></script>
+        <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+        <script src="assets/js/main.js"></script>
+
 	</head>
 	<body>
 		<div id="page-wrapper">
@@ -68,12 +77,54 @@
 				</div>
 
 			<!-- Banner -->
-				<section id="banner">
+				<section id="banner" onmouseover="pair(this)">
+                    <script>
+                        var i = '0';
+                        (function(){
+                            setInterval(function(){
+                                i++;
+                                if(pair(i)){
+                                    $('#banner').css('background', 'url(images/banner/2.jpg) center');
+                                    /*$('#banner').css('height', '28em');
+                                    $('#banner').css('text-align', 'center');
+                                    $('#banner').css('position', 'relative');*/
+                                }else{
+                                    $('#banner').css('background', 'url(images/banner/1.jpg) 50em');
+                                    /*$('#banner').css('height', '28em');
+                                    $('#banner').css('text-align', 'center');
+                                    $('#banner').css('position', 'relative');*/
+                                }
+                            }, 3000);
+                        })();
+
+                        function pair(chiffre){
+                            chiffre=parseInt(chiffre);
+                            return ((chiffre & 1)=='0')?true:false;
+                        }
+                    </script>
 					<header>
 						<h2>Spotin' <em>c'est de <a href="prestations.php">multiples prestations</a> à petits prix ! </em> </h2>
 						<a href="devis.html" class="button">Devis gratuit</a>
 					</header>
 				</section>
+
+                <script>
+                    /*i = 1;
+
+                    function affiche(numero) {
+                        i = numero;
+                        img.src = 'images/banner/.'+i+'.jpg';
+                        text.value = i;
+                    }
+                </script>
+            <!--
+            <img name="img" src="images/banner/1.jpg"><br>
+            <input type="button" value="<" OnClick="affiche(i-1)">
+            <input type="text" name="text" value="1" OnChange="affiche(text.value)">
+            <input type="button" value=">" OnClick="affiche(i+1)">-->
+
+
+
 
 			<!-- Highlights -->
 				<section class="wrapper style1">
@@ -159,6 +210,11 @@
                     </div>
                 </div>
             </section>-->
+
+
+
+
+
 
         <!-- CTA -->
 				<section id="cta" class="wrapper style3">

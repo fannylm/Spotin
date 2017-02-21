@@ -1893,8 +1893,8 @@
 	}
 
 	hr {
-		border-top: solid 1px #e0e0e0;
-		border: 0;
+		border-top: 1px #e0e0e0;
+		/*border: 0;*/
 		margin-bottom: 1.5em;
 	}
 
@@ -2519,7 +2519,8 @@
 /* Banner */
 
 	#banner {
-		background-image: url("../../images/img_audiovisuel.jpg");
+		/*background-image: url("../../images/banner/1.jpg");*/
+        background-repeat: inherit;
 		background-position: center center;
 		background-size: cover;
 		height: 28em;

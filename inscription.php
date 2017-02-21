@@ -178,7 +178,7 @@
 
                         });
 
-                    })
+                    });
 
                     // Fonction qui vérifie que la taille du mot de passe est supérieure ou égale à 4 et inférieure à 12
                     function checkpw(password){
@@ -287,7 +287,7 @@
                          return ok;
                          }*/
 
-// Fonction qui vérifie que la date entrée est correcte
+                        // Fonction qui vérifie que la date entrée est correcte
                         /*function checkDate(d) {
                          var amin=1900; // année mini
                          var amax=2002; // année maxi
@@ -370,35 +370,47 @@
                          underline(d, false);
                          return true;
                          }*/
-//}
+                        //}
 
-// Fonction qui vérifie que le numéro de téléphone est bien un nombre
-                        /*function checkphonenumber(phonenumber){
-                         var regex = new RegExp(/^(01|02|03|04|05|06|08)[0-9]{8}/gi);
-                         if(regex.test(phonenumber)){
-                         $('#phone').next('#phone-correct').fadeIn().text('');
-                         $('#phone-correct').next('#phone-incorrect').fadeOut();
-                         underline(phonenumber,false);
-                         return true;
-                         }
-                         else{
-                         $('#phone-correct').next('#phone-incorrect').fadeIn().text('Format du numéro de téléphone incorrect');
-                         $('#phone').next('#phone-correct').fadeOut();
-                         underline(phonenumber,true);
-                         return false;
-                         }
-                         /*if (isNaN(phonenumber)){
-                         $('#phone-correct').next('#phone-incorrect').fadeIn().text('Format du numéro de téléphone incorrect');
-                         $('#phone').next('#phone-correct').fadeOut();
-                         underline(phonenumber,true);
-                         return false;
-                         } else {
-                         $('#phone').next('#phone-correct').fadeIn().text('');
-                         $('#phone-correct').next('#phone-incorrect').fadeOut();
-                         underline(phonenumber,false);
-                         return true;
-                         }*/
-                    //}
+                        // Fonction qui vérifie que le numéro de téléphone est bien un nombre
+                        function checkphonenumber(phonenumber){
+                            var reg = /^(\d\d\.){4}\d\d$/;
+                            if(reg.test(phonenumber)) {
+                                $('#phone').next('#phone-correct').fadeIn().text('');
+                                $('#phone-correct').next('#phone-incorrect').fadeOut();
+                                underline(phonenumber,false);
+                                return true;
+                            } else {
+                                $('#phone-correct').next('#phone-incorrect').fadeIn().text('Format du numéro de téléphone incorrect');
+                                $('#phone').next('#phone-correct').fadeOut();
+                                underline(phonenumber,true);
+                                return false;
+                            }
+
+                        }
+
+                    function isTelephonePortable(numero){
+                        console.log('numéro : '+numero);
+                        var reg_telephone_portable = '(0|\\+33|0033)[1-9][0-9]{8}';
+
+                        if( reg_telephone_portable.test(numero) ){
+                            $('#phone').next('#phone-correct').fadeIn().text('');
+                            $('#phone-correct').next('#phone-incorrect').fadeOut();
+                            underline(numero,false);
+                            return true;
+                        } else {
+                            $('#phone-correct').next('#phone-incorrect').fadeIn().text('Format du numéro de téléphone incorrect');
+                            $('#phone').next('#phone-correct').fadeOut();
+                            underline(numero,true);
+                            return false;
+                        }
+                    }
+
+                    if( isTelephonePortable($('#phone').val()) ){
+                        console.log('Portable');
+                    } else {
+                        console.log('PAS Portable');
+                    }
 
                     /*function checkform(f)
                      {
@@ -445,7 +457,7 @@
                              <label class="required" for="mail">Mail</label> <input type="text" name="mail" id="mail" size="30" placeholder="mr.dupont@gmail.com" onblur="checkmail(this)"/>
                              <span id="mail-correct"></span><span id="mail-incorrect"></span>
                              <label class="required" for="date_naissance">Date de naissance</label><input type="date" name="date-naissance" id="date-naissance" size="30"/><br/><br/>
-                             <label for="phone" class="float">Numéro de téléphone</label> <input type="text" name="phone" id="phone" size="30" placeholder="+33 7 56 92 XX XX" />
+                             <label for="phone" class="float">Numéro de téléphone</label> <input type="text" name="phone" id="phone" size="30" placeholder="+33 7 56 92 XX XX" onblur="isTelephonePortable(this)" />
                              <span id="phone-correct"></span><span id="phone-incorrect"></span>
                              <br/>
                              <div class="center"><input type="submit" value="Inscription"><br/><br/><input type="reset" value="Réinitialisation"></div>
