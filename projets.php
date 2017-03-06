@@ -29,10 +29,9 @@
         <nav id="nav">
             <ul>
                 <li><a href="index.php">Accueil</a></li>
-                <li><a href="a-propos.php">À propos</a></li>
                 <li>
                     <a href="prestations.php">Prestations</a>
-                    <ul>
+                    <!--<ul>
                         <li><a href="#">Lorem dolor</a></li>
                         <li><a href="#">Magna phasellus</a></li>
                         <li><a href="#">Etiam sed tempus</a></li>
@@ -47,11 +46,20 @@
                             </ul>
                         </li>
                         <li><a href="#">Veroeros feugiat</a></li>
-                    </ul>
+                    </ul>-->
                 <li class="current"><a href="projets.php">Projets</a></li>
                 <li><a href="voyages.php">Voyages</a></li>
                 <li><a href="contact.php">Contact</a></li>
-                <li><a href="connexion.php" class="button">Connexion</a></li>
+                <li><a href="a-propos.php">À propos</a></li>
+                <?php
+                if(empty($_SESSION['user'])){ // si la variable de session identifiant est nulle ou inexistante
+                    ?><li><a href="connexion.php" class="button">Connexion</a></li><?php
+                }
+                else{
+                    ?><li><a href="compte.php">Mon compte</a></li>
+                    <li><a href="connexion.php?deco=true" class="button">Deconnexion</a></li><?php
+                }
+                ?>
             </ul>
         </nav>
 

@@ -51,24 +51,7 @@ if($_GET['deco']==true) {
             <ul>
                 <li><a href="index.php">Accueil</a></li>
                 <li><a href="a-propos.php">À propos</a></li>
-                <li>
-                    <a href="prestations.php">Prestations</a>
-                    <ul>
-                        <li><a href="#">Lorem dolor</a></li>
-                        <li><a href="#">Magna phasellus</a></li>
-                        <li><a href="#">Etiam sed tempus</a></li>
-                        <li>
-                            <a href="#">Submenu</a>
-                            <ul>
-                                <li><a href="#">Lorem dolor</a></li>
-                                <li><a href="#">Phasellus magna</a></li>
-                                <li><a href="#">Magna phasellus</a></li>
-                                <li><a href="#">Etiam nisl</a></li>
-                                <li><a href="#">Veroeros feugiat</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Veroeros feugiat</a></li>
-                    </ul>
+                <li><a href="prestations.php">Prestations</a></li>
                 <li><a href="projets.php">Projets</a></li>
                 <li><a href="voyages.php">Voyages</a></li>
                 <li><a href="contact.php">Contact</a></li>
@@ -83,8 +66,7 @@ if($_GET['deco']==true) {
             <div id="content">
 
                 <!-- Content -->
-                <article>
-                    <div id="resultat"></div>
+                <article id="connect">
                     <script>
                         // Fonction ajax qui permet d'afficher instantanément si le pseudo est déjà utilisé ou non
                         $(function(){
@@ -162,88 +144,16 @@ if($_GET['deco']==true) {
                             <br/>
 
                             <p style="text-align: center"><input id="submit" class="button alt" value="Envoyer"/></p>
+                            <br/><br/><br/><br/>
+                            <div id="end"><p id="end" style="text-align: center; font-size: 14px"><i id="end" >Membre de l'entreprise? C'est par <a href="connexion-bis.php">ici</a>!</i></p></div>
+
                         </form>
-                    <?php
-                    }/* else {
-                        /*if (empty($_POST['pseudo']) || empty($_POST['password'])) { ?>
-                            <script>
-                                alert('Vous devez remplir tous les champs pour vous connecter !');
-                            </script>
-                            <header>
-                                <h2 style="text-align: center">Connexion</h2>
-                            </header>
-                            <p style="text-align: center">Pas encore inscrit ? Inscrivez-vous vite <a href="inscription.php">ici</a></p>
-                            <form action="connexion.php" method="POST">
-                                <table class="connexion">
-                                    <tr>
-                                        <td style="text-align: right; padding-right: 40px;">
-                                            <div class="row 50%">
-                                                <div class="6u 12u(mobilep)">
-                                                    <label>Pseudo</label>
-                                                </div>
-                                            </div>
-                                            <div class="row 50%">
-                                                <div class="6u 12u(mobilep)">
-                                                    <label>Mot de passe</label>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td style="text-align: left">
-                                            <div class="row 50%">
-                                                <div class="6u 12u(mobilep)">
-                                                    <input style="width: 60%" type="text" name="pseudo" id="pseudo"/>
-                                                </div>
-                                            </div>
-                                            <div class="row 50%">
-                                                <div class="6u 12u(mobilep)">
-                                                    <input style="width: 60%" type="password" name="password" id="password"/>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                                <br/>
 
-                                <p style="text-align: center"><input id="submit" class="button alt" value="Envoyer"/></p>
-                            </form>
-
-                            <?php
-                            } else {
-                            $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
-
-                            $req=$bdd -> query("SELECT * FROM Client");
-                            $res=$req -> fetch();
-                            $username = $res['pseudo'];
-                            $password = $res['mdp'];
-
-
-                            if( isset($_POST['pseudo']) && isset($_POST['password']) ) {
-
-                                if ($_POST['pseudo'] == $username && $_POST['password'] == $password) { // Si les valeurs correspondent
-                                    $_SESSION['user'] = $username;
-                                    $_SESSION['prenom'] = $res['prenom'];
-                                    $_SESSION['nom'] = $res['nom'];
-                                    $_SESSION['mail'] = $res['mail'];
-                                    $_SESSION['id'] = $res['id'];
-                                    session_start(); // démarrage de la session?>
-                                    <script>
-                                        function redirection(){
-                                            self.location.href="index.php"
-                                        }
-                                        setTimeout(redirection,5000);
-                                    </script><?php
-                                    echo "<p style='text-align: center'>Vous êtes maintenant connecté " . $_SESSION['prenom'] . " ! Vous allez être automatiquement redirigé vers la page d'accueil. Si ça ne fonctionne pas, veuillez cliquer <a href='index.php'>ici</a></p>";
-                                    } else {
-                                    echo "<p style='text-align: center'>Une erreur s'est produite pendant votre identification.</br>Cliquez <a href='./connexion.php'>ici</a> pour revenir à la page précédente<br />Cliquez <a href='./index.php'>ici</a> pour revenir à la page d'accueil</p>";
-                                }
-                            }
-                        }*/
-                    ?>
+                    <?php } ?>
                     <br/>
                     <br/>
-
-
                 </article>
+                <div id="resultat"></div>
             </div>
         </div>
     </section>
@@ -256,13 +166,10 @@ if($_GET['deco']==true) {
     $('#submit').click(function() {
         var username = $('#pseudo').val();
         var password = $('#password').val();
-        console.log('pseudo : '+username);
-        if (username == '' || password == '') { // si les champs pseudo et mot de passe sont vides
-            console.log('pseudo if : '+username);
+        if (username == ' ' || password == ' ') { // si les champs pseudo et mot de passe sont vides
             alert('Vous devez remplir tous les champs pour vous connecter !');
         }
         else {
-            console.log('pseudo else : '+username);
             $.ajax({
                 url: 'trait-connexion.php',
                 type: 'POST',
@@ -271,30 +178,33 @@ if($_GET['deco']==true) {
                     password: password
                 },
                 success: function (data) {
+                    console.log('data :'+data);
                     if (data == 'success') {
-                        console.log('data :'+data);
                         // cacher le formulaire de connexion
+                        document.getElementById('connect').style.display = "none";
                         document.getElementById('connexion').style.display = "none";
                         document.getElementById('inscription').style.display = "none";
                         document.getElementById('submit').style.display = "none";
                         document.getElementById('titre').style.display = "none";
-                        $("#resultat").html("<p style='text-align: center'>Vous êtes maintenant connecté <?php echo $_SESSION['prenom'];?> ! Vous allez être automatiquement redirigé vers la page d'accueil. Si ça ne fonctionne pas, veuillez cliquer <a href='index.php'>ici</a></p>");
+                        document.getElementById('end').style.display = "none";
+                        $("#resultat").html("<p style='text-align: center'>Vous êtes maintenant connecté ! Vous allez être automatiquement redirigé vers la page d'accueil. Si ça ne fonctionne pas, veuillez cliquer <a href='index.php'>ici</a></p>");
                         function redirection(){
                             self.location.href="index.php"
                         }
-                        setTimeout(redirection,3000);
+                        setTimeout(redirection,4000);
                     }
                     else {
-                        console.log('data :'+data);
+                        document.getElementById('connect').style.display = "none";
                         document.getElementById('connexion').style.display = "none";
                         document.getElementById('inscription').style.display = "none";
                         document.getElementById('submit').style.display = "none";
                         document.getElementById('titre').style.display = "none";
-                        $("#resultat").html("<p style='text-align: center'>Une erreur s'est produite pendant votre identification.</br>Cliquez <a href='./connexion.php'>ici</a> pour revenir à la page précédente<br />Cliquez <a href='./index.php'>ici</a> pour revenir à la page d'accueil</p>");
+                        document.getElementById('end').style.display = "none";
+                        $("#resultat").html("<p style='text-align: center'>Une erreur s'est produite pendant votre identification.</br>Cliquez <a href='connexion.php'>ici</a> pour revenir à la page précédente<br />Cliquez <a href='index.php'>ici</a> pour revenir à la page d'accueil</p>");
                         function redirection2(){
-                            self.location.href="connexion.php"
+                            self.location.href="connection.php"
                         }
-                        setTimeout(redirection2,3000);
+                        setTimeout(redirection2,4000);
                     }
                 }
             });

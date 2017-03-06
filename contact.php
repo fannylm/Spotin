@@ -15,6 +15,15 @@
     <link rel="stylesheet" href="assets/css/main.css" />
     <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
     <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.dropotron.min.js"></script>
+    <script src="assets/js/skel.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+    <script src="assets/js/main.js"></script>
+
 </head>
 <body onload="initialize()">
 <div id="page-wrapper">
@@ -28,40 +37,40 @@
 
         <!-- Nav -->
         <nav id="nav">
-            <ul>
+            <?php
+            if(empty($_SESSION['user'])){ // aucun utilisateur connecté
+                ?><ul>
+                    <li><a href="index.php">Accueil</a></li>
+                    <li><a href="prestations.php">Prestations</a></li>
+                    <li><a href="projets.php">Projets</a></li>
+                    <li><a href="voyages.php">Voyages</a></li>
+                    <li class="current"><a href="contact.php">Contact</a></li>
+                    <li><a href="a-propos.php">À propos</a></li>
+                    <li><a href="connexion.php" class="button">Connexion</a></li></ul><?php
+            } else if (empty($_SESSION['mail'])) { // compte entreprise
+                ?><ul style="padding-left: 270px;">
                 <li><a href="index.php">Accueil</a></li>
-                <li>
-                    <a href="prestations.php">Prestations</a>
-                    <ul>
-                        <li><a href="#">Lorem dolor</a></li>
-                        <li><a href="#">Magna phasellus</a></li>
-                        <li><a href="#">Etiam sed tempus</a></li>
-                        <li>
-                            <a href="#">Submenu</a>
-                            <ul>
-                                <li><a href="#">Lorem dolor</a></li>
-                                <li><a href="#">Phasellus magna</a></li>
-                                <li><a href="#">Magna phasellus</a></li>
-                                <li><a href="#">Etiam nisl</a></li>
-                                <li><a href="#">Veroeros feugiat</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Veroeros feugiat</a></li>
-                    </ul>
+                <li><a href="prestations.php">Prestations</a></li>
                 <li><a href="projets.php">Projets</a></li>
                 <li><a href="voyages.php">Voyages</a></li>
                 <li class="current"><a href="contact.php">Contact</a></li>
                 <li><a href="a-propos.php">À propos</a></li>
-                <?php
-                if(empty($_SESSION['user'])){ // si la variable de session identifiant est nulle ou inexistante
-                    ?><li><a href="connexion.php" class="button">Connexion</a></li><?php
-                }
-                else{
-                    ?><li><a href="compte.php">Mon compte</a></li>
-                    <li><a href="connexion.php?deco=true" class="button">Deconnexion</a></li><?php
-                }
-                ?>
-            </ul>
+                <li><a href="connexion.php?deco=true" class="button">Deconnexion</a></li>
+                <li><a style="color: #ffffff; font-size: 15px; padding: 0; margin-left: 30px">Connecté en tant que <?php echo $_SESSION['prenom']; echo " "; echo $_SESSION['nom'] ?></a></li></ul><?php
+            } else { // compte client
+                ?><ul style="padding-left: 300px;">
+                <li><a href="index.php">Accueil</a></li>
+                <li><a href="prestations.php">Prestations</a></li>
+                <li><a href="projets.php">Projets</a></li>
+                <li><a href="voyages.php">Voyages</a></li>
+                <li class="current"><a href="contact.php">Contact</a></li>
+                <li><a href="a-propos.php">À propos</a></li>
+                <li><a href="compte.php">Mon compte</a></li>
+                <li><a href="connexion.php?deco=true" class="button">Deconnexion</a></li>
+                <li><a style="color: #ffffff; font-size: 15px; padding: 0; margin-left: 30px">Connecté en tant que <?php echo $_SESSION['prenom']; echo " "; echo $_SESSION['nom'] ?></a></li></ul>
+            <?php
+            }
+            ?>
         </nav>
 
     </div>
@@ -72,25 +81,62 @@
             <div id="content">
 
                 <p style="text-align: center" id="text"><i class="fa fa-paper-plane" aria-hidden="true"></i><strong>&nbsp;&nbsp;&nbsp;Envoyez-nous un message pour le moindre renseignement !</strong></p>
-                <form action="contact.php" method="POST" id="message">
+                <form action="contact.php" method="POST" id="contact" onsubmit="return checkform(this)">
+                    <?php if(empty($_SESSION['user'])){ ?>
                     <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
                         <div class="6u 12u(mobilep)">
                             <input type="text" name="name" id="name" placeholder="Nom" />
                         </div>
                         <div class="6u 12u(mobilep)">
-                            <input type="email" name="email" id="email" placeholder="Email" />
+                            <input type="email" name="email" id="email" placeholder="Email" onblur="checkmail(this)"/>
+                            <span id="mail-correct"></span><span id="mail-incorrect"></span>
                         </div>
-                    </div>
+                    </div> <?php } ?>
                     <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
                         <div class="12u">
                             <textarea name="message" id="message" placeholder="Message" rows="5"></textarea>
                         </div>
                     </div>
                 </form><br/><br/>
-                <p style="text-align: center"><input id="submit" class="button alt" value="Envoyer" /></p>
+                <p style="text-align: center"><input id="submit" type="submit" class="button alt" value="Envoyer" onSubmit="return checkform(this)" /></p>
                 <div id="resultat"></div>
 
                 <script>
+
+                    // Fonction qui permet de changer la couleur de l'arrière plan pour faire ressortir les erreurs
+                    function underline(champ, erreur) {
+                        if(erreur)
+                            champ.style.backgroundColor = "#FDE3E3";
+                        else
+                            champ.style.backgroundColor = "";
+                    }
+
+                    // Fonction qui vérifie que le format du mail est bien valide
+                    function checkmail(mail) {
+                        var regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
+                        if (!regex.test(mail.value)) {
+                            $('#mail-correct').next('#mail-incorrect').fadeIn().text('Format de l\'adresse mail invalide');
+                            $('#mail').next('#mail-correct').fadeOut();
+                            underline(mail, true);
+                            return false;
+                        }
+                        else {
+                            $('#mail').next('#mail-correct').fadeIn().text('');
+                            $('#mail-correct').next('#mail-incorrect').fadeOut();
+                            underline(mail, false);
+                            return true;
+                        }
+                    }
+
+                    function checkform(f) {
+                        if(checkmail(f.email)){
+                            return true;
+                        }
+                        else {
+                            alert('Veuillez remplir tous les champs correctement !');
+                            return false;
+                        }
+                    }
 
                     $('#submit').click(function() {
                         var name = $('#name').val();
@@ -111,14 +157,12 @@
                                 success: function (data) {
                                     if (data == 'success') {
                                         // cacher le formulaire
-                                        document.getElementById('message').style.display = "none";
-                                        document.getElementById('text').style.display = "none";
+                                        document.getElementById('contact').style.display = "none";
                                         document.getElementById('submit').style.display = "none";
                                         $("#resultat").html("<p style='text-align: center'> Message envoyé !</p>");
                                     }
                                     else {
-                                        document.getElementById('message').style.display = "none";
-                                        document.getElementById('text').style.display = "none";
+                                        document.getElementById('contact').style.display = "none";
                                         document.getElementById('submit').style.display = "none";
                                         $("#resultat").html("<p style='text-align: center'> Erreur lors de l'envoie du message</p>");
                                     }
@@ -131,7 +175,7 @@
                 </script>
 
                 <br/>
-
+                <div id="devis">
                 <?php if(empty($_SESSION['user'])){ ?><div id="page-wrapper">
                 <section class="wrapper style2">
                     <div class="container">
@@ -141,15 +185,50 @@
                         </header>
                     </div>
                 </section>
+                    </div>
+
+
                 </div>
 
                 <?php
                 }
                 else{ ?>
 
+                    <div id="devis">
                     <p style="text-align: center"><i class="fa fa-file-pdf-o" aria-hidden="true"></i><strong>&nbsp;&nbsp;&nbsp;Demandez votre devis gratuitement</strong></p>
-                    <p style="text-align: center">Liste des prestations <br/> Détails modifiables</p>
-                    <p style="text-align: center"><input type="submit" class="button alt" value="Envoyer" /></p>
+                    <form style="text-align: center" method="POST" id="devis" action="contact.php">
+                        <label for="id" style="font-weight: 100">Choississez votre prestation</label>
+                        <select name="id" id="id">
+                            <optgroup label="Photographique">
+                                <?php
+                                $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
+                                $req=$bdd -> query("SELECT * FROM Prestations WHERE type='photo'");
+                                while($res=$req -> fetch()){
+                                    echo "<option value=".$res['id'].">".$res['nom']."</option><br/>";
+                                }
+                                ?>
+                            </optgroup>
+                            <optgroup label="Audiovisuelle">
+                                <?php
+                                $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
+                                $req=$bdd -> query("SELECT * FROM Prestations WHERE type='video'");
+                                while($res=$req -> fetch()){
+                                    echo "<option value=".$res['id'].">".$res['nom']."</option><br/>";
+                                }
+                                ?>
+                            </optgroup>
+                        </select>
+                        <br/><br/>
+                        <label for="id" style="font-weight: 100">À quelle date souhaitez-vous la livraison de votre prestation ?</label>
+                        <input type="date" style="margin-right: auto; margin-left: auto;"
+                        <br/><br/><br/>
+                        <label for="id" style="font-weight: 100">Description de votre projet :</label>
+                        <textarea name="message" id="message" placeholder="Message" rows="5" style="width: 50%; margin-right: auto; margin-left: auto;"></textarea>
+                    </form>
+                    <br/><br/>
+                    <p style="text-align: center"><input id="submit" type="submit" class="button alt" value="Envoyer"  /></p>
+                    <div id="resultat"></div>
+                    </div>
 
                 <?php } ?>
 
@@ -211,14 +290,5 @@
 
 
 </div>
-
-<!-- Scripts -->
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/jquery.dropotron.min.js"></script>
-<script src="assets/js/skel.min.js"></script>
-<script src="assets/js/util.js"></script>
-<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-<script src="assets/js/main.js"></script>
-
 </body>
 </html>

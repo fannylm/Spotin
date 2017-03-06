@@ -2083,13 +2083,13 @@
 
 /* Icon */
 
-	.icon {
+	.icon, .icon2 {
 		text-decoration: none;
 		position: relative;
 		text-decoration: none;
 	}
 
-		.icon:before {
+		.icon:before, .icon2:before {
 			-moz-osx-font-smoothing: grayscale;
 			-webkit-font-smoothing: antialiased;
 			font-family: FontAwesome;
@@ -2098,7 +2098,7 @@
 			text-transform: none !important;
 		}
 
-		.icon > .label {
+		.icon > .label, .icon2 > .label {
 			display: none;
 		}
 
@@ -2123,6 +2123,28 @@
 			.icon.major:before {
 				font-size: 36px;
 			}
+
+        .icon2.major2 {
+            text-align: center;
+            cursor: default;
+            background-color: #36CBE0;
+            background-image: -moz-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.15)), url("images/bg01.png");
+            background-image: -webkit-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.15)), url("images/bg01.png");
+            background-image: -ms-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.15)), url("images/bg01.png");
+            background-image: linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.15)), url("images/bg01.png");
+            color: #fff;
+            border-radius: 100%;
+            display: inline-block;
+            width: 2.5em;
+            height: 2.5em;
+            line-height: 2.5em;
+            box-shadow: 0 0 0 7px white, 0 0 0 8px #e0e0e0;
+            margin: 0 0 2em 0;
+        }
+
+        .icon2.major2:before {
+            font-size: 14px;
+        }
 
 /* Lists */
 
@@ -2522,7 +2544,7 @@
 		/*background-image: url("../../images/banner/1.jpg");*/
         background-repeat: inherit;
 		background-position: center center;
-		background-size: cover;
+		/*background-size: cover;*/
 		height: 28em;
 		text-align: center;
 		position: relative;
@@ -3270,8 +3292,16 @@ label.small{
 }
 
 
+a.active{
+    border-bottom: none;
+    border-right: solid 2px;
+    padding-right: 8px;
+}
 
-
+a.inactive{
+    border-bottom: none;
+    color: black;
+}
 
 
 

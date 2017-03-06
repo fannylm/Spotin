@@ -4,26 +4,22 @@ session_start();
 
 $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
 
-$req=$bdd -> query("SELECT * FROM Client");
-$res=$req -> fetch();
-$username = $res['pseudo'];
-$password = $res['mdp'];
+if(empty($_SESSION['user'])) {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+} else {
+    $name = $_SESSION['nom'];
+    $email = $_SESSION['mail'];
+}
+$message = $_POST['message'];
 
+$bdd->exec("INSERT INTO Contact (nom,mail,message) VALUES ('$name','$email','$message')");
 
-if( isset($_POST['pseudo']) && isset($_POST['password']) ) {
-
-    if ($_POST['pseudo'] == $username && $_POST['password'] == $password) { // Si les valeurs correspondent
-        $_SESSION['user'] = $username;
-        $_SESSION['prenom'] = $res['prenom'];
-        $_SESSION['nom'] = $res['nom'];
-        $_SESSION['mail'] = $res['mail'];
-        $_SESSION['id'] = $res['id'];
-        session_start(); // démarrage de la session
-        echo 'success';
-    } else {
-        //echo "<p style='text-align: center'>Une erreur s'est produite pendant votre identification.</br>Cliquez <a href='./connexion.php'>ici</a> pour revenir à la page précédente<br />Cliquez <a href='./index.php'>ici</a> pour revenir à la page d'accueil</p>";
-        echo 'failed';
-    }
+if($bdd) {
+    echo 'success';
+}
+else{
+    echo 'failed';
 }
 
 ?>

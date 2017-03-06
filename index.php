@@ -26,6 +26,36 @@
         <script src="assets/js/main.js"></script>
 
 	</head>
+
+    <div class="gr-top-z-index gr-top-zero" tabindex="-1">
+        <div class="_970ef1-hoverMenu" style="transform:translate(NaNpx, NaNpx);" data-grammarly-reactid=".2">
+            <div class="_970ef1-panel" data-grammarly-reactid=".2.0">
+                <div class="_970ef1-tooltip _970ef1-tooltip_hidden undefined" data-grammarly-reactid=".2.0.0"></div>
+                <div class="_970ef1-buttonArea" data-grammarly-reactid=".2.0.1">
+                    <div class="_970ef1-btn _970ef1-btn_disable" tabindex="-1" data-grammarly-reactid=".2.0.1.0"></div>
+                </div>
+                <div class="_970ef1-line" data-grammarly-reactid=".2.0.3"></div>
+                <div class="_970ef1-buttonArea" data-grammarly-reactid=".2.0.5">
+                    <div class="_970ef1-btn _970ef1-btn_grammarly" data-action="editor" tabindex="-1" data-grammarly-reactid=".2.0.5.0"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="visibility: hidden; top: -9999px; position: absolute; opacity: 0;">
+        <div class="_970ef1-hoverMenu" style="transform:translate(NaNpx, NaNpx);" data-grammarly-reactid=".1">
+            <div class="_970ef1-panel" data-grammarly-reactid=".1.0">
+                <div class="_970ef1-tooltip _970ef1-tooltip_hidden undefined" data-grammarly-reactid=".1.0.0"></div>
+                <div class="_970ef1-buttonArea" data-grammarly-reactid=".1.0.1">
+                    <div class="_970ef1-btn _970ef1-btn_disable" tabindex="-1" data-grammarly-reactid=".1.0.1.0"></div>
+                </div>
+                <div class="_970ef1-line" data-grammarly-reactid=".1.0.3"></div>
+                <div class="_970ef1-buttonArea" data-grammarly-reactid=".1.0.5">
+                    <div class="_970ef1-btn _970ef1-btn_grammarly" data-action="editor" tabindex="-1" data-grammarly-reactid=".1.0.5.0"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 	<body>
 		<div id="page-wrapper">
 
@@ -38,40 +68,40 @@
 
 					<!-- Nav -->
 						<nav id="nav">
-							<ul>
-								<li class="current"><a href="index.php">Accueil</a></li>
-								<li>
-									<a href="prestations.php">Prestations</a>
-									<ul>
-										<li><a href="#">Lorem dolor</a></li>
-										<li><a href="#">Magna phasellus</a></li>
-										<li><a href="#">Etiam sed tempus</a></li>
-										<li>
-											<a href="#">Submenu</a>
-											<ul>
-												<li><a href="#">Lorem dolor</a></li>
-												<li><a href="#">Phasellus magna</a></li>
-												<li><a href="#">Magna phasellus</a></li>
-												<li><a href="#">Etiam nisl</a></li>
-												<li><a href="#">Veroeros feugiat</a></li>
-											</ul>
-										</li>
-										<li><a href="#">Veroeros feugiat</a></li>
-									</ul>
-								<li><a href="projets.php">Projets</a></li>
-								<li><a href="voyages.php">Voyages</a></li>
-								<li><a href="contact.php">Contact</a></li>
-                                <li><a href="a-propos.php">À propos</a></li>
                                 <?php
-                                if(empty($_SESSION['user'])){ // si la variable de session identifiant est nulle ou inexistante
-                                    ?><li><a href="connexion.php" class="button">Connexion</a></li><?php
-                                }
-                                else{
-                                    ?><li><a href="compte.php">Mon compte</a></li>
-                                    <li><a href="connexion.php?deco=true" class="button">Deconnexion</a></li><?php
+                                if(empty($_SESSION['user'])){ // aucun utilisateur connecté
+                                    ?><ul>
+                                    <li class="current"><a href="index.php">Accueil</a></li>
+                                    <li><a href="prestations.php">Prestations</a></li>
+                                    <li><a href="projets.php">Projets</a></li>
+                                    <li><a href="voyages.php">Voyages</a></li>
+                                    <li><a href="contact.php">Contact</a></li>
+                                    <li><a href="a-propos.php">À propos</a></li>
+                                    <li><a href="connexion.php" class="button">Connexion</a></li></ul><?php
+                                } else if (empty($_SESSION['mail'])) { // compte entreprise
+                                    ?><ul style="padding-left: 270px;">
+                                    <li class="current"><a href="index.php">Accueil</a></li>
+                                    <li><a href="prestations.php">Prestations</a></li>
+                                    <li><a href="projets.php">Projets</a></li>
+                                    <li><a href="voyages.php">Voyages</a></li>
+                                    <li><a href="contact.php">Contact</a></li>
+                                    <li><a href="a-propos.php">À propos</a></li>
+                                    <li><a href="connexion.php?deco=true" class="button">Deconnexion</a></li>
+                                    <li><a style="color: #ffffff; font-size: 15px; padding: 0; margin-left: 30px">Connecté en tant que <?php echo $_SESSION['prenom']; echo " "; echo $_SESSION['nom'] ?></a></li></ul><?php
+                                } else { // compte client
+                                    ?><ul style="padding-left: 300px;">
+                                    <li class="current"><a href="index.php">Accueil</a></li>
+                                    <li><a href="prestations.php">Prestations</a></li>
+                                    <li><a href="projets.php">Projets</a></li>
+                                    <li><a href="voyages.php">Voyages</a></li>
+                                    <li><a href="contact.php">Contact</a></li>
+                                    <li><a href="a-propos.php">À propos</a></li>
+                                    <li><a href="compte.php">Mon compte</a></li>
+                                    <li><a href="connexion.php?deco=true" class="button">Deconnexion</a></li>
+                                    <li><a style="color: #ffffff; font-size: 15px; padding: 0; margin-left: 30px">Connecté en tant que <?php echo $_SESSION['prenom']; echo " "; echo $_SESSION['nom'] ?></a></li></ul>
+                                    <?php
                                 }
                                 ?>
-							</ul>
 						</nav>
 
 				</div>
@@ -79,21 +109,32 @@
 			<!-- Banner -->
 				<section id="banner" onmouseover="pair(this)">
                     <script>
-                        var i = '0';
+                        var i = 0;
                         (function(){
                             setInterval(function(){
                                 i++;
-                                if(pair(i)){
-                                    $('#banner').css('background', 'url(images/banner/2.jpg) center');
-                                    /*$('#banner').css('height', '28em');
-                                    $('#banner').css('text-align', 'center');
-                                    $('#banner').css('position', 'relative');*/
-                                }else{
-                                    $('#banner').css('background', 'url(images/banner/1.jpg) 50em');
-                                    /*$('#banner').css('height', '28em');
-                                    $('#banner').css('text-align', 'center');
-                                    $('#banner').css('position', 'relative');*/
-                                }
+                                    if (pair(i)) {
+                                        $('#banner').css('background', 'url(images/banner/' + i + '.jpg) center');
+                                        $('#banner').css('background-size', '100%');
+                                        /*if(i=2) {
+                                            $('#banner').css('background', 'url(images/banner/2.jpg) center');
+                                            $('#banner').css('background-size', '100%');
+                                        } if(i=4) {
+                                            $('#banner').css('background', 'url(images/banner/4.jpg) center');
+                                            $('#banner').css('background-size', '100%');
+                                        }*/
+                                    } else {
+                                        $('#banner').css('background', 'url(images/banner/' + i + '.jpg) center');
+                                        $('#banner').css('background-size', '100%');
+                                        /*if(i=1) {
+                                            $('#banner').css('background', 'url(images/banner/1.jpg) center');
+                                            $('#banner').css('background-size', '100%');
+                                        } if(i=3) {
+                                            $('#banner').css('background', 'url(images/banner/3.jpg) center');
+                                            $('#banner').css('background-size', '100%');
+                                        }*/
+                                    }
+
                             }, 3000);
                         })();
 
@@ -104,19 +145,19 @@
                     </script>
 					<header>
 						<h2>Spotin' <em>c'est de <a href="prestations.php">multiples prestations</a> à petits prix ! </em> </h2>
-						<a href="devis.html" class="button">Devis gratuit</a>
+						<a href="contact.php#devis" class="button">Devis gratuit</a>
 					</header>
 				</section>
 
-                <script>
+                <!--<script>
                     /*i = 1;
 
                     function affiche(numero) {
                         i = numero;
                         img.src = 'images/banner/.'+i+'.jpg';
                         text.value = i;
-                    }
-                </script>
+                    }*/
+                </script>-->
             <!--
             <img name="img" src="images/banner/1.jpg"><br>
             <input type="button" value="<" OnClick="affiche(i-1)">

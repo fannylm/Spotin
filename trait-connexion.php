@@ -21,7 +21,6 @@ if( isset($_POST['pseudo']) && isset($_POST['password']) ) {
         session_start(); // démarrage de la session
         echo 'success';
     } else {
-        //echo "<p style='text-align: center'>Une erreur s'est produite pendant votre identification.</br>Cliquez <a href='./connexion.php'>ici</a> pour revenir à la page précédente<br />Cliquez <a href='./index.php'>ici</a> pour revenir à la page d'accueil</p>";
         echo 'failed';
     }
 }
