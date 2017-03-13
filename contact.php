@@ -30,7 +30,7 @@
 
     <!-- Header -->
     <div id="header">
-
+        <p style="text-align:right; margin-bottom: 3em; margin-right: 10px; font-size: 12px; margin-top: 0;"><a href="connexion-bis.php" style="border-bottom: solid 1px lightgray; color: darkgrey;">Admin</a></p>
         <!-- Logo -->
         <a id="link_logo" href="index.php" style="color: white"><img src="images/LogoSpotin.png" alt="logo" height="10%" width="10%"></a>
         <h1><a href="index.php" id="logo">Spotin' - <em>Agence audiovisuel</em></a></h1>
@@ -196,7 +196,7 @@
 
                     <div id="devis">
                     <p style="text-align: center"><i class="fa fa-file-pdf-o" aria-hidden="true"></i><strong>&nbsp;&nbsp;&nbsp;Demandez votre devis gratuitement</strong></p>
-                    <form style="text-align: center" method="POST" id="devis" action="contact.php">
+                    <form style="text-align: center" method="POST" id="form_devis" action="contact.php">
                         <label for="id" style="font-weight: 100">Choississez votre prestation</label>
                         <select name="id" id="id">
                             <optgroup label="Photographique">
@@ -220,15 +220,51 @@
                         </select>
                         <br/><br/>
                         <label for="id" style="font-weight: 100">À quelle date souhaitez-vous la livraison de votre prestation ?</label>
-                        <input type="date" style="margin-right: auto; margin-left: auto;"
+                        <input id="date" type="date" style="margin-right: auto; margin-left: auto;">
                         <br/><br/><br/>
                         <label for="id" style="font-weight: 100">Description de votre projet :</label>
-                        <textarea name="message" id="message" placeholder="Message" rows="5" style="width: 50%; margin-right: auto; margin-left: auto;"></textarea>
+                        <textarea name="message" id="message2" placeholder="Message" rows="5" style="width: 50%; margin-right: auto; margin-left: auto;"></textarea>
                     </form>
                     <br/><br/>
-                    <p style="text-align: center"><input id="submit" type="submit" class="button alt" value="Envoyer"  /></p>
-                    <div id="resultat"></div>
+                    <p style="text-align: center"><input id="dev" type="submit" class="button alt" value="Envoyer"  /></p>
+                    <div id="resultat2"></div>
                     </div>
+
+                    <script>
+                        $('#dev').click(function() {
+                            var select = document.getElementById("id" );
+                            var id = select.options[select.selectedIndex].value;
+                            var date = $('#date').val();
+                            var message2 = $('#message2').val();
+                            if (id == '' || date == '' || message2 == '') { // si les champs sont vides
+                                alert('Vous devez remplir tous les champs !');
+                            }
+                            else {
+                                $.ajax({
+                                    url: 'trait-devis.php',
+                                    type: 'POST',
+                                    data : {
+                                        id: id,
+                                        date: date,
+                                        message: message2
+                                    },
+                                    success: function (data) {
+                                        if (data == 'success') {
+                                            // cacher le formulaire
+                                            document.getElementById('form_devis').style.display = "none";
+                                            document.getElementById('dev').style.display = "none";
+                                            $("#resultat2").html("<p style='text-align: center'> Le devis a été correctement soumis ! Nous reviendrons vers vous très vite ! </p>");
+                                        }
+                                        else {
+                                            document.getElementById('form_devis').style.display = "none";
+                                            document.getElementById('dev').style.display = "none";
+                                            $("#resultat2").html("<p style='text-align: center'> Erreur lors de l'envoie du devis</p>");
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    </script>
 
                 <?php } ?>
 

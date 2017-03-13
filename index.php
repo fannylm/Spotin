@@ -24,6 +24,7 @@
         <script src="assets/js/util.js"></script>
         <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
         <script src="assets/js/main.js"></script>
+        
 
 	</head>
 
@@ -56,12 +57,25 @@
         </div>
     </div>
 
-	<body>
+    <script>
+        function chargement(){
+            var image1 = new Image(5472,3648);
+            image1.src = "images/banner/1.jpg";
+            var image2 = new Image(5472,3648);
+            image2.src = "images/banner/2.jpg";
+            var image3 = new Image(5472,3648);
+            image3.src = "images/banner/3.jpg";
+            var image4 = new Image(5472,3648);
+            image4.src = "images/banner/4.jpg";
+        }
+    </script>
+
+    <body onload="chargement()">
 		<div id="page-wrapper">
 
 			<!-- Header -->
 				<div id="header">
-
+                    <p style="text-align:right; margin-bottom: 3em; margin-right: 10px; font-size: 12px; margin-top: 0;"><a href="connexion-bis.php" style="border-bottom: solid 1px lightgray; color: darkgrey;">Admin</a></p>
 					<!-- Logo -->
                     <a id="link_logo" href="index.php" style="color: white"><img src="images/LogoSpotin.png" alt="logo" height="10%" width="10%"></a>
 						<h1><a href="index.php" id="logo">Spotin' - <em>Agence audiovisuel</em></a></h1>
@@ -107,41 +121,21 @@
 				</div>
 
 			<!-- Banner -->
-				<section id="banner" onmouseover="pair(this)">
+            <section id="banner" onmouseover="diapHome(this)">
+
                     <script>
-                        var i = 0;
-                        (function(){
-                            setInterval(function(){
-                                i++;
-                                    if (pair(i)) {
-                                        $('#banner').css('background', 'url(images/banner/' + i + '.jpg) center');
-                                        $('#banner').css('background-size', '100%');
-                                        /*if(i=2) {
-                                            $('#banner').css('background', 'url(images/banner/2.jpg) center');
-                                            $('#banner').css('background-size', '100%');
-                                        } if(i=4) {
-                                            $('#banner').css('background', 'url(images/banner/4.jpg) center');
-                                            $('#banner').css('background-size', '100%');
-                                        }*/
-                                    } else {
-                                        $('#banner').css('background', 'url(images/banner/' + i + '.jpg) center');
-                                        $('#banner').css('background-size', '100%');
-                                        /*if(i=1) {
-                                            $('#banner').css('background', 'url(images/banner/1.jpg) center');
-                                            $('#banner').css('background-size', '100%');
-                                        } if(i=3) {
-                                            $('#banner').css('background', 'url(images/banner/3.jpg) center');
-                                            $('#banner').css('background-size', '100%');
-                                        }*/
-                                    }
-
-                            }, 3000);
-                        })();
-
-                        function pair(chiffre){
-                            chiffre=parseInt(chiffre);
-                            return ((chiffre & 1)=='0')?true:false;
+                        var num=0;
+                        function diapHome(bloc) {
+                            if( num != 4 ) {
+                                num = num + 1;
+                            }
+                            else {
+                                num = 1;
+                            }
+                            $('#banner').css('background', 'url(images/banner/' + num + '.jpg) center');
+                            $('#banner').css('background-size', '100%');
                         }
+                        setInterval( function(){ diapHome("banner") }, 3000 );
                     </script>
 					<header>
 						<h2>Spotin' <em>c'est de <a href="prestations.php">multiples prestations</a> à petits prix ! </em> </h2>

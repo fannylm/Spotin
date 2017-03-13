@@ -119,7 +119,7 @@
 
     <!-- Header -->
     <div id="header">
-
+        <p style="text-align:right; margin-bottom: 3em; margin-right: 10px; font-size: 12px; margin-top: 0;"><a href="connexion-bis.php" style="border-bottom: solid 1px lightgray; color: darkgrey;">Admin</a></p>
         <!-- Logo -->
         <a id="link_logo" href="index.php" style="color: white"><img src="images/LogoSpotin.png" alt="logo" height="10%" width="10%"></a>
         <h1><a href="index.php" id="logo">Spotin' - <em>Agence audiovisuel</em></a></h1>

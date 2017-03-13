@@ -41,7 +41,7 @@ if($_GET['deco']==true) {
 
     <!-- Header -->
     <div id="header">
-
+        <p style="text-align:right; margin-bottom: 3em; margin-right: 10px; font-size: 12px; margin-top: 0;"><a href="connexion-bis.php" style="border-bottom: solid 1px lightgray; color: darkgrey;">Admin</a></p>
         <!-- Logo -->
         <a id="link_logo" href="index.php" style="color: white"><img src="images/LogoSpotin.png" alt="logo" height="10%" width="10%"></a>
         <h1><a href="index.php" id="logo">Spotin' - <em>Agence audiovisuel</em></a></h1>
@@ -50,11 +50,11 @@ if($_GET['deco']==true) {
         <nav id="nav">
             <ul>
                 <li><a href="index.php">Accueil</a></li>
-                <li><a href="a-propos.php">À propos</a></li>
                 <li><a href="prestations.php">Prestations</a></li>
                 <li><a href="projets.php">Projets</a></li>
                 <li><a href="voyages.php">Voyages</a></li>
                 <li><a href="contact.php">Contact</a></li>
+                <li><a href="a-propos.php">À propos</a></li>
             </ul>
         </nav>
 
@@ -144,14 +144,12 @@ if($_GET['deco']==true) {
                             <br/>
 
                             <p style="text-align: center"><input id="submit" class="button alt" value="Envoyer"/></p>
-                            <br/><br/><br/><br/>
-                            <div id="end"><p id="end" style="text-align: center; font-size: 14px"><i id="end" >Membre de l'entreprise? C'est par <a href="connexion-bis.php">ici</a>!</i></p></div>
-
+                            <br/><br/>
                         </form>
 
                     <?php } ?>
                     <br/>
-                    <br/>
+                    <br/>"
                 </article>
                 <div id="resultat"></div>
             </div>
@@ -186,7 +184,6 @@ if($_GET['deco']==true) {
                         document.getElementById('inscription').style.display = "none";
                         document.getElementById('submit').style.display = "none";
                         document.getElementById('titre').style.display = "none";
-                        document.getElementById('end').style.display = "none";
                         $("#resultat").html("<p style='text-align: center'>Vous êtes maintenant connecté ! Vous allez être automatiquement redirigé vers la page d'accueil. Si ça ne fonctionne pas, veuillez cliquer <a href='index.php'>ici</a></p>");
                         function redirection(){
                             self.location.href="index.php"
@@ -199,10 +196,9 @@ if($_GET['deco']==true) {
                         document.getElementById('inscription').style.display = "none";
                         document.getElementById('submit').style.display = "none";
                         document.getElementById('titre').style.display = "none";
-                        document.getElementById('end').style.display = "none";
                         $("#resultat").html("<p style='text-align: center'>Une erreur s'est produite pendant votre identification.</br>Cliquez <a href='connexion.php'>ici</a> pour revenir à la page précédente<br />Cliquez <a href='index.php'>ici</a> pour revenir à la page d'accueil</p>");
                         function redirection2(){
-                            self.location.href="connection.php"
+                            self.location.href="connexion.php"
                         }
                         setTimeout(redirection2,4000);
                     }

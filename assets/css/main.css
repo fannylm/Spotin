@@ -2399,7 +2399,7 @@
 
 	#header {
 		text-align: center;
-		padding: 3em 0 0 0;
+		padding: 0 0 0 0;
 		background-color: #fff;
 		background-image: url("images/bg02.png"), url("images/bg02.png"), url("images/bg01.png");
 		background-position: top left,					top left,					top left;
@@ -2541,10 +2541,10 @@
 /* Banner */
 
 	#banner {
-		/*background-image: url("../../images/banner/1.jpg");*/
+		background-image: url("../../images/banner/1.jpg");
         background-repeat: inherit;
 		background-position: center center;
-		/*background-size: cover;*/
+		background-size: 100%;
 		height: 28em;
 		text-align: center;
 		position: relative;
@@ -3304,4 +3304,50 @@ a.inactive{
 }
 
 
+#compte {
+    position: relative;
+    display: flex;
+    float: left;
+}
+
+#compte2{
+    position: relative;
+    display: flex;
+    float: right;
+    margin-top: 2px;
+    margin-right: 700px;
+}
+
+#compte3{
+    position: relative;
+    display: flex;
+    float: left;
+    margin-top: 2px;
+    margin-left: 10px;
+}
+
+label#labelCompte{
+    margin-bottom:0;
+}
+
+input#inputCompte{
+    height: 1.6em;
+}
+
+#pencil{
+    margin-left: 18px;
+    margin-top: 3px;
+    cursor: pointer;
+}
+
+#pencil:hover{
+    background-color: #eeeeee;
+    border:solid 4px #eeeeee;
+    margin-left: 18px;
+    cursor: pointer;
+}
+
+input#submitCompte{
+    line-height: 1em; min-width: 4em; margin-left: 20px;
+}
 
