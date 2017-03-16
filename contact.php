@@ -80,9 +80,12 @@
         <div class="container">
             <div id="content">
 
-                <p style="text-align: center" id="text"><i class="fa fa-paper-plane" aria-hidden="true"></i><strong>&nbsp;&nbsp;&nbsp;Envoyez-nous un message pour le moindre renseignement !</strong></p>
+            <?php
+
+            if(empty($_SESSION['user'])){ // aucun utilisateur connecté
+
+                ?> <p style="text-align: center" id="text"><i class="fa fa-paper-plane" aria-hidden="true"></i><strong>&nbsp;&nbsp;&nbsp;Envoyez-nous un message pour le moindre renseignement !</strong></p>
                 <form action="contact.php" method="POST" id="contact" onsubmit="return checkform(this)">
-                    <?php if(empty($_SESSION['user'])){ ?>
                     <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
                         <div class="6u 12u(mobilep)">
                             <input type="text" name="name" id="name" placeholder="Nom" />
@@ -91,7 +94,81 @@
                             <input type="email" name="email" id="email" placeholder="Email" onblur="checkmail(this)"/>
                             <span id="mail-correct"></span><span id="mail-incorrect"></span>
                         </div>
-                    </div> <?php } ?>
+                        <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
+                            <div class="12u">
+                                <textarea name="message" id="message" placeholder="Message" rows="5"></textarea>
+                            </div>
+                        </div>
+                </form><br/><br/>
+                <p style="text-align: center"><input id="submit" type="submit" class="button alt" value="Envoyer" onSubmit="return checkform(this)" /></p>
+                <div id="resultat"></div>
+
+                <?php
+            } else if (empty($_SESSION['mail'])) { // compte entreprise
+
+               ?>
+                <div style="display: flex; float:left;">
+                        <i id="plus" class="icon major fa fa-plus" style="cursor: pointer; width: 2em; height: 2em; line-height: 2em; margin-bottom: 0;" onclick="Display()"></i>
+                        <i id="minus" class="icon major fa fa-minus" style="cursor: pointer; width: 2em; height: 2em; line-height: 2em; margin-bottom: 0; display:none;" onclick="Erase()"></i>
+                </div>
+                <h1 style="display: flex; padding-left: 30px;">Liste des cients</h1>
+                <br/>
+                <div id="clients" style="display: none;">
+            <?php
+
+            $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
+
+            $req=$bdd -> query("SELECT * FROM Client");
+            while($res=$req -> fetch()){
+                echo "<div style='display:block'>- <a style='cursor:pointer;' onclick='Info()'>".$res['nom']." ".$res['prenom']."</a> </div><br/>
+                    <div id='infos' style='display: inline-block'>
+                        <div id='customer'><label id='labelInfo'><strong>Nom</strong> : ".$res['nom']."</label></div><br/>
+                        <div id='customer' /*style='margin-left: -128px;'*/><label id='labelInfo'><strong>Prénom</strong> : ".$res['prenom']."</label></div><br/>
+                        <div id='customer' /*style='margin-left: -121px;'*/><label id='labelInfo'><strong>Pseudo</strong> : ".$res['user']."</label></div><br/>
+                        <div id='customer'><label id='labelInfo'><strong>Adresse mail</strong> : ".$res['mail']."</label></div><br/>
+                        <div id='customer'><label id='labelInfo'><strong>Numéro de téléphone</strong> : ".$res['tel']."</label></div><br/>
+                        <div id='customer'><label id='labelInfo'><strong>Date de naissance</strong> : ".$res['birthday']."</label></div><br/>
+                    </div><br/><br/><br/>";
+            }
+            ?>
+
+
+                    <!--<div id="infos" style="display: none">
+                        <div id="compte"><label id="labelCompte">Nom : </label></div><div id="compte3"><?php echo $res['nom'] ?></div><br/><br/>
+                        <div id="compte"><label id="labelCompte">Prénom : </label></div><div id="compte3"><?php echo $res['prenom'] ?></div><br/><br/>
+                        <div id="compte"><label id="labelCompte">Pseudo : </label></div><div id="compte3"><?php echo $res['user'] ?></div><br/><br/>
+                        <div id="compte"><label id="labelCompte">Adresse mail : </label></div><div id="compte3"><?php echo $res['mail'] ?></div><br/><br/>
+                        <div id="compte"><label id="labelCompte">Numéro de téléphone : </label></div><div id="compte3"><?php echo $res['tel'] ?></div><br/><br/>
+                        <div id="compte"><label id="labelCompte">Date de naissance : </label></div><div id="compte3"><?php echo $res['birthday'] ?></div><br/><br/>
+                    </div>-->
+
+                    <script>
+
+                       function Display(){
+                           document.getElementById('clients').style.display = "block";
+                           //document.getElementById('infos').style.float = "left";
+                           document.getElementById('plus').style.display = "none";
+                           document.getElementById('minus').style.display = "block";
+                       }
+
+                       function Erase(){
+                           document.getElementById('clients').style.display = "none";
+                           document.getElementById('plus').style.display = "block";
+                           document.getElementById('minus').style.display = "none";
+                       }
+
+                       function Info(){
+                           document.getElementById('infos').style.display = "inline-block";
+                           //document.getElementById('infos').style.float = "right";
+                       }
+
+                    </script>
+            </div>
+
+            <?php
+            } else { // compte client
+                ?> <p style="text-align: center" id="text"><i class="fa fa-paper-plane" aria-hidden="true"></i><strong>&nbsp;&nbsp;&nbsp;Envoyez-nous un message pour le moindre renseignement !</strong></p>
+                <form action="contact.php" method="POST" id="contact" onsubmit="return checkform(this)">
                     <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
                         <div class="12u">
                             <textarea name="message" id="message" placeholder="Message" rows="5"></textarea>
@@ -100,6 +177,11 @@
                 </form><br/><br/>
                 <p style="text-align: center"><input id="submit" type="submit" class="button alt" value="Envoyer" onSubmit="return checkform(this)" /></p>
                 <div id="resultat"></div>
+
+            <?php
+            }
+
+            ?>
 
                 <script>
 
@@ -192,7 +274,10 @@
 
                 <?php
                 }
-                else{ ?>
+                else if(empty($_SESSION['mail'])){ ?>
+            <p>------ rien</p>
+
+            <?php } else { ?>
 
                     <div id="devis">
                     <p style="text-align: center"><i class="fa fa-file-pdf-o" aria-hidden="true"></i><strong>&nbsp;&nbsp;&nbsp;Demandez votre devis gratuitement</strong></p>
@@ -274,6 +359,10 @@
 
                 <br/>
 
+            <?php if(empty($_SESSION['mail'])){
+                echo 'rien';
+            } else { ?>
+
                 <p style="text-align: center"><i class="fa fa-map-marker" aria-hidden="true"></i><strong>&nbsp;&nbsp;&nbsp;26 rue Beck, 33800, Bordeaux</strong></p>
 
                 <script type="text/javascript" src="http://maps.google.com/maps/api/js"></script>
@@ -290,7 +379,7 @@
                 <div style="margin-right: auto; margin-left: auto; width: 80%;HEIGHT: 400px;" id="map_canvas"></div>
                 <br/>
                 <!--<p style="text-align: center">26 rue Beck, 33800, Bordeaux</p>-->
-
+            <?php } ?>
             </div>
         </div>
     </section>

@@ -91,6 +91,10 @@
             $req=$bdd -> query("SELECT * FROM Prestations WHERE type='photo'");
             while($res=$req -> fetch()){
                 echo "- ".$res['nom']."<br/>";
+
+                /*echo "<div id='compte3'>- ".$res['nom']."<i id='pencil' class='fa fa-pencil' aria-hidden='true' onclick='Update()'></i></div>
+                    <div id='compte2' style='display: none;'><input type='text' name='nom' id='inputCompte' value=".$res['nom']."><input id='submitCompte' type='submit' class='button alt' value='Ok' /></div><br/>";
+                */
             }
 
             ?>
@@ -110,6 +114,13 @@
 
             ?>
             <br/><br/>
+
+            <script>
+                function Update(){
+                    document.getElementById('compte3').style.display = "none";
+                    document.getElementById('compte2').style.display = "flex";
+                }
+            </script>
 
             <?php
             if(empty($_SESSION['user'])){ // si la variable de session identifiant est nulle ou inexistante

@@ -25,6 +25,8 @@
 </head>
 <body>
 <?php
+
+// Déconnexion
 if($_GET['deco']==true) {
     // On détruit les variables de notre session
     session_unset ();

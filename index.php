@@ -121,7 +121,7 @@
 				</div>
 
 			<!-- Banner -->
-            <section id="banner" onmouseover="diapHome(this)">
+            <section id="banner" onload="diapHome(this)">
 
                     <script>
                         var num=0;
