@@ -7,7 +7,7 @@
 -->
 <html>
 <head>
-    <title>Spotin' - Prestations</title>
+    <title>Spotin' - Voyages</title>
     <link rel="icon" type="image/png" href="images/icon.png" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -67,9 +67,12 @@
             <h2 id="title" type="title">Ajouter un nouveau voyage</h2>
             <br/><br/>
             <form method="POST" id="voyage" action="add-voyage.php">
-                <label for="destination">Quelle est la destination de ce voyage?</label>
+                <label for="destination">Quelle est la destination de ce voyage ?</label>
                 <input id="destination" type="text">
-                <br/><br/>
+                <br/>
+                <label for="nbImages">Combien de photos comporte-t-il ?</label>
+                <input id="nbImages" type="number">
+                <br/><br/><br/>
             </form>
             <input id="submit" type="submit" class="button alt" value="Envoyer" />
             <div id="resultat"></div>
@@ -78,7 +81,8 @@
 
                 $('#submit').click(function() {
                     var destination = $('#destination').val();
-                    if (destination == '') {
+                    var nbImages = $('#nbImages').val();
+                    if (destination == '' || nbImages == '') {
                      alert('Vous devez remplir tous les champs !');
                      }
                      else {
@@ -86,7 +90,8 @@
                         url: 'add-trip.php',
                         type: 'POST',
                         data : {
-                            destination: destination
+                            destination: destination,
+                            nbImages: nbImages
                         },
                         success: function (data) {
                             if (data == 'success') {
@@ -94,7 +99,7 @@
                                 document.getElementById('voyage').style.display = "none";
                                 document.getElementById('submit').style.display = "none";
                                 document.getElementById('title').style.display = "none";
-                                $("#resultat").html("<p style='text-align: center'> Destination ajoutée ! <br/>Vous allez être automatiquement redirigé vers la page des voyages. Si cela ne fonctionne pas veuillez cliquer <a href='voyages.php'>ici</a></p>");
+                                $("#resultat").html("<p style='text-align: center'>Voyage ajouté ! <br/>Vous allez être automatiquement redirigé vers la page des voyages. Si cela ne fonctionne pas veuillez cliquer <a href='voyages.php'>ici</a></p>");
                                 function redirection(){
                                     self.location.href="voyages.php"
                                 }
@@ -104,7 +109,7 @@
                                 document.getElementById('voyage').style.display = "none";
                                 document.getElementById('submit').style.display = "none";
                                 document.getElementById('title').style.display = "none";
-                                $("#resultat").html("<p style='text-align: center'> Erreur lors de l'ajout de la destination.. Veuillez essayer à nouveau à partir d'<a href='voyages.php'>ici</a>.</p>");
+                                $("#resultat").html("<p style='text-align: center'> Erreur lors de l'ajout du voyage... Veuillez essayer à nouveau à partir d'<a href='voyages.php'>ici</a>.</p>");
                             }
                         }
                     });

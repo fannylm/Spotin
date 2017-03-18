@@ -218,7 +218,7 @@
         }
 
         // Scrolly.
-        $('.scrolly').scrolly({
+        $('.scrolly').scroll({
             speed: 1000,
             offset: function() {
 

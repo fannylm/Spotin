@@ -280,14 +280,14 @@
             <?php } else { ?>
 
                     <div id="devis">
-                    <p style="text-align: center"><i class="fa fa-file-pdf-o" aria-hidden="true"></i><strong>&nbsp;&nbsp;&nbsp;Demandez votre devis gratuitement</strong></p>
+                        <fieldset style="border: 1px grey solid; border-radius: 10px; text-align: center;"><legend><p style="text-align: center"><i class="fa fa-file-pdf-o" aria-hidden="true"></i><strong>&nbsp;&nbsp;&nbsp;Demandez votre devis gratuitement</strong></p></legend>
                     <form style="text-align: center" method="POST" id="form_devis" action="contact.php">
                         <label for="id" style="font-weight: 100">Choississez votre prestation</label>
                         <select name="id" id="id">
                             <optgroup label="Photographique">
                                 <?php
                                 $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
-                                $req=$bdd -> query("SELECT * FROM Prestations WHERE type='photo'");
+                                $req=$bdd -> query("SELECT * FROM Prestation WHERE type='photo'");
                                 while($res=$req -> fetch()){
                                     echo "<option value=".$res['id'].">".$res['nom']."</option><br/>";
                                 }
@@ -296,7 +296,7 @@
                             <optgroup label="Audiovisuelle">
                                 <?php
                                 $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
-                                $req=$bdd -> query("SELECT * FROM Prestations WHERE type='video'");
+                                $req=$bdd -> query("SELECT * FROM Prestation WHERE type='video'");
                                 while($res=$req -> fetch()){
                                     echo "<option value=".$res['id'].">".$res['nom']."</option><br/>";
                                 }
@@ -313,6 +313,7 @@
                     <br/><br/>
                     <p style="text-align: center"><input id="dev" type="submit" class="button alt" value="Envoyer"  /></p>
                     <div id="resultat2"></div>
+                            </fieldset>
                     </div>
 
                     <script>

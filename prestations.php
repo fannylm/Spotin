@@ -88,7 +88,7 @@
 
             $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
 
-            $req=$bdd -> query("SELECT * FROM Prestations WHERE type='photo'");
+            $req=$bdd -> query("SELECT * FROM Prestation WHERE type='photo'");
             while($res=$req -> fetch()){
                 echo "- ".$res['nom']."<br/>";
 
@@ -107,7 +107,7 @@
 
             $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
 
-            $req=$bdd -> query("SELECT * FROM Prestations WHERE type='video'");
+            $req=$bdd -> query("SELECT * FROM Prestation WHERE type='video'");
             while($res=$req -> fetch()){
                 echo "- ".$res['nom']."<br/>";
             }

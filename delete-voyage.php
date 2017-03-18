@@ -65,13 +65,13 @@
         <div class="container">
 
             <h2 id="title" type="title">Supprimer un voyage</h2>
-            <br/><br/>
+            <br/>
             <form method="POST" id="voyage" action="delete-voyage.php">
                 <label for="lieu">Quel voyage souhaitez-vous supprimer ?</label>
                 <select name="lieu" id="lieu">
                         <?php
                         $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
-                        $req=$bdd -> query("SELECT * FROM DestinationVoyage");
+                        $req=$bdd -> query("SELECT * FROM Voyage");
                         while($res=$req -> fetch()){
                             echo "<option value=".$res['lieu'].">".$res['lieu']."</option><br/>";
                         }
@@ -88,7 +88,6 @@
                     var select = document.getElementById("lieu" );
                     var lieu = select.options[select.selectedIndex].value;
                     var alert = confirm("Êtes-vous sûr de vouloir supprimer ce voyage ?");
-                    console.log(lieu);
                     if(alert) {
                         $.ajax({
                             url: 'delete-trip.php',

@@ -4,28 +4,13 @@ session_start();
 
 $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
 
-$req=$bdd -> query("SELECT * FROM Client");
-$res=$req -> fetch();
-$username = $res['pseudo'];
-$password = $res['mdp'];
-$cleSecrete = "MaCleEstIncassable";
+$req = $bdd -> query("SELECT * FROM Client WHERE pseudo='".$_POST['pseudo']."' AND mdp = '".hash('sha256', $_POST['password'])."'");
 
-function decrypt($encrypted_string, $encryption_key) {
-    $iv_size = mcrypt_get_iv_size(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
-    $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-    $decrypted_string = mcrypt_decrypt(MCRYPT_BLOWFISH, $encryption_key, $encrypted_string, MCRYPT_MODE_ECB, $iv);
-    return $decrypted_string;
-}
-
-$mdpDecrypte = decrypt($password,$cleSecrete);
-
-
-
+$res = $req -> fetch();
 
 if( isset($_POST['pseudo']) && isset($_POST['password']) ) {
-
-    if ($_POST['pseudo'] == $username && $_POST['password'] == $password) { // Si les valeurs correspondent
-        $_SESSION['user'] = $username;
+    // Déclaration des variables de session
+        $_SESSION['user'] = $res['pseudo'];
         $_SESSION['prenom'] = $res['prenom'];
         $_SESSION['nom'] = $res['nom'];
         $_SESSION['mail'] = $res['mail'];
@@ -36,7 +21,6 @@ if( isset($_POST['pseudo']) && isset($_POST['password']) ) {
         echo 'success';
     } else {
         echo 'failed';
-    }
 }
 
 ?>

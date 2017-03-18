@@ -72,7 +72,7 @@
                     <optgroup label="Photographique">
                         <?php
                         $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
-                        $req=$bdd -> query("SELECT * FROM Prestations WHERE type='photo'");
+                        $req=$bdd -> query("SELECT * FROM Prestation WHERE type='photo'");
                         while($res=$req -> fetch()){
                             echo "<option value=".$res['id'].">".$res['nom']."</option><br/>";
                         }
@@ -81,7 +81,7 @@
                     <optgroup label="Audiovisuelle">
                         <?php
                         $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
-                        $req=$bdd -> query("SELECT * FROM Prestations WHERE type='video'");
+                        $req=$bdd -> query("SELECT * FROM Prestation WHERE type='video'");
                         while($res=$req -> fetch()){
                             echo "<option value=".$res['id'].">".$res['nom']."</option><br/>";
                         }
