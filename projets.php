@@ -140,6 +140,7 @@
                             while($res=$req -> fetch()){
                                 echo"<div id=".$res['titre']."><h3>".$res['titre']."</h3>
                                     <span class='image featured'><img src=".$res['image']."/></span>
+                                    <p><strong>Année de réalisation : </strong>".$res['anneeRealisation']."</p>
                                     <p><strong>Description</strong><br/>
                                     ".$res['description']."</p></div>";
                             }

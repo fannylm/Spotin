@@ -24,6 +24,18 @@
     <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
     <script src="assets/js/main.js"></script>
 
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDnSPt_Pwr_yqSwru4v29sED66kozQPUM&callback=myMap"></script>
+    <script type="text/javascript">
+        function initialize() {
+            var map = new google.maps.Map(document.getElementById("map_canvas"), {
+                zoom: 16,
+                center: new google.maps.LatLng(44.8220752,-0.5525643),
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+        }
+    </script>
+
 </head>
 <body onload="initialize()">
 <div id="page-wrapper">
@@ -80,34 +92,134 @@
         <div class="container">
             <div id="content">
 
-            <?php
+            <?php if(empty($_SESSION['user'])){ // aucun utilisateur connecté
+                ?>
 
-            if(empty($_SESSION['user'])){ // aucun utilisateur connecté
-
-                ?> <p style="text-align: center" id="text"><i class="fa fa-paper-plane" aria-hidden="true"></i><strong>&nbsp;&nbsp;&nbsp;Envoyez-nous un message pour le moindre renseignement !</strong></p>
+                <p style="text-align: center" id="text"><i class="fa fa-paper-plane" aria-hidden="true"></i><strong>&nbsp;&nbsp;&nbsp;Envoyez-nous un message pour le moindre renseignement !</strong></p>
                 <form action="contact.php" method="POST" id="contact" onsubmit="return checkform(this)">
                     <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
-                        <div class="6u 12u(mobilep)">
-                            <input type="text" name="name" id="name" placeholder="Nom" />
+                        <div class=" 6u 12u(mobilep)">
+                            <input type="text" name="nom" id="nom" placeholder="Nom" >
                         </div>
-                        <div class="6u 12u(mobilep)">
-                            <input type="email" name="email" id="email" placeholder="Email" onblur="checkmail(this)"/>
-                            <span id="mail-correct"></span><span id="mail-incorrect"></span>
+                        <div class=" 6u 12u(mobilep)">
+                            <input type="text" name="prenom" id="prenom" placeholder="Prénom" >
                         </div>
-                        <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
-                            <div class="12u">
-                                <textarea name="message" id="message" placeholder="Message" rows="5"></textarea>
-                            </div>
+                    </div>
+                    <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
+                        <div class=" 6u 12u(mobilep)">
+                            <input type="text" name="departement" id="departement" placeholder="Département" >
                         </div>
-                </form><br/><br/>
+                        <div class=" 6u 12u(mobilep)">
+                            <input type="text" name="email" id="email" placeholder="Email" >
+                        </div>
+                    </div>
+                    <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
+                        <div class="12u">
+                            <textarea name="message" id="message" placeholder="Message" rows="8"></textarea>
+                        </div>
+                    </div>
+                </form><div id="resultat"></div><br/><br/>
                 <p style="text-align: center"><input id="submit" type="submit" class="button alt" value="Envoyer" onSubmit="return checkform(this)" /></p>
-                <div id="resultat"></div>
 
-                <?php
-            } else if (empty($_SESSION['mail'])) { // compte entreprise
+                <br/><br/>
 
-               ?>
-                <div style="display: flex; float:left;">
+                <script>
+                    // Fonction qui permet de changer la couleur de l'arrière plan pour faire ressortir les erreurs
+                    function underline(champ, erreur) {
+                        if(erreur)
+                            champ.style.backgroundColor = "#FDE3E3";
+                        else
+                            champ.style.backgroundColor = "";
+                    }
+
+                    // Fonction qui vérifie que le format du mail est bien valide
+                    function checkmail(mail) {
+                        var regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
+                        if (!regex.test(mail.value)) {
+                            $('#mail-correct').next('#mail-incorrect').fadeIn().text('Format de l\'adresse mail invalide');
+                            $('#mail').next('#mail-correct').fadeOut();
+                            underline(mail, true);
+                            return false;
+                        }
+                        else {
+                            $('#mail').next('#mail-correct').fadeIn().text('');
+                            $('#mail-correct').next('#mail-incorrect').fadeOut();
+                            underline(mail, false);
+                            return true;
+                        }
+                    }
+
+                    function checkform(f) {
+                        if(checkmail(f.email)){
+                            return true;
+                        }
+                        else {
+                            alert('Veuillez remplir tous les champs correctement !');
+                            return false;
+                        }
+                    }
+
+                    $('#submit').click(function() {
+                        var nom = $('#nom').val();
+                        var prenom = $('#prenom').val();
+                        var departement = $('#departement').val();
+                        var email = $('#email').val();
+                        var message = $('#message').val();
+                        if (nom == '' || prenom == '' || departement == '' || email == '' || message == '') { // si les champs sont vides
+                            alert('Vous devez remplir tous les champs !');
+                        }
+                        else {
+                            $.ajax({
+                                url: 'trait-message.php',
+                                type: 'POST',
+                                data : {
+                                    nom: nom,
+                                    prenom: prenom,
+                                    departement: departement,
+                                    email: email,
+                                    message: message
+                                },
+                                success: function (data) {
+                                    if (data == 'success') {
+                                        // cacher le formulaire
+                                        document.getElementById('contact').style.display = "none";
+                                        document.getElementById('submit').style.display = "none";
+                                        $("#resultat").html("<p style='text-align: center'> Message envoyé !</p>");
+                                    }
+                                    else {
+                                        document.getElementById('contact').style.display = "none";
+                                        document.getElementById('submit').style.display = "none";
+                                        $("#resultat").html("<p style='text-align: center'> Erreur lors de l'envoie du message</p>");
+                                    }
+                                }
+                            });
+                        }
+                    });
+                </script>
+
+            <div id="devis">
+                <div id="page-wrapper">
+                    <section class="wrapper style2">
+                        <div class="container">
+                            <header class="major">
+                                <h2>Pour une demande de devis gratuit <a href="connexion.php">connectez-vous</a> !</h2>
+                                <p>Si vous ne possédez pas encore de compte client <a href="inscription.php">inscrivez-vous</a> vite.</p>
+                            </header>
+                        </div>
+                    </section>
+                </div>
+
+
+            </div>
+            <br/><br/><br/>
+                <p style="text-align: center"><i class="fa fa-map-marker" aria-hidden="true"></i><strong>&nbsp;&nbsp;&nbsp;26 rue Beck, 33800, Bordeaux</strong></p>
+
+                <div style="margin-right: auto; margin-left: auto; width: 80%;HEIGHT: 400px;" id="map_canvas"></div>
+                <br/>
+
+            <?php } else if (empty($_SESSION['mail'])) { // compte entreprise
+
+               ?> <div style="display: flex; float:left;">
                         <i id="plus" class="icon major fa fa-plus" style="cursor: pointer; width: 2em; height: 2em; line-height: 2em; margin-bottom: 0;" onclick="Display()"></i>
                         <i id="minus" class="icon major fa fa-minus" style="cursor: pointer; width: 2em; height: 2em; line-height: 2em; margin-bottom: 0; display:none;" onclick="Erase()"></i>
                 </div>
@@ -165,26 +277,23 @@
                     </script>
             </div>
 
-            <?php
-            } else { // compte client
-                ?> <p style="text-align: center" id="text"><i class="fa fa-paper-plane" aria-hidden="true"></i><strong>&nbsp;&nbsp;&nbsp;Envoyez-nous un message pour le moindre renseignement !</strong></p>
+            <?php } else { // compte client
+                ?>
+                <p style="text-align: center" id="text"><i class="fa fa-paper-plane" aria-hidden="true"></i><strong>&nbsp;&nbsp;&nbsp;Envoyez-nous un message pour le moindre renseignement !</strong></p>
                 <form action="contact.php" method="POST" id="contact" onsubmit="return checkform(this)">
                     <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
                         <div class="12u">
                             <textarea name="message" id="message" placeholder="Message" rows="5"></textarea>
                         </div>
                     </div>
-                </form><br/><br/>
+                </form>
+                <div id="resultat"></div><br/><br/>
                 <p style="text-align: center"><input id="submit" type="submit" class="button alt" value="Envoyer" onSubmit="return checkform(this)" /></p>
-                <div id="resultat"></div>
 
-            <?php
-            }
 
-            ?>
+
 
                 <script>
-
                     // Fonction qui permet de changer la couleur de l'arrière plan pour faire ressortir les erreurs
                     function underline(champ, erreur) {
                         if(erreur)
@@ -229,7 +338,7 @@
                         }
                         else {
                             $.ajax({
-                                url: 'trait-message.php',
+                                url: 'trait-message-bis.php',
                                 type: 'POST',
                                 data : {
                                     name: name,
@@ -252,35 +361,12 @@
                             });
                         }
                     });
-
-
                 </script>
 
                 <br/>
-                <div id="devis">
-                <?php if(empty($_SESSION['user'])){ ?><div id="page-wrapper">
-                <section class="wrapper style2">
-                    <div class="container">
-                        <header class="major">
-                            <h2>Pour une demande de devis gratuit <a href="connexion.php">connectez-vous</a> !</h2>
-                            <p>Si vous ne possédez pas encore de compte client <a href="inscription.php">inscrivez-vous</a> vite.</p>
-                        </header>
-                    </div>
-                </section>
-                    </div>
 
-
-                </div>
-
-                <?php
-                }
-                else if(empty($_SESSION['mail'])){ ?>
-            <p>------ rien</p>
-
-            <?php } else { ?>
-
-                    <div id="devis">
-                        <fieldset style="border: 1px grey solid; border-radius: 10px; text-align: center;"><legend><p style="text-align: center"><i class="fa fa-file-pdf-o" aria-hidden="true"></i><strong>&nbsp;&nbsp;&nbsp;Demandez votre devis gratuitement</strong></p></legend>
+            <div id="devis">
+                <fieldset style="border: 1px grey solid; border-radius: 10px; text-align: center;"><legend><p style="text-align: center"><i class="fa fa-file-pdf-o" aria-hidden="true"></i><strong>&nbsp;&nbsp;&nbsp;Demandez votre devis gratuitement</strong></p></legend>
                     <form style="text-align: center" method="POST" id="form_devis" action="contact.php">
                         <label for="id" style="font-weight: 100">Choississez votre prestation</label>
                         <select name="id" id="id">
@@ -313,86 +399,56 @@
                     <br/><br/>
                     <p style="text-align: center"><input id="dev" type="submit" class="button alt" value="Envoyer"  /></p>
                     <div id="resultat2"></div>
-                            </fieldset>
-                    </div>
+                </fieldset>
+            </div>
 
-                    <script>
-                        $('#dev').click(function() {
-                            var select = document.getElementById("id" );
-                            var id = select.options[select.selectedIndex].value;
-                            var date = $('#date').val();
-                            var message2 = $('#message2').val();
-                            if (id == '' || date == '' || message2 == '') { // si les champs sont vides
-                                alert('Vous devez remplir tous les champs !');
+            <script>
+                $('#dev').click(function() {
+                    var select = document.getElementById("id" );
+                    var id = select.options[select.selectedIndex].value;
+                    var date = $('#date').val();
+                    var message2 = $('#message2').val();
+                    if (id == '' || date == '' || message2 == '') { // si les champs sont vides
+                        alert('Vous devez remplir tous les champs !');
+                    }
+                    else {
+                        $.ajax({
+                            url: 'trait-devis.php',
+                            type: 'POST',
+                            data : {
+                                id: id,
+                                date: date,
+                                message: message2
+                            },
+                            success: function (data) {
+                                if (data == 'success') {
+                                    // cacher le formulaire
+                                    document.getElementById('form_devis').style.display = "none";
+                                    document.getElementById('dev').style.display = "none";
+                                    $("#resultat2").html("<p style='text-align: center'> Le devis a été correctement soumis ! Nous reviendrons vers vous très vite ! </p>");
+                                }
+                                else {
+                                    document.getElementById('form_devis').style.display = "none";
+                                    document.getElementById('dev').style.display = "none";
+                                    $("#resultat2").html("<p style='text-align: center'> Erreur lors de l'envoie du devis</p>");
+                                }
                             }
-                            else {
-                                $.ajax({
-                                    url: 'trait-devis.php',
-                                    type: 'POST',
-                                    data : {
-                                        id: id,
-                                        date: date,
-                                        message: message2
-                                    },
-                                    success: function (data) {
-                                        if (data == 'success') {
-                                            // cacher le formulaire
-                                            document.getElementById('form_devis').style.display = "none";
-                                            document.getElementById('dev').style.display = "none";
-                                            $("#resultat2").html("<p style='text-align: center'> Le devis a été correctement soumis ! Nous reviendrons vers vous très vite ! </p>");
-                                        }
-                                        else {
-                                            document.getElementById('form_devis').style.display = "none";
-                                            document.getElementById('dev').style.display = "none";
-                                            $("#resultat2").html("<p style='text-align: center'> Erreur lors de l'envoie du devis</p>");
-                                        }
-                                    }
-                                });
-                            }
-                        });
-                    </script>
-
-                <?php } ?>
-
-                <br/><br/>
-
-                <!--<hr style="border-color: darkgrey; width: 100%;">-->
-
-                <br/>
-
-            <?php if(empty($_SESSION['mail'])){
-                echo 'rien';
-            } else { ?>
-
-                <p style="text-align: center"><i class="fa fa-map-marker" aria-hidden="true"></i><strong>&nbsp;&nbsp;&nbsp;26 rue Beck, 33800, Bordeaux</strong></p>
-
-                <script type="text/javascript" src="http://maps.google.com/maps/api/js"></script>
-                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDnSPt_Pwr_yqSwru4v29sED66kozQPUM&callback=myMap"></script>
-                <script type="text/javascript">
-                    function initialize() {
-                        var map = new google.maps.Map(document.getElementById("map_canvas"), {
-                            zoom: 16,
-                            center: new google.maps.LatLng(44.8220752,-0.5525643),
-                            mapTypeId: google.maps.MapTypeId.ROADMAP
                         });
                     }
-                </script>
-                <div style="margin-right: auto; margin-left: auto; width: 80%;HEIGHT: 400px;" id="map_canvas"></div>
-                <br/>
-                <!--<p style="text-align: center">26 rue Beck, 33800, Bordeaux</p>-->
+                });
+            </script>
+                <br/><br/><br/>
+
+            <p style="text-align: center"><i class="fa fa-map-marker" aria-hidden="true"></i><strong>&nbsp;&nbsp;&nbsp;26 rue Beck, 33800, Bordeaux</strong></p>
+
+            <div style="margin-right: auto; margin-left: auto; width: 80%;HEIGHT: 400px;" id="map_canvas"></div>
+            <br/>
+
             <?php } ?>
+
             </div>
         </div>
     </section>
-
-
-
-
-
-
-
-
-
 
     <!-- Footer -->
     <div id="footer">

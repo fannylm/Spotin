@@ -58,7 +58,7 @@
     </div>
 
     <script>
-        function chargement(){
+        function load(){
             var image1 = new Image(5472,3648);
             image1.src = "images/banner/1.jpg";
             var image2 = new Image(5472,3648);
@@ -68,9 +68,20 @@
             var image4 = new Image(5472,3648);
             image4.src = "images/banner/4.jpg";
         }
+        function initialize() {
+            var map = new google.maps.Map(document.getElementById("map_canvas"), {
+                zoom: 16,
+                center: new google.maps.LatLng(44.8220752,-0.5525643),
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+        }
+        function start(){
+            load();
+            initialize();
+        }
     </script>
 
-    <body onload="chargement()">
+    <body onload="start()">
 		<div id="page-wrapper">
 
 			<!-- Header -->
@@ -169,14 +180,14 @@
 								<div class="box highlight">
 									<i class="icon major fa fa-camera"></i>
 									<h3>Photographie</h3>
-									<p>Portrait, mode, mariage, festival, publicitaire, entreprise ... <a href="prestations/photo.html">En savoir plus</a></p>
+									<p>Portrait, mode, mariage, festival, publicitaire, entreprise ... <a href="prestations.php#photo">En savoir plus</a></p>
 								</div>
 							</section>
 							<section class="4u 12u(narrower)">
 								<div class="box highlight">
 									<i class="icon major fa fa-video-camera"></i>
 									<h3>Vidéo</h3>
-									<p>Court-métrage, institutionnel, making-of, post-production ... <a href="prestations/video.html">En savoir plus</a></p>
+									<p>Court-métrage, institutionnel, making-of, post-production ... <a href="prestations.php#video">En savoir plus</a></p>
 								</div>
 							</section>
 							<section class="4u 12u(narrower)">
@@ -260,9 +271,9 @@
 						</header>
 					</div>
 				</section>
-            <?php require("footer.html"); ?>
-
-		</div>
-
+            <div id="footer" onload="initialize()">
+                <?php require("footer.html");  ?>
+            </div>
+        </div>
 	</body>
 </html>

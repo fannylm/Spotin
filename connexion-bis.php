@@ -25,6 +25,8 @@
 </head>
 <body>
 <?php
+
+// Déconnexion
 if($_GET['deco']==true) {
     // On détruit les variables de notre session
     session_unset ();
@@ -50,11 +52,11 @@ if($_GET['deco']==true) {
         <nav id="nav">
             <ul>
                 <li><a href="index.php">Accueil</a></li>
-                <li><a href="a-propos.php">À propos</a></li>
                 <li><a href="prestations.php">Prestations</a></li>
                 <li><a href="projets.php">Projets</a></li>
                 <li><a href="voyages.php">Voyages</a></li>
                 <li><a href="contact.php">Contact</a></li>
+                <li><a href="a-propos.php">À propos</a></li>
             </ul>
         </nav>
 
@@ -66,7 +68,7 @@ if($_GET['deco']==true) {
             <div id="content">
 
                 <!-- Content -->
-                <article>
+                <article id="connect">
                     <script>
                         // Fonction ajax qui permet d'afficher instantanément si le pseudo est déjà utilisé ou non
                         $(function(){
@@ -75,7 +77,7 @@ if($_GET['deco']==true) {
 
                                 var pseudo=$('#pseudo').val(); // on récupère la valeur du pseudo
                                 $.ajax({
-                                    url : 'inscrit-bis.php', // La ressource ciblée
+                                    url : 'inscrit.php', // La ressource ciblée
                                     type : 'POST', // Le type de la requête HTTP.
                                     data : 'pseudo=' + pseudo,
                                     success:function(data){ // dès qu'on est bien rentré dans le fichier php
@@ -142,14 +144,15 @@ if($_GET['deco']==true) {
                             </table>
                             <br/>
 
-                            <p style="text-align: center"><input id="submit" type="submit" class="button alt" value="Envoyer"/></p>
+                            <p style="text-align: center"><input id="submit" class="button alt" value="Envoyer"/></p>
+                            <br/><br/>
                         </form>
-                        <div id="resultat"></div>
+
                     <?php } ?>
                     <br/>
-                    <br/>
-
+                    <br/>"
                 </article>
+                <div id="resultat"></div>
             </div>
         </div>
     </section>
@@ -174,32 +177,29 @@ if($_GET['deco']==true) {
                     password: password
                 },
                 success: function (data) {
+                    console.log('data :'+data);
                     if (data == 'success') {
-                        console.log('data :'+data);
                         // cacher le formulaire de connexion
+                        document.getElementById('connect').style.display = "none";
                         document.getElementById('connexion').style.display = "none";
-                        document.getElementById('inscription').style.display = "none";
                         document.getElementById('submit').style.display = "none";
                         document.getElementById('titre').style.display = "none";
-                        document.getElementById('end').style.display = "none";
                         $("#resultat").html("<p style='text-align: center'>Vous êtes maintenant connecté ! Vous allez être automatiquement redirigé vers la page d'accueil. Si ça ne fonctionne pas, veuillez cliquer <a href='index.php'>ici</a></p>");
-                        /*function redirection(){
-                         self.location.href="index.php"
-                         }
-                         setTimeout(redirection,5000);*/
+                        function redirection(){
+                            self.location.href="index.php"
+                        }
+                        setTimeout(redirection,4000);
                     }
                     else {
-                        console.log('data :'+data);
+                        document.getElementById('connect').style.display = "none";
                         document.getElementById('connexion').style.display = "none";
-                        document.getElementById('inscription').style.display = "none";
                         document.getElementById('submit').style.display = "none";
                         document.getElementById('titre').style.display = "none";
-                        document.getElementById('end').style.display = "none";
-                        $("#resultat").html("<p style='text-align: center'>Une erreur s'est produite pendant votre identification.</br>Cliquez <a href='./connexion.php'>ici</a> pour revenir à la page précédente<br />Cliquez <a href='./index.php'>ici</a> pour revenir à la page d'accueil</p>");
+                        $("#resultat").html("<p style='text-align: center'>Une erreur s'est produite pendant votre identification.</br>Cliquez <a href='connexion.php'>ici</a> pour revenir à la page précédente<br />Cliquez <a href='index.php'>ici</a> pour revenir à la page d'accueil</p>");
                         function redirection2(){
                             self.location.href="connexion.php"
                         }
-                        setTimeout(redirection2,5000);
+                        setTimeout(redirection2,4000);
                     }
                 }
             });

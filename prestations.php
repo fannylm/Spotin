@@ -81,7 +81,8 @@
         <div class="container">
 
             <p><i>Les prix des prestations varient selon le profil, pour connaître les tarifs d'une prestation que vous souhaitez faire réaliser demander un devis gratuitement !</i></p><br/>
-            <i class="icon2 major2 fa fa-camera" style="font-size: 14pt; before: font-size: 16px;"></i><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prestations photographiques</strong>
+            <div id="photo">
+                <i class="icon2 major2 fa fa-camera" style="font-size: 14pt; before: font-size: 16px;"></i><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prestations photographiques</strong>
             <br/>
 
             <?php
@@ -98,8 +99,9 @@
             }
 
             ?>
-
+            </div>
             <br/>
+            <div id="video">
             <i class="icon2 major2 fa fa-video-camera"></i><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prestations audiovisuelles</strong>
             <br/>
 
@@ -113,6 +115,7 @@
             }
 
             ?>
+            </div>
             <br/><br/>
 
             <script>

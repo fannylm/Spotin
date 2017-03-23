@@ -6,9 +6,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root'
 
 $req = $bdd -> query("SELECT * FROM Client WHERE pseudo='".$_POST['pseudo']."' AND mdp = '".hash('sha256', $_POST['password'])."'");
 
-$res = $req -> fetch();
-
-if( isset($_POST['pseudo']) && isset($_POST['password']) ) {
+if($res = $req -> fetch()){
     // Déclaration des variables de session
         $_SESSION['user'] = $res['pseudo'];
         $_SESSION['prenom'] = $res['prenom'];
@@ -19,7 +17,7 @@ if( isset($_POST['pseudo']) && isset($_POST['password']) ) {
         $_SESSION['birthday'] = $res['birthday'];
         session_start(); // démarrage de la session
         echo 'success';
-    } else {
+} else {
         echo 'failed';
 }
 

@@ -59,7 +59,9 @@
         </nav>
 
     </div>
+    <?php if(empty($_SESSION['user'])){
 
+    } else if (empty($_SESSION['mail'])){ ?>
     <!-- Main -->
     <section class="wrapper style1">
         <div class="container">
@@ -138,7 +140,8 @@
 
         </div>
     </section>
-
+    <?php } else {
+    } ?>
     <?php require("footer.html"); ?>
 
 </div>

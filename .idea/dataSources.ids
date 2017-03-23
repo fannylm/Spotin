@@ -13,60 +13,71 @@
       <column name="nom" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
       <column name="prenom" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
       <column name="pseudo" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
-      <column name="mdp" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="mdp" sqlType="VARCHAR" precision="300" scale="0" nullable="false" jdbcType="12"/>
       <column name="mail" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
       <column name="birthday" sqlType="DATE" precision="10" scale="0" nullable="false" jdbcType="91"/>
       <column name="telephone" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="fk_client_id" table="ContactBis" schema="" catalog="Spotin" columns="idClient"/>
+      <exported-key name="devis_ibfk_1" table="Devis" schema="" catalog="Spotin" columns="idExpediteur"/>
     </table>
     <table name="Contact" schema="" catalog="Spotin" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="nom" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="prenom" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="departement" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
       <column name="mail" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
       <column name="message" sqlType="VARCHAR" precision="2000" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
     </table>
+    <table name="ContactBis" schema="" catalog="Spotin" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="idClient" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="message" sqlType="VARCHAR" precision="2000" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_client_id" columns="idClient" ref-table="Client" ref-schema="" ref-catalog="Spotin" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_client_id" unique="false" columns="idClient"/>
+    </table>
     <table name="Devis" schema="" catalog="Spotin" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="prestation" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
-      <column name="date" sqlType="DATE" precision="10" scale="0" nullable="false" jdbcType="91"/>
-      <column name="message" sqlType="VARCHAR" precision="300" scale="0" nullable="false" jdbcType="12"/>
-      <column name="expediteur" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
-      <column name="destinateur" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="idExpediteur" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="idDestinateur" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="idPrestation" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="date" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="message" sqlType="VARCHAR" precision="2000" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="devis_ibfk_1" columns="idExpediteur" ref-table="Client" ref-schema="" ref-catalog="Spotin" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="devis_ibfk_2" columns="idDestinateur" ref-table="Entrepreneur" ref-schema="" ref-catalog="Spotin" ref-columns="Id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="devis_ibfk_3" columns="idPrestation" ref-table="Prestation" ref-schema="" ref-catalog="Spotin" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
     </table>
     <table name="Entrepreneur" schema="" catalog="Spotin" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="nom" sqlType="VARCHAR" precision="12" scale="0" nullable="false" jdbcType="12"/>
       <column name="prenom" sqlType="VARCHAR" precision="12" scale="0" nullable="false" jdbcType="12"/>
       <column name="pseudo" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
-      <column name="mdp" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="mdp" sqlType="VARCHAR" precision="300" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="devis_ibfk_2" table="Devis" schema="" catalog="Spotin" columns="idDestinateur"/>
     </table>
     <table name="Prestation" schema="" catalog="Spotin" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="nom" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
       <column name="type" sqlType="VARCHAR" precision="10" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="devis_ibfk_3" table="Devis" schema="" catalog="Spotin" columns="idPrestation"/>
     </table>
     <table name="Projet" schema="" catalog="Spotin" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="titre" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
       <column name="description" sqlType="VARCHAR" precision="500" scale="0" nullable="false" jdbcType="12"/>
       <column name="image" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="anneeRealisation" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
     </table>
     <table name="Voyage" schema="" catalog="Spotin" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="lieu" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
       <column name="nbImages" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <primary-key name="PRIMARY" columns="id"/>
-    </table>
-    <table name="VoyageBis" schema="" catalog="Spotin" type="TABLE">
-      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="lien" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
-      <column name="destination" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
-      <column name="description" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
     </table>
   </data-source>
