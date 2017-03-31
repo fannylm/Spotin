@@ -132,7 +132,7 @@
                                     <li><a href="connexion.php?deco=true" class="button">Deconnexion</a></li>
                                     <li><a style="color: #ffffff; font-size: 15px; padding: 0; margin-left: 20px">
                                             Connecté en tant que <?php echo $_SESSION['prenom']; echo " "; echo $_SESSION['nom']; echo " "; echo "<span style='color: #333;'>_</span>"; echo " ";
-                                            echo '<a style="padding: 3px 3px 3px 3px; font-weight: 600; color: white; cursor: pointer;background-color:red; border-radius: 50%; width: 1.6em; height: 1.6em; position: absolute; left:100%; bottom: 20%;" href="notifications.php"> '.$numTotal.' </a>'; ?></a></li></ul>
+                                            echo '<a class="cercle" href="notifications.php"> '.$numTotal.' </a>'; ?></a></li></ul>
 
                                 <?php
                                 } else { // compte client

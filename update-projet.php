@@ -57,24 +57,46 @@ $numTotal=$num+$num2+$num3;
 
         <!-- Nav -->
         <nav id="nav">
-            <ul>
-                <li><a href="index.php">Accueil</a></li>
+            <?php
+            if(empty($_SESSION['user'])){ // aucun utilisateur connecté
+                ?><ul>
+                    <li class="current"><a href="index.php">Accueil</a></li>
+                    <li><a href="prestations.php">Prestations</a></li>
+                    <li><a href="projets.php">Projets</a></li>
+                    <li><a href="voyages.php">Voyages</a></li>
+                    <li><a href="contact.php">Contact</a></li>
+                    <li><a href="a-propos.php">À propos</a></li>
+                    <li><a href="connexion.php" class="button">Connexion</a></li></ul><?php
+            } else if (empty($_SESSION['mail'])) { // compte entreprise
+                ?><ul style="padding-left: 270px;">
+                <li class="current"><a href="index.php">Accueil</a></li>
                 <li><a href="prestations.php">Prestations</a></li>
-                <li class="current"><a href="projets.php">Projets</a></li>
+                <li><a href="projets.php">Projets</a></li>
                 <li><a href="voyages.php">Voyages</a></li>
                 <li><a href="contact.php">Contact</a></li>
                 <li><a href="a-propos.php">À propos</a></li>
-                <?php
-                if(empty($_SESSION['user'])){ // si la variable de session identifiant est nulle ou inexistante
-                    ?><li><a href="connexion.php" class="button">Connexion</a></li><?php
-                } else if (empty($_SESSION['mail'])) {
-                    ?><li><a href="connexion.php?deco=true" class="button">Deconnexion</a></li><?php
-                } else {
-                    ?><li><a href="compte.php">Mon compte</a></li>
-                    <li><a href="connexion.php?deco=true" class="button">Deconnexion</a></li><?php
-                }
-                ?>
-            </ul>
+                <li><a href="connexion.php?deco=true" class="button">Deconnexion</a></li>
+                <li><a style="color: #ffffff; font-size: 15px; padding: 0; margin-left: 20px">
+                        Connecté en tant que <?php echo $_SESSION['prenom']; echo " "; echo $_SESSION['nom']; echo " "; echo "<span style='color: #333;'>_</span>"; echo " ";
+                        echo '<a class="cercle" href="notifications.php"> '.$numTotal.' </a>'; ?></a></li></ul>
+
+            <?php
+            } else { // compte client
+                ?><ul style="padding-left: 300px;">
+                <li class="current"><a href="index.php">Accueil</a></li>
+                <li><a href="prestations.php">Prestations</a></li>
+                <li><a href="projets.php">Projets</a></li>
+                <li><a href="voyages.php">Voyages</a></li>
+                <li><a href="contact.php">Contact</a></li>
+                <li><a href="a-propos.php">À propos</a></li>
+                <li><a href="compte.php">Mon compte</a></li>
+                <li><a href="connexion.php?deco=true" class="button">Deconnexion</a></li>
+
+                <li class="cercle"><a style="color: #ffffff; font-size: 15px; padding: 0; margin-left: 30px">Connecté en tant que <?php echo $_SESSION['prenom']; echo " "; echo $_SESSION['nom'] ?></a></li></ul>
+
+            <?php
+            }
+            ?>
         </nav>
 
     </div>

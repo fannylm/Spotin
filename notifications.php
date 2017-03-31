@@ -75,7 +75,11 @@ $numTotal=$num+$num2+$num3;
                 <li><a href="contact.php">Contact</a></li>
                 <li><a href="a-propos.php">À propos</a></li>
                 <li><a href="connexion.php?deco=true" class="button">Deconnexion</a></li>
-                <li><a style="color: #ffffff; font-size: 15px; padding: 0; margin-left: 30px">Connecté en tant que <?php echo $_SESSION['prenom']; echo " "; echo $_SESSION['nom'] ?></a></li></ul><?php
+                <li><a style="color: #ffffff; font-size: 15px; padding: 0; margin-left: 20px">
+                        Connecté en tant que <?php echo $_SESSION['prenom']; echo " "; echo $_SESSION['nom']; echo " "; echo "<span style='color: #333;'>_</span>"; echo " ";
+                        echo '<a class="cercle" href="notifications.php"> '.$numTotal.' </a>'; ?></a></li></ul>
+
+                <?php
             } else { // compte client
                 ?><ul style="padding-left: 300px;">
                 <li><a href="index.php">Accueil</a></li>
@@ -145,10 +149,7 @@ $numTotal=$num+$num2+$num3;
                 }
 
                 echo '<a href="update-notif3.php" class="button">Effacer</a>';
-
-
-                $numTotal=$num+$num2+$num3;
-                echo '<br/><br/> Nombre total de notifications : '.$numTotal;
+                
 
                 ?></div>
                 <br/><br/><br/>

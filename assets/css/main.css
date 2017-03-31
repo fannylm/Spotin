@@ -3774,6 +3774,20 @@ body.is-loading #sidebar nav ul li {
     opacity: 0;
 }
 
+#nav > ul > li a.cercle {
+    padding: 3px 3px 3px 3px;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    background-color:red;
+    border-radius: 50%;
+    width: 1.6em;
+    height: 1.65em;
+    position: absolute;
+    left:100%;
+    bottom: 20%;
+}
+
 
 
 
