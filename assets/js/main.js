@@ -125,10 +125,10 @@
         // Forms.
 
         // Fix: Placeholder polyfill.
-        $('form').placeholder();
+        //$('form').placeholder();
 
         // Hack: Activate non-input submits.
-        $('form').on('click', '.submit', function(event) {
+        /*$('form').on('click', '.submit', function(event) {
 
             // Stop propagation, default.
             event.stopPropagation();
@@ -137,7 +137,7 @@
             // Submit form.
             $(this).parents('form').submit();
 
-        });
+        });*/
 
         // Prioritize "important" elements on medium.
         skel.on('+medium -medium', function() {

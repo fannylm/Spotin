@@ -10,7 +10,7 @@ $departement = $_POST['departement'];
 $email = $_POST['email'];
 $message = $_POST['message'];
 
-$bdd->exec("INSERT INTO Contact (nom, prenom, departement, mail, message) VALUES ('$nom','$prenom','$departement','$email','$message')");
+$bdd->exec("INSERT INTO Contact (nom, prenom, departement, mail, message, statut) VALUES ('$nom','$prenom','$departement','$email','$message','A traiter')");
 
 if($bdd) {
     echo 'success';

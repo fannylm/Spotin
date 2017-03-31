@@ -17,11 +17,13 @@
     <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 
     <!-- Scripts -->
-    <script src="assets/js/jquery-2.1.1.js"></script>
-    <script src="assets/js/jquery.min.js"></script>
+
     <script src="assets/js/jquery.dropotron.min.js"></script>
     <script src="assets/js/skel.min.js"></script>
     <script src="assets/js/util.js"></script>
+
+    <script src="assets/js/jquery-2.1.1.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
 
 </head>
 <body>
@@ -60,6 +62,49 @@
                         <h2 id="title" style="text-align: center">Inscription</h2>
                     </header>
 
+                    <script>
+
+                        // Fonction qui permet de changer la couleur de l'arrière plan pour faire ressortir les erreurs
+                        function underline(champ, erreur) {
+                            if(erreur)
+                            //champ.style.backgroundColor = "#FDE3E3";
+                                champ.css( 'background-color', '#FDE3E3' );
+                            else
+                            //champ.style.backgroundColor = "none";
+                                champ.css( 'background-color', 'transparent' );
+                        }
+
+                        // Fonction ajax qui permet d'afficher instantanément si le pseudo est déjà utilisé ou non
+                        $(function(){
+
+                         $('#pseudo').keyup(function(){ // à chaque fois qu'on "lache" le clavier
+                             var pseudo=$('#pseudo').val(); // on récupère la valeur du pseudo
+                             $.ajax({
+                                 url : 'inscrit.php', // La ressource ciblée
+                                 type : 'POST', // Le type de la requête HTTP.
+                                 data : 'pseudo=' + pseudo,
+                                 success:function(data){ // dès qu'on est bien rentré dans le fichier php
+                                    if(data==1){ // si le php retourne 1 le pseudo existe déjà
+                                        $('#pseudo').next('#error').fadeIn().text('Ce pseudo est déjà pris');
+                                        $('#error').next('#ok').fadeOut(); // pour eviter d'écrire deux textes à la suite
+                                        console.log(data);
+                                        underline(pseudo,true);
+                                        return false;
+                                    } else if(data==0){
+                                        $('#error').next('#ok').fadeIn().text('Pseudo disponible');
+                                        $('#pseudo').next('#error').fadeOut();
+                                        underline(pseudo,false);
+                                        return true;
+                                    }
+                                 }
+                             });
+
+                         });
+
+                        });
+
+                    </script>
+
 
 
                     <div id="contenu">
@@ -77,7 +122,7 @@
                              <span id="nom-correct"></span><span id="nom-incorrect"></span>
                              <label class="required" for="prenom">Prénom</label> <input type="text" name="prenom" id="prenom"/>
                              <span id="prenom-correct"></span><span id="prenom-incorrect"></span>
-                             <label class="required" for="pseudo">Pseudo</label> <input type="text" name="pseudo" id="pseudo" size="30" placeholder="compris entre 4 et 8 caractères""/>
+                             <label class="required" for="pseudo">Pseudo</label> <input type="text" name="pseudo" id="pseudo" size="30" placeholder="compris entre 4 et 8 caractères" />
                              <span id="error"></span><span id="ok"></span><br/>
                              <label class="required" for="mdp1">Mot de passe</label> <input type="password" name="mdp1" id="mdp1" size="30" placeholder="compris entre 4 et 12 caractères"/>
                              <span id="mdp1-correct"></span><span id="mdp1-incorrect"></span>

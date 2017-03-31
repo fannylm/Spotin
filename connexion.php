@@ -69,32 +69,6 @@ if($_GET['deco']==true) {
 
                 <!-- Content -->
                 <article id="connect">
-                    <script>
-                        // Fonction ajax qui permet d'afficher instantanément si le pseudo est déjà utilisé ou non
-                        $(function(){
-
-                            $('#pseudo').keyup(function(){ // à chaque fois qu'on "lache" le clavier
-
-                                var pseudo=$('#pseudo').val(); // on récupère la valeur du pseudo
-                                $.ajax({
-                                    url : 'inscrit.php', // La ressource ciblée
-                                    type : 'POST', // Le type de la requête HTTP.
-                                    data : 'pseudo=' + pseudo,
-                                    success:function(data){ // dès qu'on est bien rentré dans le fichier php
-                                        if(data==1){ // si le php retourne 1 le pseudo existe déjà
-                                            $('#pseudo').next('#correct').fadeIn().text('Correct');
-                                            $('#correct').next('#incorrect').fadeOut(); // pour eviter d'écrire deux textes à la suite
-                                        } else if(data==0){
-                                            $('#correct').next('#incorrect').fadeIn().text('Pseudo innexistant');
-                                            $('#pseudo').next('#correct').fadeOut();
-                                        }
-                                    }
-                                });
-
-                            });
-
-                        });
-                    </script>
                     <?php
                     if(!isset($_POST['pseudo'])) {
                         ?>

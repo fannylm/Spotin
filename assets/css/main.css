@@ -3728,3 +3728,52 @@ body.is-loading #sidebar nav ul li {
 }
 
 
+
+#moncercle{
+    background:red;
+    border-radius:50%;
+    width:20px;
+    height:10px;
+    border:2px solid red;
+}
+
+
+#nav > ul > li.cercle {
+    font-weight: 600;
+}
+
+
+#nav > ul > li.cercle:before {
+    /*-moz-transform: rotateZ(45deg);
+    -webkit-transform: rotateZ(45deg);
+    -ms-transform: rotateZ(45deg);
+    transform: rotateZ(45deg);*/
+    border-radius:50%;
+    width: 1.6em;
+    height: 1.6em;
+    color: white;
+    display: block;
+    position: absolute;
+    cursor: pointer;
+    /*top: 0.1em;*/
+    left: 110%;
+    /*margin-left: -0.375em;*/
+    background-color: red;
+    background-image: url("images/bg01.png");
+}
+
+#nav > ul > li.cercle a {
+    color: red;
+}
+
+#nav > ul > li.active a {
+    color: red;
+}
+
+#nav > ul > li.active.cercle:before {
+    opacity: 0;
+}
+
+
+
+

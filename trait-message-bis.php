@@ -7,7 +7,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root'
 $id = $_SESSION['id'];
 $message = $_POST['message'];
 
-$bdd->exec("INSERT INTO ContactBis (idClient,message) VALUES ('$id','$message')");
+$bdd->exec("INSERT INTO ContactBis (idClient,message,statut) VALUES ('$id','$message','A traiter')");
 
 if($bdd) {
     echo 'success';

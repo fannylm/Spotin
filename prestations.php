@@ -26,6 +26,24 @@
     <script src="assets/js/main.js"></script>
 
 </head>
+
+<?php
+
+$bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
+
+$req1=$bdd -> query("SELECT * FROM Contact WHERE statut='A traiter'");
+$num=$req1 -> rowCount();
+
+$req2=$bdd -> query("SELECT * FROM ContactBis, Client WHERE ContactBis.statut='A traiter' AND ContactBis.idClient=Client.id");
+$num2=$req2 -> rowCount();
+
+$req3=$bdd -> query("SELECT * FROM Devis, Client, Prestation WHERE Devis.statut='A traiter' AND Devis.idExpediteur=Client.id AND Devis.idPrestation=Prestation.id");
+$num3=$req3 -> rowCount();
+
+$numTotal=$num+$num2+$num3;
+
+?>
+
 <body>
 <div id="page-wrapper">
 
@@ -57,7 +75,11 @@
                 <li><a href="contact.php">Contact</a></li>
                 <li><a href="a-propos.php">À propos</a></li>
                 <li><a href="connexion.php?deco=true" class="button">Deconnexion</a></li>
-                <li><a style="color: #ffffff; font-size: 15px; padding: 0; margin-left: 30px">Connecté en tant que <?php echo $_SESSION['prenom']; echo " "; echo $_SESSION['nom'] ?></a></li></ul><?php
+                <li><a style="color: #ffffff; font-size: 15px; padding: 0; margin-left: 20px">
+                        Connecté en tant que <?php echo $_SESSION['prenom']; echo " "; echo $_SESSION['nom']; echo " "; echo "<span style='color: #333;'>_</span>"; echo " ";
+                        echo '<a style="padding: 3px 3px 3px 3px; font-weight: 600; color: white; cursor: pointer;background-color:red; border-radius: 50%; width: 1.6em; height: 1.6em; position: absolute; left:100%; bottom: 20%;" href="notifications.php"> '.$numTotal.' </a>'; ?></a></li></ul>
+
+                <?php
             } else { // compte client
                 ?><ul style="padding-left: 300px;">
                 <li><a href="index.php">Accueil</a></li>
@@ -91,7 +113,7 @@
 
             $req=$bdd -> query("SELECT * FROM Prestation WHERE type='photo'");
             while($res=$req -> fetch()){
-                echo "- ".$res['nom']."<br/>";
+                echo "- ".$res['prestation']."<br/>";
 
                 /*echo "<div id='compte3'>- ".$res['nom']."<i id='pencil' class='fa fa-pencil' aria-hidden='true' onclick='Update()'></i></div>
                     <div id='compte2' style='display: none;'><input type='text' name='nom' id='inputCompte' value=".$res['nom']."><input id='submitCompte' type='submit' class='button alt' value='Ok' /></div><br/>";
@@ -111,7 +133,7 @@
 
             $req=$bdd -> query("SELECT * FROM Prestation WHERE type='video'");
             while($res=$req -> fetch()){
-                echo "- ".$res['nom']."<br/>";
+                echo "- ".$res['prestation']."<br/>";
             }
 
             ?>
