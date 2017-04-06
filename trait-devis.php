@@ -9,7 +9,8 @@ $date = $_POST['date'];
 $message = $_POST['message'];
 $expediteur = $_SESSION['id'];
 
-$bdd->exec("INSERT INTO Devis (idExpediteur, idPrestation, date, message) VALUES ('$expediteur','$prestation','$date','$message')");
+$bdd->exec("INSERT INTO Devis (idExpediteur, idPrestation, date, message, statut) VALUES ('$expediteur','$prestation','$date','$message','A traiter')");
+
 
 if($bdd) {
     echo 'success';

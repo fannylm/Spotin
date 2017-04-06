@@ -2079,7 +2079,7 @@
 
 			.image.featured img {
 				display: block;
-				width: 100%;
+				width: 60%;
 			}
 
 /* Icon */
@@ -2663,6 +2663,7 @@
 
 	#footer {
 		padding: 4em 0 8em 0;
+        background: #f7f7f7 url("images/bg01.png");
 	}
 
 		#footer a {
@@ -3271,7 +3272,7 @@ label.small{
     color: red;
 }
 
-#error,#incorrect,#prenom-incorrect,#nom-incorrect,#mdp1-incorrect,#mdp2-incorrect,#mail-incorrect,#phone-incorrect,#date-incorrect{
+#error,#incorrect,#prenom-incorrect,#nom-incorrect,#mdp1-incorrect,#mdp2-incorrect,#mail-incorrect,#phone-incorrect,#date-incorrect,#tel-incorrect,#pseudo-incorrect,#identifiant-incorrect{
     color:red;
     display: inline-block;
     margin-left: 20px;
@@ -3281,7 +3282,7 @@ label.small{
     font-style: italic;
 }
 
-#ok,#correct,#prenom-correct,#nom-correct,#mdp1-correct,#mdp2-correct,#mail-correct,#phone-correct,#date-correct{
+#ok,#correct,#prenom-correct,#nom-correct,#mdp1-correct,#mdp2-correct,#mail-correct,#phone-correct,#date-correct,#tel-correct,#pseudo-correct,#identifiant-correct{
     /*display:none;*/
     color:green;
     display: inline-block;
@@ -3789,5 +3790,7 @@ body.is-loading #sidebar nav ul li {
 }
 
 
-
+textarea{
+    resize:none;
+}
 

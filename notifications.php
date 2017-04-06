@@ -149,7 +149,7 @@ $numTotal=$num+$num2+$num3;
                 }
 
                 echo '<a href="update-notif3.php" class="button">Effacer</a>';
-                
+
 
                 ?></div>
                 <br/><br/><br/>

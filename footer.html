@@ -22,7 +22,7 @@
 
             <section class="6u 12u(narrower)">
                 <i class="fa fa-paper-plane" aria-hidden="true"></i><strong>&nbsp;&nbsp;&nbsp;Contact</strong>
-                <br/><br/>
+
                 <form action="contact.php" method="POST" id="contact">
                     <?php if(empty($_SESSION['user'])){ ?>
                     <div class="row 50%">
@@ -30,10 +30,22 @@
                             <input type="text" name="name" id="name" placeholder="Nom" />
                         </div>
                         <div class="6u 12u(mobilep)">
-                            <input type="email" name="email" id="email" placeholder="Email" onblur="checkmail(this)"/>
+                            <input type="text" name="prenom" id="prenom" placeholder="Prénom"/>
+                        </div>
+                    </div>
+                    <div class="row 50%">
+                        <div class=" 6u 12u(mobilep)">
+                            <input type="text" name="tel" id="tel" placeholder="Numéro de téléphone" onblur="checkphone(this)">
+                            <span id="tel-correct"></span><span id="tel-incorrect"></span>
+                        </div>
+                        <div class=" 6u 12u(mobilep)">
+                            <input type="text" name="email" id="email" placeholder="Email" onblur="checkmail(this)">
                             <span id="mail-correct"></span><span id="mail-incorrect"></span>
                         </div>
-                    </div> <?php } ?>
+                    </div>
+
+                    <?php } ?>
+
                     <div class="row 50%">
                         <div class="12u">
                             <textarea name="message" id="message" placeholder="Message" rows="5"></textarea>
@@ -47,69 +59,83 @@
                         </div>
                     </div>
                 </form>
-                <div id="resultat"></div>
+                <div id="resultat" style="z-index: 4000000"></div>
 
                 <script>
 
+                    // Fonction qui vérifie que le format du mail est bien valide
+                    function checkmail(mail) {
+                        var regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
+                        var email = mail.value || mail;
+                        if (!regex.test(email)) {
+                            $('#mail-correct').next('#mail-incorrect').fadeIn().text('Format de l\'adresse mail invalide');
+                            $('#mail').next('#mail-correct').fadeOut();
+                            //underline(mail, true);
+                            return false;
+                        }
+                        else {
+                            $('#mail').next('#mail-correct').fadeIn().text('');
+                            $('#mail-correct').next('#mail-incorrect').fadeOut();
+                            //underline(mail, false);
+                            return true;
+                        }
+                    }
+
+                    // Fonction qui vérifie que le format du numéro de téléphone
+                    function checkphone(phonenumber){
+                        var regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+                        var tel = phonenumber.value || phonenumber;
+                        if (!regex.test(tel)) {
+                            $('#tel-correct').next('#tel-incorrect').fadeIn().text('Format du numéro invalide');
+                            $('#tel').next('#tel-correct').fadeOut();
+                            //underline(phonenumber, true);
+                            return false;
+                        }
+                        else {
+                            $('#el').next('#tel-correct').fadeIn().text('');
+                            $('#tel-correct').next('#tel-incorrect').fadeOut();
+                            //underline(phonenumber, false);
+                            return true;
+                        }
+                    }
+
                     $('#soumettre').click(function() {
-                        var name = $('#name').val();
+                        var nom = $('#nom').val();
+                        var prenom = $('#prenom').val();
+                        var tel = $('#tel').val();
                         var email = $('#email').val();
                         var message = $('#message').val();
-                        if (name == '' || email == '' || message == '') { // si les champs sont vides
-                            alert('Vous devez remplir tous les champs !');
+                        if (nom == '' || prenom == '' || tel == '' || email == '' || message == '' || !checkphone(tel) || !checkmail(email)) { // si les champs sont vides
+                            alert('Vous devez remplir tous les champs correctement!');
                         }
                         else {
                             $.ajax({
                                 url: 'trait-message.php',
                                 type: 'POST',
                                 data : {
-                                    name: name,
+                                    nom: nom,
+                                    prenom: prenom,
+                                    tel: tel,
                                     email: email,
                                     message: message
                                 },
                                 success: function (data) {
+                                    console.log(data);
                                     if (data == 'success') {
                                         // cacher le formulaire
                                         document.getElementById('contact').style.display = "none";
-                                        document.getElementById('submit').style.display = "none";
+                                        document.getElementById('soumettre').style.display = "none";
                                         $("#resultat").html("<p style='text-align: center'> Message envoyé !</p>");
                                     }
                                     else {
                                         document.getElementById('contact').style.display = "none";
-                                        document.getElementById('submit').style.display = "none";
+                                        document.getElementById('soumettre').style.display = "none";
                                         $("#resultat").html("<p style='text-align: center'> Erreur lors de l'envoie du message</p>");
                                     }
                                 }
                             });
                         }
                     });
-
-                    // Fonction qui permet de changer la couleur de l'arrière plan pour faire ressortir les erreurs
-                    function underline(champ, erreur)
-                    {
-                        if(erreur)
-                            champ.style.backgroundColor = "#FDE3E3";
-                        else
-                            champ.style.backgroundColor = "";
-                    }
-
-                    // Fonction qui vérifie que le format du mail est bien valide
-                    function checkmail(mail) {
-                        var regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
-                        if (!regex.test(mail.value)) {
-                            $('#mail-correct').next('#mail-incorrect').fadeIn().text('Format de l\'adresse mail invalide');
-                            $('#mail').next('#mail-correct').fadeOut();
-                            underline(mail, true);
-                            return false;
-                        }
-                        else {
-                            $('#mail').next('#mail-correct').fadeIn().text('');
-                            $('#mail-correct').next('#mail-incorrect').fadeOut();
-                            underline(mail, false);
-                            return true;
-                        }
-                    }
-
 
                 </script>
 

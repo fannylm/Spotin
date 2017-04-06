@@ -134,6 +134,7 @@ function checkfirstname(firstname){
 // Au moins 8 caractères, une majuscule, une minuscule et 1 chiffre
 function checkpw(password){
     /*var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+
      if (!regex.test(password.value)){
      $('#mdp1-correct').next('#mdp1-incorrect').fadeIn().text('Format du mot de passe incorrect. Il doit contenir au moins 8 caractères, une majuscule, une minuscule et 1 chiffre ');
      $('#mdp1').next('#mdp1-correct').fadeOut();

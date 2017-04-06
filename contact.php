@@ -119,7 +119,7 @@ $numTotal=$num+$num2+$num3;
                 ?>
 
                 <p style="text-align: center" id="text"><i class="fa fa-paper-plane" aria-hidden="true"></i><strong>&nbsp;&nbsp;&nbsp;Envoyez-nous un message pour le moindre renseignement !</strong></p>
-                <form action="contact.php" method="POST" id="contact" onsubmit="return checkform(this)">
+                <form action="contact.php" method="POST" id="contact" onclick="console.log(this)" onsubmit="return checkform(this)">
                     <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
                         <div class=" 6u 12u(mobilep)">
                             <input type="text" name="nom" id="nom" placeholder="Nom" >
@@ -130,114 +130,12 @@ $numTotal=$num+$num2+$num3;
                     </div>
                     <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
                         <div class=" 6u 12u(mobilep)">
-                            <input type="text" name="departement" id="departement" placeholder="N° - Département (ex : 33 - Gironde)" >
-                            <!--
-01 - Ain - Bourg-en-bresse
-02 - Aisne - Laon
-03 - Allier - Moulins
-04 - Alpes-de-Haute-Provence - Digne-les-bains
-05 - Hautes-alpes - Gap
-06 - Alpes-maritimes - Nice
-07 - Ardèche - Privas
-08 - Ardennes - Charleville-mézières
-09 - Ariège - Foix
-10 - Aube - Troyes
-11 - Aude - Carcassonne
-12 - Aveyron - Rodez
-13 - Bouches-du-Rhône - Marseille
-14 - Calvados - Caen
-15 - Cantal - Aurillac
-16 - Charente - Angoulême
-17 - Charente-maritime - La rochelle
-18 - Cher - Bourges
-19 - Corrèze - Tulle
-2a - Corse-du-sud - Ajaccio
-2b - Haute-Corse - Bastia
-21 - Côte-d'Or - Dijon
-22 - Côtes-d'Armor - Saint-brieuc
-23 - Creuse - Guéret
-24 - Dordogne - Périgueux
-25 - Doubs - Besançon
-26 - Drôme - Valence
-27 - Eure - Évreux
-28 - Eure-et-loir - Chartres
-29 - Finistère - Quimper
-30 - Gard - Nîmes
-31 - Haute-garonne - Toulouse
-32 - Gers - Auch
-33 - Gironde - Bordeaux
-34 - Hérault - Montpellier
-35 - Ille-et-vilaine - Rennes
-36 - Indre - Châteauroux
-37 - Indre-et-loire - Tours
-38 - Isère - Grenoble
-39 - Jura - Lons-le-saunier
-40 - Landes - Mont-de-marsan
-41 - Loir-et-cher - Blois
-42 - Loire - Saint-étienne
-43 - Haute-loire - Le puy-en-velay
-44 - Loire-atlantique - Nantes
-45 - Loiret - Orléans
-46 - Lot - Cahors
-47 - Lot-et-garonne - Agen
-48 - Lozère - Mende
-49 - Maine-et-loire - Angers
-50 - Manche - Saint-lô
-51 - Marne - Châlons-en-champagne
-52 - Haute-marne - Chaumont
-53 - Mayenne - Laval
-54 - Meurthe-et-moselle - Nancy
-55 - Meuse - Bar-le-duc
-56 - Morbihan - Vannes
-57 - Moselle - Metz
-58 - Nièvre - Nevers
-59 - Nord - Lille
-60 - Oise - Beauvais
-61 - Orne - Alençon
-62 - Pas-de-calais - Arras
-63 - Puy-de-dôme - Clermont-ferrand
-64 - Pyrénées-atlantiques - Pau
-65 - Hautes-Pyrénées - Tarbes
-66 - Pyrénées-orientales - Perpignan
-67 - Bas-rhin - Strasbourg
-68 - Haut-rhin - Colmar
-69 - Rhône - Lyon
-70 - Haute-saône - Vesoul
-71 - Saône-et-loire - Mâcon
-72 - Sarthe - Le mans
-73 - Savoie - Chambéry
-74 - Haute-savoie - Annecy
-75 - Paris - Paris
-76 - Seine-maritime - Rouen
-77 - Seine-et-marne - Melun
-78 - Yvelines - Versailles
-79 - Deux-sèvres - Niort
-80 - Somme - Amiens
-81 - Tarn - Albi
-82 - Tarn-et-garonne - Montauban
-83 - Var - Toulon
-84 - Vaucluse - Avignon
-85 - Vendée - La roche-sur-yon
-86 - Vienne - Poitiers
-87 - Haute-vienne - Limoges
-88 - Vosges - Épinal
-89 - Yonne - Auxerre
-90 - Territoire de belfort - Belfort
-91 - Essonne - Évry
-92 - Hauts-de-seine - Nanterre
-93 - Seine-Saint-Denis - Bobigny
-94 - Val-de-marne - Créteil
-95 - Val-d'oise - Pontoise
-971 - Guadeloupe - Basse-terre
-972 - Martinique - Fort-de-france
-973 - Guyane - Cayenne
-974 - La réunion - Saint-denis
-976 - Mayotte - Dzaoudzi
-
-                            -->
+                            <input type="text" name="tel" id="tel" placeholder="Numéro de téléphone" onblur="checkphone(this)">
+                            <span id="tel-correct"></span><span id="tel-incorrect"></span>
                         </div>
                         <div class=" 6u 12u(mobilep)">
-                            <input type="text" name="email" id="email" placeholder="Email" >
+                            <input type="text" name="email" id="email" placeholder="Email" onblur="checkmail(this)">
+                            <span id="mail-correct"></span><span id="mail-incorrect"></span>
                         </div>
                     </div>
                     <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
@@ -245,43 +143,62 @@ $numTotal=$num+$num2+$num3;
                             <textarea name="message" id="message" placeholder="Message" rows="8"></textarea>
                         </div>
                     </div>
+                    <br/><br/>
+                    <p style="text-align: center"><input id="submit" class="button alt" value="Envoyer" /></p>
                 </form><div id="resultat"></div><br/><br/>
-                <p style="text-align: center"><input id="submit" type="submit" class="button alt" value="Envoyer" onSubmit="return checkform(this)" /></p>
 
                 <br/><br/>
 
                 <script>
                     // Fonction qui permet de changer la couleur de l'arrière plan pour faire ressortir les erreurs
-                    function underline(champ, erreur) {
+                    /*function underline(champ, erreur) {
                         if(erreur)
                             champ.style.backgroundColor = "#FDE3E3";
                         else
                             champ.style.backgroundColor = "";
-                    }
+                    }*/
 
                     // Fonction qui vérifie que le format du mail est bien valide
                     function checkmail(mail) {
                         var regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
-                        if (!regex.test(mail.value)) {
+                        var mail = mail.value || mail;
+                        if (!regex.test(mail)) {
                             $('#mail-correct').next('#mail-incorrect').fadeIn().text('Format de l\'adresse mail invalide');
                             $('#mail').next('#mail-correct').fadeOut();
-                            underline(mail, true);
+                            //underline(mail, true);
                             return false;
                         }
                         else {
                             $('#mail').next('#mail-correct').fadeIn().text('');
                             $('#mail-correct').next('#mail-incorrect').fadeOut();
-                            underline(mail, false);
+                            //underline(mail, false);
+                            return true;
+                        }
+                    }
+
+                    // Fonction qui vérifie que le format du numéro de téléphone
+                    function checkphone(phonenumber){
+                        var regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+                        var phonenumber = phonenumber.value || phonenumber;
+                        if (!regex.test(phonenumber)) {
+                            $('#tel-correct').next('#tel-incorrect').fadeIn().text('Format du numéro invalide');
+                            $('#tel').next('#tel-correct').fadeOut();
+                            //underline(phonenumber, true);
+                            return false;
+                        }
+                        else {
+                            $('#el').next('#tel-correct').fadeIn().text('');
+                            $('#tel-correct').next('#tel-incorrect').fadeOut();
+                            //underline(phonenumber, false);
                             return true;
                         }
                     }
 
                     function checkform(f) {
-                        if(checkmail(f.email)){
+                        if(checkmail(f.email) && checkphone(f.tel)){
                             return true;
                         }
                         else {
-                            alert('Veuillez remplir tous les champs correctement !');
                             return false;
                         }
                     }
@@ -289,20 +206,22 @@ $numTotal=$num+$num2+$num3;
                     $('#submit').click(function() {
                         var nom = $('#nom').val();
                         var prenom = $('#prenom').val();
-                        var departement = $('#departement').val();
+                        var tel = $('#tel').val();
                         var email = $('#email').val();
                         var message = $('#message').val();
-                        if (nom == '' || prenom == '' || departement == '' || email == '' || message == '') { // si les champs sont vides
-                            alert('Vous devez remplir tous les champs !');
+                        console.log($('#contact'));
+                        if (nom == '' || prenom == '' || tel == '' || email == '' || message == '' || !checkphone(tel) || !checkmail(email)) { // si les champs sont vides
+                            alert('Vous devez remplir tous les champs correctement!');
                         }
                         else {
+                            console.log("coucou");
                             $.ajax({
                                 url: 'trait-message.php',
                                 type: 'POST',
                                 data : {
                                     nom: nom,
                                     prenom: prenom,
-                                    departement: departement,
+                                    tel: tel,
                                     email: email,
                                     message: message
                                 },
@@ -502,7 +421,7 @@ $numTotal=$num+$num2+$num3;
                                 $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
                                 $req=$bdd -> query("SELECT * FROM Prestation WHERE type='photo'");
                                 while($res=$req -> fetch()){
-                                    echo "<option value=".$res['id'].">".$res['nom']."</option><br/>";
+                                    echo "<option value=".$res['id'].">".$res['prestation']."</option><br/>";
                                 }
                                 ?>
                             </optgroup>
@@ -511,7 +430,7 @@ $numTotal=$num+$num2+$num3;
                                 $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
                                 $req=$bdd -> query("SELECT * FROM Prestation WHERE type='video'");
                                 while($res=$req -> fetch()){
-                                    echo "<option value=".$res['id'].">".$res['nom']."</option><br/>";
+                                    echo "<option value=".$res['id'].">".$res['prestation']."</option><br/>";
                                 }
                                 ?>
                             </optgroup>
@@ -535,6 +454,7 @@ $numTotal=$num+$num2+$num3;
                     var id = select.options[select.selectedIndex].value;
                     var date = $('#date').val();
                     var message2 = $('#message2').val();
+                    console.log(date);
                     if (id == '' || date == '' || message2 == '') { // si les champs sont vides
                         alert('Vous devez remplir tous les champs !');
                     }

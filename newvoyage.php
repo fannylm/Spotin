@@ -175,7 +175,7 @@
 
     <!-- Sidebar -->
 
-    <<section style="width: 80%; text-align: right">
+    <section style="width: 80%; text-align: right">
 
     <h3>Destinations</h3><br/>
 
@@ -183,7 +183,7 @@
 
     $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
 
-    $req=$bdd -> query("SELECT * FROM DestinationVoyage");
+    $req=$bdd -> query("SELECT * FROM Voyage");
     $i=$req->rowCount();
     while($res=$req -> fetch()){
         echo $res['lieu']."<br/>";
