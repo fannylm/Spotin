@@ -151,9 +151,9 @@ $numTotal=$num+$num2+$num3;
             if(empty($_SESSION['user'])){ // si la variable de session identifiant est nulle ou inexistante
                 ?><a href="contact.php#devis" class="button">Devis gratuit</a><?php
             } else if (empty($_SESSION['mail'])) {
-                ?><a href="add-prestation.php" class="button">Ajouter une prestation</a><br/><br/>
-                <a href="update-prestation.php" class="button">Modifier une prestation</a><br/><br/>
-                <a href="delete-prestation.php" class="button">Supprimer une prestation</a>
+                ?><a style="padding:0; min-width: 11em" href="add-prestation.php" class="button">Nouvelle prestation</a>
+                <a style="padding:0; min-width: 11em" href="update-prestation.php" class="button">Modifier une prestation</a>
+                <a style="padding:0; min-width: 11em" href="delete-prestation.php" class="button">Supprimer une prestation</a>
             <?php
             } else {
                 ?><a href="contact.php#devis" class="button">Devis gratuit</a><?php

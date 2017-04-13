@@ -271,6 +271,7 @@ $numTotal=$num+$num2+$num3;
                 </div>
                 <h1 style="display: flex; padding-left: 30px;">Liste des cients</h1>
                 <br/>
+
                 <div id="clients" style="display: none;">
             <?php
 
@@ -278,33 +279,22 @@ $numTotal=$num+$num2+$num3;
 
             $req=$bdd -> query("SELECT * FROM Client");
             while($res=$req -> fetch()){
-                echo "<div style='display:block'>- <a style='cursor:pointer;' onclick='Info()'>".$res['nom']." ".$res['prenom']."</a> </div><br/>
-                    <div id='infos' style='display: inline-block'>
-                        <div id='customer'><label id='labelInfo'><strong>Nom</strong> : ".$res['nom']."</label></div><br/>
-                        <div id='customer' /*style='margin-left: -128px;'*/><label id='labelInfo'><strong>Prénom</strong> : ".$res['prenom']."</label></div><br/>
-                        <div id='customer' /*style='margin-left: -121px;'*/><label id='labelInfo'><strong>Pseudo</strong> : ".$res['user']."</label></div><br/>
-                        <div id='customer'><label id='labelInfo'><strong>Adresse mail</strong> : ".$res['mail']."</label></div><br/>
-                        <div id='customer'><label id='labelInfo'><strong>Numéro de téléphone</strong> : ".$res['tel']."</label></div><br/>
-                        <div id='customer'><label id='labelInfo'><strong>Date de naissance</strong> : ".$res['birthday']."</label></div><br/>
-                    </div><br/><br/><br/>";
-            }
+                ?><div style='display:block'>- <a style='cursor:pointer;' onclick='Info()'><?php echo $res['nom']; echo ' '; echo $res['prenom'] ?></a> <i id="pencil" style="display: none;" class="fa fa-caret-up" aria-hidden="true" onclick="Hide()"></i></div><br/>
+                    <div id='infos' style='display: none;'>
+                        <label id='labelInfo'><strong>Nom</strong> : <?php echo $res['nom'] ?></label><br/>
+                        <label id='labelInfo'><strong>Prénom</strong> : <?php echo $res['prenom'] ?></label><br/>
+                        <label id='labelInfo'><strong>Pseudo</strong> : <?php echo $res['pseudo'] ?></label><br/>
+                        <label id='labelInfo'><strong>Adresse mail</strong> : <?php echo $res['mail'] ?></label><br/>
+                        <label id='labelInfo'><strong>Numéro de téléphone</strong> : 0<?php echo $res['telephone'] ?></label><br/>
+                        <label id='labelInfo'><strong>Date de naissance</strong> : <?php echo $res['birthday'] ?></label><br/>
+                    </div><br/>
+            <?php }
             ?>
-
-
-                    <!--<div id="infos" style="display: none">
-                        <div id="compte"><label id="labelCompte">Nom : </label></div><div id="compte3"><?php echo $res['nom'] ?></div><br/><br/>
-                        <div id="compte"><label id="labelCompte">Prénom : </label></div><div id="compte3"><?php echo $res['prenom'] ?></div><br/><br/>
-                        <div id="compte"><label id="labelCompte">Pseudo : </label></div><div id="compte3"><?php echo $res['user'] ?></div><br/><br/>
-                        <div id="compte"><label id="labelCompte">Adresse mail : </label></div><div id="compte3"><?php echo $res['mail'] ?></div><br/><br/>
-                        <div id="compte"><label id="labelCompte">Numéro de téléphone : </label></div><div id="compte3"><?php echo $res['tel'] ?></div><br/><br/>
-                        <div id="compte"><label id="labelCompte">Date de naissance : </label></div><div id="compte3"><?php echo $res['birthday'] ?></div><br/><br/>
-                    </div>-->
 
                     <script>
 
                        function Display(){
                            document.getElementById('clients').style.display = "block";
-                           //document.getElementById('infos').style.float = "left";
                            document.getElementById('plus').style.display = "none";
                            document.getElementById('minus').style.display = "block";
                        }
@@ -317,11 +307,151 @@ $numTotal=$num+$num2+$num3;
 
                        function Info(){
                            document.getElementById('infos').style.display = "inline-block";
-                           //document.getElementById('infos').style.float = "right";
+                           document.getElementById('pencil').style.display = "inline-block";
+                       }
+
+                       function Hide(){
+                           document.getElementById('infos').style.display = "none";
+                           document.getElementById('pencil').style.display = "none";
                        }
 
                     </script>
             </div>
+
+
+                <br/><br/><br/>
+                <div id="historiqe"><h2 style="color:red;">Historique des messages</h2><br/><br/>
+                    <div style="display: flex; float:left;">
+                        <i id="plus1" class="icon major fa fa-plus" style="cursor: pointer; width: 2em; height: 2em; line-height: 2em; margin-bottom: 0;" onclick="Display1()"></i>
+                        <i id="minus1" class="icon major fa fa-minus" style="cursor: pointer; width: 2em; height: 2em; line-height: 2em; margin-bottom: 0; display:none;" onclick="Erase1()"></i>
+                    </div>
+                    <h1 style="display: flex; padding-left: 30px;">Visiteurs</h1>
+                    <br/>
+                    <div id="clients1" style="display: none;">
+                        <?php
+
+                        $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
+
+                        $req=$bdd -> query("SELECT * FROM Contact");
+                        while($res=$req -> fetch()){
+                            echo "<strong> - ".$res['nom']." ".$res['prenom']."</strong> (".$res['departement']."), <a href='mailto:".$res['mail']."'>".$res['mail']."</a><br/>";
+                            echo "Message : ".$res['message']."<br/><br/>";
+                            echo '<br/>';
+                        }
+                        ?>
+
+                        <script>
+
+                            function Display1(){
+                                document.getElementById('clients1').style.display = "block";
+                                //document.getElementById('infos').style.float = "left";
+                                document.getElementById('plus1').style.display = "none";
+                                document.getElementById('minus1').style.display = "block";
+                            }
+
+                            function Erase1(){
+                                document.getElementById('clients1').style.display = "none";
+                                document.getElementById('plus1').style.display = "block";
+                                document.getElementById('minus1').style.display = "none";
+                            }
+
+                            function Info1(){
+                                document.getElementById('infos1').style.display = "inline-block";
+                                //document.getElementById('infos').style.float = "right";
+                            }
+
+                        </script>
+                    </div>
+
+
+
+                    <br/><br/>
+                    <div style="display: flex; float:left;">
+                        <i id="plus2" class="icon major fa fa-plus" style="cursor: pointer; width: 2em; height: 2em; line-height: 2em; margin-bottom: 0;" onclick="Display2()"></i>
+                        <i id="minus2" class="icon major fa fa-minus" style="cursor: pointer; width: 2em; height: 2em; line-height: 2em; margin-bottom: 0; display:none;" onclick="Erase2()"></i>
+                    </div>
+                    <h1 style="display: flex; padding-left: 30px;">Clients</h1>
+                    <br/>
+                    <div id="clients2" style="display: none;">
+                        <?php
+
+                        $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
+
+                        $req=$bdd -> query("SELECT * FROM ContactBis");
+                        while($res=$req -> fetch()){
+                            echo "<strong> - ".$res['nom']." ".$res['prenom']."</strong>, <a href='mailto:".$res['mail']."'>".$res['mail']."</a><br/>";
+                            echo "Message : ".$res['message']."<br/><br/>";
+                        }
+                        ?>
+
+                        <script>
+
+                            function Display2(){
+                                document.getElementById('clients2').style.display = "block";
+                                //document.getElementById('infos').style.float = "left";
+                                document.getElementById('plus2').style.display = "none";
+                                document.getElementById('minus2').style.display = "block";
+                            }
+
+                            function Erase2(){
+                                document.getElementById('clients2').style.display = "none";
+                                document.getElementById('plus2').style.display = "block";
+                                document.getElementById('minus2').style.display = "none";
+                            }
+
+                            function Info2(){
+                                document.getElementById('infos2').style.display = "inline-block";
+                                //document.getElementById('infos').style.float = "right";
+                            }
+
+                        </script>
+                    </div>
+
+
+                    <br/><br/>
+                    <div style="display: flex; float:left;">
+                        <i id="plus3" class="icon major fa fa-plus" style="cursor: pointer; width: 2em; height: 2em; line-height: 2em; margin-bottom: 0;" onclick="Display3()"></i>
+                        <i id="minus3" class="icon major fa fa-minus" style="cursor: pointer; width: 2em; height: 2em; line-height: 2em; margin-bottom: 0; display:none;" onclick="Erase3()"></i>
+                    </div>
+                    <h1 style="display: flex; padding-left: 30px;">Devis</h1>
+                    <br/>
+                    <div id="devis" style="display: none;">
+                        <?php
+
+                        $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
+
+                        $req=$bdd -> query("SELECT * FROM Devis");
+                        while($res=$req -> fetch()){
+                            echo "<strong> - ".$res['nom']." ".$res['prenom']."</strong>, <a href='mailto:".$res['mail']."'>".$res['mail']."</a><br/>";
+                            echo "Message : ".$res['message']."<br/><br/>";
+                        }
+                        ?>
+
+                        <script>
+
+                            function Display3(){
+                                document.getElementById('devis').style.display = "block";
+                                //document.getElementById('infos').style.float = "left";
+                                document.getElementById('plus3').style.display = "none";
+                                document.getElementById('minus3').style.display = "block";
+                            }
+
+                            function Erase3(){
+                                document.getElementById('devis').style.display = "none";
+                                document.getElementById('plus3').style.display = "block";
+                                document.getElementById('minus3').style.display = "none";
+                            }
+
+                            function Info2(){
+                                document.getElementById('infos3').style.display = "inline-block";
+                                //document.getElementById('infos').style.float = "right";
+                            }
+
+                        </script>
+                    </div>
+                </div>
+
+
 
             <?php } else { // compte client
                 ?>

@@ -103,14 +103,14 @@ $numTotal=$num+$num2+$num3;
         <div class="container">
 
 
-            <h1 style="text-align: center; font-size: 30px;">Notifications & Historique</h1>
+            <h1 style="text-align: center; font-size: 30px;">Notifications</h1>
 
             <?php if(empty($_SESSION['user'])){ // aucun utilisateur connecté
                 ?><p style="font-size: 20px; text-align: center;">Page inaccessible !</p>
 
             <?php } else if (empty($_SESSION['mail'])) { // compte entreprise
 
-                ?><div id="notifications"><h2 style="color:red;">Notifications</h2> <?php
+                ?><div id="notifications"> <?php
                 $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
 
                 ?><h3>Messages des non-clients</h3><?php
@@ -152,137 +152,7 @@ $numTotal=$num+$num2+$num3;
 
 
                 ?></div>
-                <br/><br/><br/>
-                <div id="historiqe"><h2 style="color:red;">Historique</h2><br/><br/>
-                <div style="display: flex; float:left;">
-                    <i id="plus" class="icon major fa fa-plus" style="cursor: pointer; width: 2em; height: 2em; line-height: 2em; margin-bottom: 0;" onclick="Display()"></i>
-                    <i id="minus" class="icon major fa fa-minus" style="cursor: pointer; width: 2em; height: 2em; line-height: 2em; margin-bottom: 0; display:none;" onclick="Erase()"></i>
-                </div>
-                <h1 style="display: flex; padding-left: 30px;">Historique des messages des non-clients</h1>
-                <br/>
-                <div id="clients" style="display: none;">
-                    <?php
-
-                    $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
-
-                    $req=$bdd -> query("SELECT * FROM Contact");
-                    while($res=$req -> fetch()){
-                        echo "<strong> - ".$res['nom']." ".$res['prenom']."</strong> (".$res['departement']."), <a href='mailto:".$res['mail']."'>".$res['mail']."</a><br/>";
-                        echo "Message : ".$res['message']."<br/><br/>";
-                        echo '<br/>';
-                    }
-                    ?>
-
-                    <script>
-
-                        function Display(){
-                            document.getElementById('clients').style.display = "block";
-                            //document.getElementById('infos').style.float = "left";
-                            document.getElementById('plus').style.display = "none";
-                            document.getElementById('minus').style.display = "block";
-                        }
-
-                        function Erase(){
-                            document.getElementById('clients').style.display = "none";
-                            document.getElementById('plus').style.display = "block";
-                            document.getElementById('minus').style.display = "none";
-                        }
-
-                        function Info(){
-                            document.getElementById('infos').style.display = "inline-block";
-                            //document.getElementById('infos').style.float = "right";
-                        }
-
-                    </script>
-                </div>
-
-
-
                 <br/><br/>
-                <div style="display: flex; float:left;">
-                    <i id="plus2" class="icon major fa fa-plus" style="cursor: pointer; width: 2em; height: 2em; line-height: 2em; margin-bottom: 0;" onclick="Display2()"></i>
-                    <i id="minus2" class="icon major fa fa-minus" style="cursor: pointer; width: 2em; height: 2em; line-height: 2em; margin-bottom: 0; display:none;" onclick="Erase2()"></i>
-                </div>
-                <h1 style="display: flex; padding-left: 30px;">Historique des messages des clients</h1>
-                <br/>
-                <div id="clients2" style="display: none;">
-                    <?php
-
-                    $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
-
-                    $req=$bdd -> query("SELECT * FROM ContactBis");
-                    while($res=$req -> fetch()){
-                        echo "<strong> - ".$res['nom']." ".$res['prenom']."</strong>, <a href='mailto:".$res['mail']."'>".$res['mail']."</a><br/>";
-                        echo "Message : ".$res['message']."<br/><br/>";
-                    }
-                    ?>
-
-                    <script>
-
-                        function Display2(){
-                            document.getElementById('clients2').style.display = "block";
-                            //document.getElementById('infos').style.float = "left";
-                            document.getElementById('plus2').style.display = "none";
-                            document.getElementById('minus2').style.display = "block";
-                        }
-
-                        function Erase2(){
-                            document.getElementById('clients2').style.display = "none";
-                            document.getElementById('plus2').style.display = "block";
-                            document.getElementById('minus2').style.display = "none";
-                        }
-
-                        function Info2(){
-                            document.getElementById('infos2').style.display = "inline-block";
-                            //document.getElementById('infos').style.float = "right";
-                        }
-
-                    </script>
-                </div>
-
-
-                <br/><br/>
-                <div style="display: flex; float:left;">
-                    <i id="plus3" class="icon major fa fa-plus" style="cursor: pointer; width: 2em; height: 2em; line-height: 2em; margin-bottom: 0;" onclick="Display3()"></i>
-                    <i id="minus3" class="icon major fa fa-minus" style="cursor: pointer; width: 2em; height: 2em; line-height: 2em; margin-bottom: 0; display:none;" onclick="Erase3()"></i>
-                </div>
-                <h1 style="display: flex; padding-left: 30px;">Historique des messages des devis</h1>
-                <br/>
-                <div id="devis" style="display: none;">
-                    <?php
-
-                    $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
-
-                    $req=$bdd -> query("SELECT * FROM Devis");
-                    while($res=$req -> fetch()){
-                        echo "<strong> - ".$res['nom']." ".$res['prenom']."</strong>, <a href='mailto:".$res['mail']."'>".$res['mail']."</a><br/>";
-                        echo "Message : ".$res['message']."<br/><br/>";
-                    }
-                    ?>
-
-                    <script>
-
-                        function Display3(){
-                            document.getElementById('devis').style.display = "block";
-                            //document.getElementById('infos').style.float = "left";
-                            document.getElementById('plus3').style.display = "none";
-                            document.getElementById('minus3').style.display = "block";
-                        }
-
-                        function Erase3(){
-                            document.getElementById('devis').style.display = "none";
-                            document.getElementById('plus3').style.display = "block";
-                            document.getElementById('minus3').style.display = "none";
-                        }
-
-                        function Info2(){
-                            document.getElementById('infos3').style.display = "inline-block";
-                            //document.getElementById('infos').style.float = "right";
-                        }
-
-                    </script>
-                </div>
-                    </div>
 
 
             <?php } else { // compte client

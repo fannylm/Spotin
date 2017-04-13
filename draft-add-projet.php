@@ -49,7 +49,7 @@ $numTotal=$num+$num2+$num3;
 
     <!-- Header -->
     <div id="header">
-        <p style="text-align:right; margin-bottom: 3em; margin-right: 10px; font-size: 12px; margin-top: 0;"><a href="connexion-bis.php" style="border-bottom: solid 1px lightgray; color: darkgrey;">Admin</a></p>
+
         <!-- Logo -->
         <a id="link_logo" href="index.php" style="color: white"><img src="images/LogoSpotin.png" alt="logo" height="10%" width="10%"></a>
         <h1><a href="index.php" id="logo">Spotin' - <em>Agence audiovisuel</em></a></h1>
@@ -59,18 +59,18 @@ $numTotal=$num+$num2+$num3;
             <?php
             if(empty($_SESSION['user'])){ // aucun utilisateur connecté
                 ?><ul>
-                    <li><a href="index.php">Accueil</a></li>
+                    <li class="current"><a href="index.php">Accueil</a></li>
                     <li><a href="prestations.php">Prestations</a></li>
-                    <li class="current"><a href="projets.php">Projets</a></li>
+                    <li><a href="projets.php">Projets</a></li>
                     <li><a href="voyages.php">Voyages</a></li>
                     <li><a href="contact.php">Contact</a></li>
                     <li><a href="a-propos.php">À propos</a></li>
                     <li><a href="connexion.php" class="button">Connexion</a></li></ul><?php
             } else if (empty($_SESSION['mail'])) { // compte entreprise
                 ?><ul style="padding-left: 270px;">
-                <li><a href="index.php">Accueil</a></li>
+                <li class="current"><a href="index.php">Accueil</a></li>
                 <li><a href="prestations.php">Prestations</a></li>
-                <li class="current"><a href="projets.php">Projets</a></li>
+                <li><a href="projets.php">Projets</a></li>
                 <li><a href="voyages.php">Voyages</a></li>
                 <li><a href="contact.php">Contact</a></li>
                 <li><a href="a-propos.php">À propos</a></li>
@@ -82,9 +82,9 @@ $numTotal=$num+$num2+$num3;
             <?php
             } else { // compte client
                 ?><ul style="padding-left: 300px;">
-                <li><a href="index.php">Accueil</a></li>
+                <li class="current"><a href="index.php">Accueil</a></li>
                 <li><a href="prestations.php">Prestations</a></li>
-                <li class="current"><a href="projets.php">Projets</a></li>
+                <li><a href="projets.php">Projets</a></li>
                 <li><a href="voyages.php">Voyages</a></li>
                 <li><a href="contact.php">Contact</a></li>
                 <li><a href="a-propos.php">À propos</a></li>
@@ -99,6 +99,7 @@ $numTotal=$num+$num2+$num3;
         </nav>
 
     </div>
+
     <?php if(empty($_SESSION['user'])){
 
     } else if (empty($_SESSION['mail'])){ ?>
@@ -106,54 +107,41 @@ $numTotal=$num+$num2+$num3;
         <section class="wrapper style1">
             <div class="container">
 
-                <fieldset id="cadre" class="fieldsetform"><legend><h2 id="title" type="title">Ajouter un nouveau projet</h2></legend>
-                    <br/><br/>
-                    <form method="POST" id="projet" action="add-projet.php">
-                        <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
-                            <div class="12u">
-                                <label for="titre">Quel est le titre de ce projet ?</label>
-                                <input type="text" name="titre" id="titre">
-                            </div>
-                        </div>
-                        <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
-                            <div class="12u">
-                                <label for="description">Ajoutez une description</label>
-                                <textarea name="description" id="description" ></textarea>
-                            </div>
-                        </div><br/>
-                        <label for="mon_fichier">Ajoutez une image pour illustrer le projet (PDF et PNG uniquement | max. 10 Mo) :</label>
-                   <input type="hidden" name="MAX_FILE_SIZE" value="10240000"/>
-                   <input style="text-align: center" type="file" style="width:75%;" name="mon_fichier" id="mon_fichier"/>
-                   <br/><br/>
-                        <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
-                            <div class="12u">
-                                <label for="date">Quelle est l'année de réalisation de ce projet ?</label>
-                                <select id=date name="date" size="1">
-                                    <option value="2012">2012
-                                    <option value="2013">2013
-                                    <option value="2014">2014
-                                    <option value="2015">2015
-                                    <option value="2016">2016
-                                    <option value="2017">2017
-                                </select>
-                            </div>
-                        </div>
-                        <br/>
-                        <br/><br/>
-                    </form>
-                    <input id="submit" type="submit" class="button alt" value="Envoyer" />
+                <h2 id="title" type="title">Ajouter un nouveau projet</h2>
+                <br/><br/>
+                <form method="POST" id="projet" action="add-projet.php">
+                    <label for="titre">Quel est le titre de ce projet ?</label>
+                    <input id="titre" type="text">
+                    <br/>
+                    <label for="description">Ajoutez une description</label>
+                    <textarea name="description" id="description" ></textarea>
+                    <br/>
+                    <!--<label for="mon_fichier">Ajoutez une image pour illustrer le projet (PDF et PNG uniquement | max. 10 Mo) :</label>
+                    <input type="hidden" name="MAX_FILE_SIZE" value="10240000"/>
+                    <input type="file" style="width:75%;" name="mon_fichier" id="mon_fichier"/>
+                    <br/><br/>-->
+                    <label for="titre">Quelle est l'année de réalisation de ce projet ?</label>
+                    <select id=date name="date" size="1">
+                        <option value="2012">2012
+                        <option value="2013">2013
+                        <option value="2014">2014
+                        <option value="2015">2015
+                        <option value="2016">2016
+                        <option value="2017">2017
+                    </select>
                     <br/><br/><br/>
-                </fieldset>
+                    <input id="submitProjet" type="submit" class="button alt" value="Envoyer" />
+                </form>
                 <div id="resultat"></div>
 
                 <script>
 
-                    $('#submit').click(function() {
-                        var select = document.getElementById("date" );
-                        var date = select.options[select.selectedIndex].value;
+                    $('#submitProjet').click(function() {
                         var titre = $('#titre').val();
                         var description = $('#description').val();
-                        if (date == '' || titre == '' || description == '') {
+                        var select = document.getElementById("date" );
+                        var date = select.options[select.selectedIndex].value;
+                        if (titre == '' || description == '' || date == '') {
                             alert('Vous devez remplir tous les champs !');
                         }
                         else {
@@ -161,18 +149,17 @@ $numTotal=$num+$num2+$num3;
                                 url: 'add-project.php',
                                 type: 'POST',
                                 data : {
-                                    date: date,
                                     titre: titre,
-                                    description: description
+                                    description: description,
+                                    date: date
                                 },
                                 success: function (data) {
-                                    console.log("data="+data);
-                                    if (data = 'success') {
+                                    if (data == 'success') {
+                                        // cacher le formulaire
                                         document.getElementById('projet').style.display = "none";
-                                        document.getElementById('submit').style.display = "none";
+                                        document.getElementById('submitProjet').style.display = "none";
                                         document.getElementById('title').style.display = "none";
-                                        document.getElementById('cadre').style.display = "none";
-                                        $("#resultat").html("<p style='text-align: center'> Projet ajouté ! <br/>Vous allez être automatiquement redirigé vers la page des projets. Si cela ne fonctionne pas veuillez cliquer <a href='prestations.php'>ici</a></p>");
+                                        $("#resultat").html("<p style='text-align: center'>Projet ajouté ! <br/>Vous allez être automatiquement redirigé vers la page des voyages. Si cela ne fonctionne pas veuillez cliquer <a href='voyages.php'>ici</a></p>");
                                         function redirection(){
                                             self.location.href="projets.php"
                                         }
@@ -180,10 +167,9 @@ $numTotal=$num+$num2+$num3;
                                     }
                                     else {
                                         document.getElementById('projet').style.display = "none";
-                                        document.getElementById('submit').style.display = "none";
+                                        document.getElementById('submitProjet').style.display = "none";
                                         document.getElementById('title').style.display = "none";
-                                        document.getElementById('cadre').style.display = "none";
-                                        $("#resultat").html("<p style='text-align: center'> Erreur lors de l'ajout du projet.. Veuillez essayer à nouveau à partir d'<a href='projets.php'>ici</a>.</p>");
+                                        $("#resultat").html("<p style='text-align: center'> Erreur lors de l'ajout du projet... Veuillez essayer à nouveau à partir d'<a href='projets.php'>ici</a>.</p>");
                                     }
                                 }
                             });
@@ -194,10 +180,9 @@ $numTotal=$num+$num2+$num3;
 
             </div>
         </section>
-    <?php } else {
-    } ?>
+    <?php } else { }
 
-    <?php require("footer.html"); ?>
+    require("footer.html"); ?>
 
 </div>
 

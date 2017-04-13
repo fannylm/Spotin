@@ -49,6 +49,7 @@ $numTotal=$num+$num2+$num3;
 
     <!-- Header -->
     <div id="header">
+        <p style="text-align:right; margin-bottom: 3em; margin-right: 10px; font-size: 12px; margin-top: 0;"><a href="connexion-bis.php" style="border-bottom: solid 1px lightgray; color: darkgrey;">Admin</a></p>
 
         <!-- Logo -->
         <a id="link_logo" href="index.php" style="color: white"><img src="images/LogoSpotin.png" alt="logo" height="10%" width="10%"></a>
@@ -59,19 +60,19 @@ $numTotal=$num+$num2+$num3;
             <?php
             if(empty($_SESSION['user'])){ // aucun utilisateur connecté
                 ?><ul>
-                    <li class="current"><a href="index.php">Accueil</a></li>
+                    <li><a href="index.php">Accueil</a></li>
                     <li><a href="prestations.php">Prestations</a></li>
                     <li><a href="projets.php">Projets</a></li>
-                    <li><a href="voyages.php">Voyages</a></li>
+                    <li class="current"><a href="voyages.php">Voyages</a></li>
                     <li><a href="contact.php">Contact</a></li>
                     <li><a href="a-propos.php">À propos</a></li>
                     <li><a href="connexion.php" class="button">Connexion</a></li></ul><?php
             } else if (empty($_SESSION['mail'])) { // compte entreprise
                 ?><ul style="padding-left: 270px;">
-                <li class="current"><a href="index.php">Accueil</a></li>
+                <li><a href="index.php">Accueil</a></li>
                 <li><a href="prestations.php">Prestations</a></li>
                 <li><a href="projets.php">Projets</a></li>
-                <li><a href="voyages.php">Voyages</a></li>
+                <li class="current"><a href="voyages.php">Voyages</a></li>
                 <li><a href="contact.php">Contact</a></li>
                 <li><a href="a-propos.php">À propos</a></li>
                 <li><a href="connexion.php?deco=true" class="button">Deconnexion</a></li>
@@ -82,10 +83,10 @@ $numTotal=$num+$num2+$num3;
             <?php
             } else { // compte client
                 ?><ul style="padding-left: 300px;">
-                <li class="current"><a href="index.php">Accueil</a></li>
+                <li><a href="index.php">Accueil</a></li>
                 <li><a href="prestations.php">Prestations</a></li>
                 <li><a href="projets.php">Projets</a></li>
-                <li><a href="voyages.php">Voyages</a></li>
+                <li class="current"><a href="voyages.php">Voyages</a></li>
                 <li><a href="contact.php">Contact</a></li>
                 <li><a href="a-propos.php">À propos</a></li>
                 <li><a href="compte.php">Mon compte</a></li>
@@ -106,9 +107,11 @@ $numTotal=$num+$num2+$num3;
     <section class="wrapper style1">
         <div class="container">
 
-            <h2 id="title" type="title">Supprimer un voyage</h2>
+            <fieldset id="cadre" class="fieldsetform"><legend><h2 id="title" type="title">Supprimer un voyage</h2></legend>
             <br/>
             <form method="POST" id="voyage" action="delete-voyage.php">
+                <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
+                    <div class="12u">
                 <label for="lieu">Quel voyage souhaitez-vous supprimer ?</label>
                 <select name="lieu" id="lieu">
                         <?php
@@ -119,9 +122,13 @@ $numTotal=$num+$num2+$num3;
                         }
                         ?>
                 </select>
+                        </div>
+                    </div>
                 <br/><br/>
             </form>
             <input id="submit" type="submit" class="button alt" value="Ok" />
+                <br/><br/>
+                </fieldset>
             <div id="resultat"></div>
 
             <script>

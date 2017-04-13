@@ -10,7 +10,9 @@ $tel = $_POST['tel'];
 $email = $_POST['email'];
 $message = $_POST['message'];
 
-$bdd->exec("INSERT INTO Contact (nom, prenom, mail, telephone, message, statut) VALUES ('$nom','$prenom','$email', '$tel','$message','A traiter')");
+$new_message = str_replace("'", "''", "$message");
+
+$bdd->exec("INSERT INTO Contact (nom, prenom, mail, telephone, message, statut) VALUES ('$nom','$prenom','$email', '$tel','$new_message','A traiter')");
 
 if($bdd) {
     echo 'success';

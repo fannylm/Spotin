@@ -248,14 +248,16 @@
 
          $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
 
-        $req=$bdd -> query("SELECT * FROM Voyage WHERE destination='Londres'");
-        $i=$req -> rowCount();
+        $req=$bdd -> query("SELECT * FROM Voyage");
         while($res=$req -> fetch()){
             //echo "<img width='30%' src='".$res['lien']."'>";
+        for($i=1;$i<=$res['nbImages'];$i++){
             echo "<figure tabindex=".$i." contenteditable='true'>
-                    <img width='100%' src='".$res['lien']."' alt='jump, matey' contenteditable='false' />
-                    <figcaption contenteditable='false'>".$res['description']."</figcaption>
+                    <img width='100%' src='images/Voyages/".$res['lieu']."/".$i.".jpg' alt='jump, matey' contenteditable='false' />
+                    <figcaption contenteditable='false'></figcaption>
                     </figure>";
+        }
+
         }
         ?>
         </div>

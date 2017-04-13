@@ -2079,8 +2079,13 @@
 
 			.image.featured img {
 				display: block;
-				width: 60%;
+				width: 100%;
 			}
+
+            .image.featured2 img {
+                display: flex;
+                width: 50%;
+            }
 
 /* Icon */
 
@@ -3792,5 +3797,15 @@ body.is-loading #sidebar nav ul li {
 
 textarea{
     resize:none;
+}
+
+
+fieldset.fieldsetform {
+    border: 1px lightgrey solid;
+    border-radius: 10px;
+    text-align: center;
+    width: 50em;
+    margin-right: auto;
+    margin-left: auto;
 }
 

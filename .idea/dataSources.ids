@@ -139,8 +139,21 @@
       <column name="birthday" sqlType="DATE" precision="10" scale="0" nullable="false" jdbcType="91"/>
       <column name="telephone" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="fk_customer_id" table="Commentaires" schema="" catalog="Spotin" columns="idClient"/>
       <exported-key name="fk_client_id" table="ContactBis" schema="" catalog="Spotin" columns="idClient"/>
       <exported-key name="devis_ibfk_1" table="Devis" schema="" catalog="Spotin" columns="idExpediteur"/>
+    </table>
+    <table name="Commentaires" schema="" catalog="Spotin" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="idClient" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="date" sqlType="DATE" precision="10" scale="0" nullable="false" jdbcType="91"/>
+      <column name="idProjet" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="commentaire" sqlType="VARCHAR" precision="800" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_customer_id" columns="idClient" ref-table="Client" ref-schema="" ref-catalog="Spotin" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_projet_id" columns="idProjet" ref-table="Projet" ref-schema="" ref-catalog="Spotin" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_customer_id" unique="false" columns="idClient"/>
+      <index name="fk_projet_id" unique="false" columns="idProjet"/>
     </table>
     <table name="Contact" schema="" catalog="Spotin" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -196,10 +209,11 @@
       <column name="image" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
       <column name="anneeRealisation" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="fk_projet_id" table="Commentaires" schema="" catalog="Spotin" columns="idProjet"/>
     </table>
     <table name="Propos" schema="" catalog="Spotin" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="description" sqlType="VARCHAR" precision="500" scale="0" nullable="false" jdbcType="12"/>
+      <column name="description" sqlType="VARCHAR" precision="5000" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
     </table>
     <table name="Voyage" schema="" catalog="Spotin" type="TABLE">

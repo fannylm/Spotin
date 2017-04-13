@@ -146,7 +146,7 @@
                                     <li><a href="compte.php">Mon compte</a></li>
                                     <li><a href="connexion.php?deco=true" class="button">Deconnexion</a></li>
 
-                                    <li class="cercle"><a style="color: #ffffff; font-size: 15px; padding: 0; margin-left: 30px">Connecté en tant que <?php echo $_SESSION['prenom']; echo " "; echo $_SESSION['nom'] ?></a></li></ul>
+                                    <li class="cercle"><a style="color: #ffffff; font-size: 15px; padding: 0;">Connecté en tant que <?php echo $_SESSION['prenom']; echo " "; echo $_SESSION['nom'] ?></a></li></ul>
 
                                     <?php
                                 }

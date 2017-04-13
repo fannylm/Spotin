@@ -142,33 +142,68 @@ $numTotal=$num+$num2+$num3;
                             <?php
                             if(empty($_SESSION['user'])){ // aucun utilisateur connecté
 
-                            } else if (empty($_SESSION['mail'])) { // compte entreprise
-                                ?><a style="padding:0" href="add-projet.php" class="button">Nouveau projet</a>
-                                <a style="padding:0" href="update-projet.php" class="button">Modifier un projet</a>
-                                <a style="padding:0" href="delete-projet.php" class="button">Supprimer un projet</a>
-                                <br/><br/><?php
-                            } else { // compte client
+                                $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
 
-                            }
-                            ?>
-
-
-
-                            <!-- Boucle php permettant d'afficher l'ensemble des projets les uns à la suite des autres -->
-                            <?php
-
-                            $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
-
-                            $req=$bdd -> query("SELECT * FROM Projet");
-                            while($res=$req -> fetch()){
-                                echo"<div id=".$res['titre']."><h3>".$res['titre']."</h3>
+                                $req=$bdd -> query("SELECT * FROM Projet");
+                                while($res=$req -> fetch()){
+                                    echo"<div id=".$res['titre']."><h3>".$res['titre']."</h3>
                                     <span class='image featured'><img src=".$res['image']."/></span>
                                     <p><strong>Année de réalisation : </strong>".$res['anneeRealisation']."</p>
                                     <p><strong>Description</strong><br/>
                                     ".$res['description']."</p></div>";
-                            }
+                                }
 
+                            } else if (empty($_SESSION['mail'])) { // compte entreprise
+                                ?><a style="padding:0" href="add-projet.php" class="button">Nouveau projet</a>
+                                <a style="padding:0" href="update-projet.php" class="button">Modifier un projet</a>
+                                <a style="padding:0" href="delete-projet.php" class="button">Supprimer un projet</a>
+                                <br/><br/>
+                            <?php
+
+                                $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
+
+                                $req=$bdd -> query("SELECT * FROM Projet");
+                                while($res=$req -> fetch()){
+                                    echo"<div id=".$res['titre']."><h3>".$res['titre']."</h3>
+                                    <span class='image featured'><img src=".$res['image']."/></span>
+                                    <p><strong>Année de réalisation : </strong>".$res['anneeRealisation']."</p>
+                                    <p><strong>Description</strong><br/>
+                                    ".$res['description']."</p></div>";
+                                }
+
+
+                            } else { // compte client
+
+                                // Boucle php permettant d'afficher l'ensemble des projets les uns à la suite des autres
+
+                                $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
+
+                                $req=$bdd -> query("SELECT * FROM Projet");
+                                while($res=$req -> fetch()){
+                                    echo"<div id=".$res['titre']."><h3>".$res['titre']."</h3>
+                                    <span class='image featured'><img src=".$res['image']."/></span>
+                                    <a href='projet.php?id_projet=".$res['id']."'><i>En savoir plus sur ".$res['titre']."</i></a>
+                                    </div><br/><br/>";
+                                } ?>
+
+                                <!-- <div id=".$res['id'].">
+                                    <i style='color:purple' id='postercom' onclick='Display()'>Poster un commentaire</i><br/>
+                                    <label style='display:none; color:purple' for='commentaire' id='labelcom'>Votre commentaire</label><br/>
+                                    <textarea style='display:none' name='commentaire' id='commentaire' rows='4'></textarea><br/>
+                                    <input style='display:none' id='submitcom' class='button alt' value='Ok'/></div><br/><br/> -->
+
+
+                          <?php }
                             ?>
+
+                            <script>
+                                function Display(){
+                                    document.getElementById('commentaire').style.display = "block";
+                                    document.getElementById('labelcom').style.display = "block";
+                                    document.getElementById('submitcom').style.display = "block";
+                                    document.getElementById('postercom').style.display = "none";
+                                }
+                            </script>
 
                         </article>
 

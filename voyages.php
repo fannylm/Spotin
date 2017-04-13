@@ -33,6 +33,8 @@
 
 </head>
 
+
+
 <?php
 
 $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
@@ -159,7 +161,11 @@ $numTotal=$num+$num2+$num3;
                             while($res=$req -> fetch()){
                                 echo "<div id=" . $res['lieu'] . "><h3>" . $res['lieu'] . "</h3>";
                                     for($i=1;$i<=$res['nbImages'];$i++){
-                                        echo "<span class='image featured'><img src='images/Voyages/".$res['lieu']."/".$i.".jpg'/></span></div>";
+                                        //echo "<span class='image featured'><img src='images/Voyages/".$res['lieu']."/".$i.".jpg'/></span></div>";
+                                        echo "<figure tabindex=".$i." contenteditable='true'>
+                                                <img style='padding-bottom:30px;' width=100%; src='images/Voyages/".$res['lieu']."/".$i.".jpg' alt='jump, matey' contenteditable='false' />
+                                                <figcaption contenteditable='false'></figcaption>
+                                                </figure>";
                                     };
                             }
 

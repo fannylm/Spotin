@@ -27,6 +27,22 @@
 
 </head>
 
+<?php
+
+$bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
+
+$req1=$bdd -> query("SELECT * FROM Contact WHERE statut='A traiter'");
+$num=$req1 -> rowCount();
+
+$req2=$bdd -> query("SELECT * FROM ContactBis, Client WHERE ContactBis.statut='A traiter' AND ContactBis.idClient=Client.id");
+$num2=$req2 -> rowCount();
+
+$req3=$bdd -> query("SELECT * FROM Devis, Client, Prestation WHERE Devis.statut='A traiter' AND Devis.idExpediteur=Client.id AND Devis.idPrestation=Prestation.id");
+$num3=$req3 -> rowCount();
+
+$numTotal=$num+$num2+$num3;
+
+?>
 
 <body>
 <div id="page-wrapper">
@@ -102,14 +118,14 @@
                 <br/>
                 <form action="update-propos.php" method="POST" id="formCompte" >
                     <div id="description"><?php echo $res['description']; ?><i id="pencil" class="fa fa-pencil" aria-hidden="true" onclick="Update()"></i></div>
-                    <div id="modification" style="display: none;"><input type="text" name="description" id="inputCompte" value="<?php echo $res['description'];  ?>"><input id="submitCompte" type="submit" class="button alt" value="Ok" /></div>
+                    <div id="modification" style="display: none;"><textarea style="width: 60%; height: 300px;" type="text" name="description" id="description"><?php echo $res['description'];?></textarea><br/><input style="height: 30px;" id="submitCompte" type="submit" class="button alt" value="Ok" /></div>
                 </form>
                 <br/><br/>
 
                 <script>
                     function Update(){
                         document.getElementById('description').style.display = "none";
-                        document.getElementById('modification').style.display = "flex";
+                        document.getElementById('modification').style.display = "block";
                     }
                 </script>
             <?php

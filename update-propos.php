@@ -7,7 +7,9 @@ $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root'
 
 $description = $_POST['description'];
 
-$bdd->exec("UPDATE Propos SET description = '$description' WHERE id = '1'");
+$new_description = str_replace("'", "''", "$description");
+
+$bdd->exec("UPDATE Propos SET description = '$new_description' WHERE id = '1'");
 
 if($bdd) {
     echo 'Chargement...';

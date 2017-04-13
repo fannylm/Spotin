@@ -72,9 +72,8 @@ if($_GET['deco']==true) {
                     <?php
                     if(!isset($_POST['pseudo'])) {
                         ?>
-                        <header>
-                            <h2 id="titre" style="text-align: center">Connexion</h2>
-                        </header>
+                        <fieldset class="fieldsetform"><legend><h2 id="titre" style="text-align: center">Connexion</h2></legend>
+                        <br/><br/>
                         <p id="inscription" style="text-align: center">Pas encore inscrit ? Inscrivez-vous vite <a href="inscription.php">ici</a></p>
                         <form name="mail" style="visibility: visible" action="connexion.php" method="POST">
                             <table id="connexion" class="connexion">
@@ -117,15 +116,14 @@ if($_GET['deco']==true) {
                                     </td>
                                 </tr>
                             </table>
-                            <br/>
-
+                            <p style="text-align: center;"><a href="mdp-oublie.php" style="font-size: 16px;"><i>Mot de passe oublié ?</i></a></p>
                             <p style="text-align: center"><input id="submit" class="button alt" value="Envoyer"/></p>
-                            <br/><br/>
-                        </form>
 
+                        </form>
+                        </fieldset>
                     <?php } ?>
                     <br/>
-                    <br/>"
+                    <br/>
                 </article>
                 <div id="resultat"></div>
             </div>

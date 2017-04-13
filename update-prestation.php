@@ -49,7 +49,7 @@ $numTotal=$num+$num2+$num3;
 
     <!-- Header -->
     <div id="header">
-
+        <p style="text-align:right; margin-bottom: 3em; margin-right: 10px; font-size: 12px; margin-top: 0;"><a href="connexion-bis.php" style="border-bottom: solid 1px lightgray; color: darkgrey;">Admin</a></p>
         <!-- Logo -->
         <a id="link_logo" href="index.php" style="color: white"><img src="images/LogoSpotin.png" alt="logo" height="10%" width="10%"></a>
         <h1><a href="index.php" id="logo">Spotin' - <em>Agence audiovisuel</em></a></h1>
@@ -59,8 +59,8 @@ $numTotal=$num+$num2+$num3;
             <?php
             if(empty($_SESSION['user'])){ // aucun utilisateur connecté
                 ?><ul>
-                    <li class="current"><a href="index.php">Accueil</a></li>
-                    <li><a href="prestations.php">Prestations</a></li>
+                    <li><a href="index.php">Accueil</a></li>
+                    <li class="current"><a href="prestations.php">Prestations</a></li>
                     <li><a href="projets.php">Projets</a></li>
                     <li><a href="voyages.php">Voyages</a></li>
                     <li><a href="contact.php">Contact</a></li>
@@ -68,8 +68,8 @@ $numTotal=$num+$num2+$num3;
                     <li><a href="connexion.php" class="button">Connexion</a></li></ul><?php
             } else if (empty($_SESSION['mail'])) { // compte entreprise
                 ?><ul style="padding-left: 270px;">
-                <li class="current"><a href="index.php">Accueil</a></li>
-                <li><a href="prestations.php">Prestations</a></li>
+                <li><a href="index.php">Accueil</a></li>
+                <li class="current"><a href="prestations.php">Prestations</a></li>
                 <li><a href="projets.php">Projets</a></li>
                 <li><a href="voyages.php">Voyages</a></li>
                 <li><a href="contact.php">Contact</a></li>
@@ -82,8 +82,8 @@ $numTotal=$num+$num2+$num3;
             <?php
             } else { // compte client
                 ?><ul style="padding-left: 300px;">
-                <li class="current"><a href="index.php">Accueil</a></li>
-                <li><a href="prestations.php">Prestations</a></li>
+                <li><a href="index.php">Accueil</a></li>
+                <li class="current"><a href="prestations.php">Prestations</a></li>
                 <li><a href="projets.php">Projets</a></li>
                 <li><a href="voyages.php">Voyages</a></li>
                 <li><a href="contact.php">Contact</a></li>
@@ -106,9 +106,11 @@ $numTotal=$num+$num2+$num3;
     <section class="wrapper style1">
         <div class="container">
 
-            <h2 id="title" type="title">Modifier une prestation</h2>
+            <fieldset id="cadre" class="fieldsetform"><legend><h2 id="title" type="title">Modifier une prestation</h2></legend>
             <br/><br/>
             <form method="POST" id="prestation" action="update-prestation.php">
+                <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
+                    <div class="12u">
                 <label for="id">Quelle prestation souhaitez-vous modifier ?</label>
                 <select name="id" id="id">
                     <optgroup label="Photographique">
@@ -116,7 +118,7 @@ $numTotal=$num+$num2+$num3;
                         $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
                         $req=$bdd -> query("SELECT * FROM Prestation WHERE type='photo'");
                         while($res=$req -> fetch()){
-                            echo "<option value=".$res['id'].">".$res['nom']."</option><br/>";
+                            echo "<option value=".$res['id'].">".$res['prestation']."</option><br/>";
                         }
                         ?>
                     </optgroup>
@@ -125,17 +127,25 @@ $numTotal=$num+$num2+$num3;
                         $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
                         $req=$bdd -> query("SELECT * FROM Prestation WHERE type='video'");
                         while($res=$req -> fetch()){
-                            echo "<option value=".$res['id'].">".$res['nom']."</option><br/>";
+                            echo "<option value=".$res['id'].">".$res['prestation']."</option><br/>";
                         }
                         ?>
                     </optgroup>
                 </select>
-                <br/><br/><br/>
-                <label for="nom">Quel nom souhaitez-vous mettre à la place ?</label>
-                <input id="nom" type="text">
+                        </div>
+                    </div>
+                <br/>
+                <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
+                    <div class="12u">
+                        <label for="nom">Quel nom souhaitez-vous mettre à la place ?</label>
+                        <input type="text" name="nom" id="nom">
+                    </div>
+                </div>
                 <br/><br/>
             </form>
             <input id="submit" type="submit" class="button alt" value="Envoyer" />
+                <br/><br/><br/>
+                </fieldset>
             <div id="resultat"></div>
 
             <script>
@@ -162,6 +172,7 @@ $numTotal=$num+$num2+$num3;
                                 document.getElementById('prestation').style.display = "none";
                                 document.getElementById('submit').style.display = "none";
                                 document.getElementById('title').style.display = "none";
+                                document.getElementById('cadre').style.display = "none";
                                 $("#resultat").html("<p style='text-align: center'> Prestation modifiée ! <br/>Vous allez être automatiquement redirigé vers la page des prestations. Si cela ne fonctionne pas veuillez cliquer <a href='prestations.php'>ici</a></p>");
                                 function redirection(){
                                     self.location.href="prestations.php"
@@ -172,6 +183,7 @@ $numTotal=$num+$num2+$num3;
                                 document.getElementById('prestation').style.display = "none";
                                 document.getElementById('submit').style.display = "none";
                                 document.getElementById('title').style.display = "none";
+                                document.getElementById('cadre').style.display = "none";
                                 $("#resultat").html("<p style='text-align: center'> Erreur lors de la modification de la prestation... Veuillez essayer à nouveau à partir d'<a href='prestations.php'>ici</a>.</p>");
                             }
                         }

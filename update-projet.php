@@ -50,7 +50,7 @@ $numTotal=$num+$num2+$num3;
 
     <!-- Header -->
     <div id="header">
-
+        <p style="text-align:right; margin-bottom: 3em; margin-right: 10px; font-size: 12px; margin-top: 0;"><a href="connexion-bis.php" style="border-bottom: solid 1px lightgray; color: darkgrey;">Admin</a></p>
         <!-- Logo -->
         <a id="link_logo" href="index.php" style="color: white"><img src="images/LogoSpotin.png" alt="logo" height="10%" width="10%"></a>
         <h1><a href="index.php" id="logo">Spotin' - <em>Agence audiovisuel</em></a></h1>
@@ -60,18 +60,18 @@ $numTotal=$num+$num2+$num3;
             <?php
             if(empty($_SESSION['user'])){ // aucun utilisateur connecté
                 ?><ul>
-                    <li class="current"><a href="index.php">Accueil</a></li>
+                    <li><a href="index.php">Accueil</a></li>
                     <li><a href="prestations.php">Prestations</a></li>
-                    <li><a href="projets.php">Projets</a></li>
+                    <li class="current"><a href="projets.php">Projets</a></li>
                     <li><a href="voyages.php">Voyages</a></li>
                     <li><a href="contact.php">Contact</a></li>
                     <li><a href="a-propos.php">À propos</a></li>
                     <li><a href="connexion.php" class="button">Connexion</a></li></ul><?php
             } else if (empty($_SESSION['mail'])) { // compte entreprise
                 ?><ul style="padding-left: 270px;">
-                <li class="current"><a href="index.php">Accueil</a></li>
+                <li><a href="index.php">Accueil</a></li>
                 <li><a href="prestations.php">Prestations</a></li>
-                <li><a href="projets.php">Projets</a></li>
+                <li class="current"><a href="projets.php">Projets</a></li>
                 <li><a href="voyages.php">Voyages</a></li>
                 <li><a href="contact.php">Contact</a></li>
                 <li><a href="a-propos.php">À propos</a></li>
@@ -83,9 +83,9 @@ $numTotal=$num+$num2+$num3;
             <?php
             } else { // compte client
                 ?><ul style="padding-left: 300px;">
-                <li class="current"><a href="index.php">Accueil</a></li>
+                <li><a href="index.php">Accueil</a></li>
                 <li><a href="prestations.php">Prestations</a></li>
-                <li><a href="projets.php">Projets</a></li>
+                <li class="current"><a href="projets.php">Projets</a></li>
                 <li><a href="voyages.php">Voyages</a></li>
                 <li><a href="contact.php">Contact</a></li>
                 <li><a href="a-propos.php">À propos</a></li>
@@ -107,9 +107,11 @@ $numTotal=$num+$num2+$num3;
     <section class="wrapper style1">
         <div class="container">
 
-            <h2 id="title" type="title">Modifier un projet</h2>
+            <fieldset id="cadre" class="fieldsetform"><legend><h2 id="title" type="title">Modifier un projet</h2></legend>
             <br/><br/>
             <form method="POST" id="projet" action="update-project.php">
+                <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
+                    <div class="12u">
                 <label for="id">Quel projet souhaitez-vous modifier ?</label>
                 <select name="id" id="id">
                         <?php
@@ -120,6 +122,8 @@ $numTotal=$num+$num2+$num3;
                         }
                         ?>
                 </select>
+                        </div>
+                    </div>
                 <br/><br/>
                 <!--<label for="type">Que souhaitez-vous modifier ?</label>
                 <select name="type" id="type">
@@ -128,14 +132,24 @@ $numTotal=$num+$num2+$num3;
                     <option value="tout">Les deux</option>
                 </select>
                 <br/><br/>-->
-                <label for="titre" id="labelTitre" /*style="display: none"*/>Quel titre souhaitez-vous mettre ?</label>
-                <input id="titre" type="text" /*style="display: none"*/>
+                <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
+                    <div class="12u">
+                <label for="titre" id="labelTitre">Quel titre souhaitez-vous mettre ?</label>
+                <input id="titre" type="text">
+                        </div>
+                    </div>
                 <br/>
-                <label for="description" /*style="display: none"*/>Quelle description souhaitez-vous mettre ?</label>
-                <textarea name="description" id="description" /*style="display: none"*/></textarea>
+                <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
+                    <div class="12u">
+                <label for="description">Quelle description souhaitez-vous mettre ?</label>
+                <textarea name="description" id="description"></textarea>
+                        </div>
+                    </div>
                 <br/><br/>
             </form>
             <input id="submit" type="submit" class="button alt" value="Envoyer" />
+                <br/><br/>
+                </fieldset>
             <div id="resultat"></div>
 
             <script>
@@ -166,6 +180,7 @@ $numTotal=$num+$num2+$num3;
                                     document.getElementById('projet').style.display = "none";
                                     document.getElementById('submit').style.display = "none";
                                     document.getElementById('title').style.display = "none";
+                                    document.getElementById('cadre').style.display = "none";
                                     $("#resultat").html("<p style='text-align: center'> Projet correctement modifié ! <br/>Vous allez être automatiquement redirigé vers la page des prestations. Si cela ne fonctionne pas veuillez cliquer <a href='prestations.php'>ici</a></p>");
                                     function redirection(){
                                         self.location.href="projets.php"
@@ -176,6 +191,7 @@ $numTotal=$num+$num2+$num3;
                                     document.getElementById('prestation').style.display = "none";
                                     document.getElementById('submit').style.display = "none";
                                     document.getElementById('title').style.display = "none";
+                                    document.getElementById('cadre').style.display = "none";
                                     $("#resultat").html("<p style='text-align: center'> Erreur lors de la modification du projet... Veuillez essayer à nouveau à partir d'<a href='projets.php'>ici</a>.</p>");
                                 }
                             }
