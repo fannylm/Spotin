@@ -150,7 +150,7 @@ if($_GET['deco']==true) {
 
                     <?php } ?>
                     <br/>
-                    <br/>"
+                    <br/>
                 </article>
                 <div id="resultat"></div>
             </div>

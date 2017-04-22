@@ -13,11 +13,17 @@ $commentaire = $_POST['commentaire'];
 $bdd->exec("INSERT INTO Commentaires (idClient, date, idProjet, commentaire) VALUES ('$client','$date','$projet','$commentaire')");
 
 if($bdd) {
-    echo 'success';
-    echo 'Chargement...';
-}
+    //echo 'success';
+    echo 'Chargement...';?>
+    <script>
+        function redirection(){
+            self.location.href="projet.php?id_projet=<?php echo $projet ?>"
+        }
+        setTimeout(redirection,1);
+    </script>
+<?php }
 else{
-    echo 'failed';
+    //echo 'failed';
     echo "Erreur dans l'ajout du commentaire...";
 }
 

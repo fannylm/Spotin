@@ -108,7 +108,7 @@ $numTotal=$num+$num2+$num3;
 
                 <fieldset id="cadre" class="fieldsetform"><legend><h2 id="title" type="title">Ajouter un nouveau projet</h2></legend>
                     <br/><br/>
-                    <form method="POST" id="projet" action="add-projet.php">
+                    <form method="POST" id="projet" action="add-project.php" enctype="multipart/form-data">
                         <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
                             <div class="12u">
                                 <label for="titre">Quel est le titre de ce projet ?</label>
@@ -122,7 +122,7 @@ $numTotal=$num+$num2+$num3;
                             </div>
                         </div><br/>
                         <label for="mon_fichier">Ajoutez une image pour illustrer le projet (PDF et PNG uniquement | max. 10 Mo) :</label>
-                   <input type="hidden" name="MAX_FILE_SIZE" value="10240000"/>
+                   <input type="hidden" name="MAX_FILE_SIZE" value="102400000000"/>
                    <input style="text-align: center" type="file" style="width:75%;" name="mon_fichier" id="mon_fichier"/>
                    <br/><br/>
                         <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
@@ -140,19 +140,20 @@ $numTotal=$num+$num2+$num3;
                         </div>
                         <br/>
                         <br/><br/>
-                    </form>
                     <input id="submit" type="submit" class="button alt" value="Envoyer" />
+                    </form>
                     <br/><br/><br/>
                 </fieldset>
                 <div id="resultat"></div>
 
                 <script>
-
+/*
                     $('#submit').click(function() {
                         var select = document.getElementById("date" );
                         var date = select.options[select.selectedIndex].value;
                         var titre = $('#titre').val();
                         var description = $('#description').val();
+                        var image = $('mon_fichier').val();
                         if (date == '' || titre == '' || description == '') {
                             alert('Vous devez remplir tous les champs !');
                         }
@@ -163,7 +164,8 @@ $numTotal=$num+$num2+$num3;
                                 data : {
                                     date: date,
                                     titre: titre,
-                                    description: description
+                                    description: description,
+                                    image: image
                                 },
                                 success: function (data) {
                                     console.log("data="+data);
@@ -189,7 +191,7 @@ $numTotal=$num+$num2+$num3;
                             });
                         }
                     });
-
+*/
                 </script>
 
             </div>

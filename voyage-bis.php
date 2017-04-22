@@ -1,25 +1,4 @@
-<?php
-
-session_start();
-
-$bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
-
-$lieu = $_POST['lieu'];
-
-$bdd->exec("DELETE FROM Voyage WHERE Voyage.lieu = '$lieu'");
-
-if($bdd) {
-    echo 'success';
-}
-else{
-    echo 'failed';
-}
-
-?>
-
-
-
-<?php require 'connect.php'; session_start(); ?>
+<?php session_start(); ?>
 <!DOCTYPE HTML>
 <!--
 	Arcana by HTML5 UP
@@ -28,10 +7,15 @@ else{
 -->
 <html>
 <head>
-    <title>Spotin' - Prestations</title>
+    <title>Spotin' - Voyages</title>
     <link rel="icon" type="image/png" href="images/icon.png" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
     <link rel="stylesheet" href="assets/css/main.css" />
     <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -44,9 +28,12 @@ else{
     <script src="assets/js/util.js"></script>
     <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
     <script src="assets/js/main.js"></script>
-
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
 
 </head>
+
+
 
 <?php
 
@@ -71,7 +58,6 @@ $numTotal=$num+$num2+$num3;
     <!-- Header -->
     <div id="header">
         <p style="text-align:right; margin-bottom: 3em; margin-right: 10px; font-size: 12px; margin-top: 0;"><a href="connexion-bis.php" style="border-bottom: solid 1px lightgray; color: darkgrey;">Admin</a></p>
-
         <!-- Logo -->
         <a id="link_logo" href="index.php" style="color: white"><img src="images/LogoSpotin.png" alt="logo" height="10%" width="10%"></a>
         <h1><a href="index.php" id="logo">Spotin' - <em>Agence audiovisuel</em></a></h1>
@@ -112,99 +98,109 @@ $numTotal=$num+$num2+$num3;
                 <li><a href="a-propos.php">À propos</a></li>
                 <li><a href="compte.php">Mon compte</a></li>
                 <li><a href="connexion.php?deco=true" class="button">Deconnexion</a></li>
-
-                <li class="cercle"><a style="color: #ffffff; font-size: 15px; padding: 0; margin-left: 30px">Connecté en tant que <?php echo $_SESSION['prenom']; echo " "; echo $_SESSION['nom'] ?></a></li></ul>
-
+                <li><a style="color: #ffffff; font-size: 15px; padding: 0; margin-left: 30px">Connecté en tant que <?php echo $_SESSION['prenom']; echo " "; echo $_SESSION['nom'] ?></a></li></ul>
             <?php
             }
             ?>
         </nav>
 
     </div>
-    <?php if(empty($_SESSION['user'])){
 
-    } else if (empty($_SESSION['mail'])){ ?>
-        <!-- Main -->
-        <section class="wrapper style1">
-            <div class="container">
+    <!-- Main -->
+    <section class="wrapper style1">
+        <div class="container">
+            <div class="row 200%">
+                <div class="4u 12u(narrower)">
+                    <!-- Sidebar -->
+                    <section id="sidebar">
+                        <div class="inner">
+                            <nav>
+                                <ul>
 
-                <fieldset id="cadre" class="fieldsetform"><legend><h2 id="title" type="title">Supprimer un voyage</h2></legend>
-                    <br/>
-                    <form method="POST" id="voyage" action="delete-voyage.php">
-                        <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
-                            <div class="12u">
-                                <label for="lieu">Quel voyage souhaitez-vous supprimer ?</label>
-                                <select name="lieu" id="lieu">
+                                    <!-- Boucle php permettant d'afficher toutes les destinations dans la sidebar -->
                                     <?php
+
                                     $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
+
                                     $req=$bdd -> query("SELECT * FROM Voyage");
                                     while($res=$req -> fetch()){
-                                        echo "<option value=".$res['lieu'].">".$res['lieu']."</option><br/>";
+                                        ?><li><a href="#<?php echo $res['lieu'] ?>"><?php echo $res['lieu'] ?></a></li><?php
                                     }
+
                                     ?>
-                                </select>
-                            </div>
+                                </ul>
+                            </nav>
                         </div>
-                        <br/><br/>
-                    </form>
-                    <input id="submit" type="submit" class="button alt" value="Ok" />
-                    <br/><br/>
-                </fieldset>
-                <div id="resultat"></div>
+                    </section>
 
-                <script>
+                </div>
+                <div class="8u  12u(narrower) important(narrower)">
+                    <div id="content">
 
-                    $('#submit').click(function() {
-                        var select = document.getElementById("lieu" );
-                        var lieu = select.options[select.selectedIndex].value;
-                        var alert = confirm("Êtes-vous sûr de vouloir supprimer ce voyage ?");
-                        if(alert) {
-                            $.ajax({
-                                url: 'delete-trip.php',
-                                type: 'POST',
-                                data : {
-                                    lieu: lieu
-                                },
-                                success: function (data) {
-                                    console.log(data);
-                                    if (data == 'success') {
-                                        // cacher le formulaire
-                                        document.getElementById('voyage').style.display = "none";
-                                        document.getElementById('submit').style.display = "none";
-                                        document.getElementById('title').style.display = "none";
-                                        $("#resultat").html("<p style='text-align: center'> Voyage correctement supprimé !<br/>Vous allez être automatiquement redirigé vers la page des voyages. Si cela ne fonctionne pas veuillez cliquer <a href='voyages.php'>ici</a></p>");
-                                        function redirection(){
-                                            self.location.href="voyages.php"
-                                        }
-                                        setTimeout(redirection,3000);
-                                    }
-                                    else {
-                                        document.getElementById('voyage').style.display = "none";
-                                        document.getElementById('submit').style.display = "none";
-                                        document.getElementById('title').style.display = "none";
-                                        $("#resultat").html("<p style='text-align: center'> Erreur lors de la suppression du voyage... Veuillez essayer à nouveau à partir d'<a href='voyages.php'>ici</a>.</p>");
-                                    }
-                                }
-                            });
-                        } else {
-                            function redirection(){
-                                self.location.href="prestations.php"
+                        <!-- Content -->
+                        <article>
+
+                            <?php
+                            if(empty($_SESSION['user'])){ // aucun utilisateur connecté
+
+                            } else if (empty($_SESSION['mail'])) { // compte entreprise
+                                ?><a style="padding:0" href="add-voyage.php" class="button">Nouveau voyage</a>
+                                <a style="padding:0" href="delete-voyage.php" class="button">Supprimer un voyage</a>
+                                <a style="padding:0" href="update-voyage.php" class="button">Modifier un voyage</a>
+                                <br/><br/><?php
+                            } else { // compte client
+
                             }
-                            setTimeout(redirection,1000);
-                        }
-                    })
+                            ?>
 
-                </script>
+                            <?php
 
+                            $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
+
+                            $req=$bdd -> query("SELECT * FROM Voyage");
+                            while($res=$req -> fetch()){
+                                echo "<div id=" . $res['lieu'] . "><h3>" . $res['lieu'] . "</h3>";
+                                for($i=1;$i<=$res['nbImages'];$i++){
+                                    //echo "<span class='image featured'><img src='images/Voyages/".$res['lieu']."/".$i.".jpg'/></span></div>";
+                                    echo "<figure tabindex=".$i." contenteditable='true'>
+                                                <img style='padding-bottom:30px;' width=100%; src='images/Voyages/".$res['lieu']."/".$i.".jpg' alt='jump, matey' contenteditable='false' />
+                                                <figcaption contenteditable='false'></figcaption>
+                                                </figure>";
+                                };
+                            }
+
+                            ?>
+
+                            <?php
+
+                            /*
+
+                            <span class='image featured'><img src='images/Voyages/".$res['lieu']."/".$i.".jpg'/></span>
+
+                             $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
+
+                            $req=$bdd -> query("SELECT * FROM DestinationVoyage");
+                            while($res=$req -> fetch()){
+                                for($i=1;$i<=$res['nbImages'];$i++){
+                                    echo "<figure tabindex=".$i." contenteditable='true'>
+                                        <img width='100%' src='images/Voyages/".$res['lieu']."/".$i.".jpg' contenteditable='false' />
+                                        </figure>";
+                                }
+                            }*/
+
+                            ?>
+
+                        </article>
+
+                    </div>
+                </div>
             </div>
-        </section>
-    <?php } else {
-    } ?>
+        </div>
+    </section>
+
     <?php require("footer.html"); ?>
 
 </div>
-
-
 
 </body>
 </html>

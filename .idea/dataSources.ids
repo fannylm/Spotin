@@ -195,6 +195,14 @@
       <column name="mdp" sqlType="VARCHAR" precision="300" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
     </table>
+    <table name="PhotosVoyage" schema="" catalog="Spotin" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="lien" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="destination" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_destination_id" columns="destination" ref-table="Voyage" ref-schema="" ref-catalog="Spotin" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_destination_id" unique="false" columns="destination"/>
+    </table>
     <table name="Prestation" schema="" catalog="Spotin" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="prestation" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
@@ -221,6 +229,7 @@
       <column name="lieu" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
       <column name="nbImages" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="fk_destination_id" table="PhotosVoyage" schema="" catalog="Spotin" columns="destination"/>
     </table>
     <table name="CHARACTER_SETS" schema="" catalog="information_schema" type="SYSTEM VIEW">
       <column name="CHARACTER_SET_NAME" sqlType="VARCHAR" precision="32" scale="0" nullable="false" jdbcType="12" def="Jyc="/>

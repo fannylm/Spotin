@@ -109,92 +109,161 @@ $id_projet = $_GET['id_projet'];
     </div>
 
     <!-- Main -->
-    <section class="wrapper style1">
+    <section class="wrapper style1" style="padding: 3em 0 3em 0">
+        <a style="margin-left:130px;" href="projets.php">Retour à la liste des projets</a>
         <div class="container">
             <article>
+                <br/>
+                <?php
+                if(empty($_SESSION['user'])){ // aucun utilisateur connecté
 
-            <?php
+                    $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
 
-            $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
-
-            $req=$bdd -> query("SELECT * FROM Projet WHERE id=$id_projet");
-            while($res=$req -> fetch()){
-            echo"<div id=".$res['titre']."><h3>".$res['titre']."</h3></div>
+                    $req=$bdd -> query("SELECT * FROM Projet WHERE id=$id_projet");
+                    while($res=$req -> fetch()){
+                        echo"<div id=".$res['titre']."><h3>".$res['titre']."</h3></div>
                 <img style='width:50%; display:flex; float:left;' src=".$res['image']."/>
                 <div style='margin-left:33em' ><p><strong>Année de réalisation : </strong>".$res['anneeRealisation']."</p>
                 <p><strong>Description</strong><br/>
                     ".$res['description']."</p></div>";
-            }
-
-            $requete=$bdd -> query("SELECT * FROM Commentaires, Client WHERE Commentaires.idProjet=$id_projet AND Commentaires.idClient=Client.id");
-            $numComs=$requete -> rowCount();
-            if ($numComs==0){
-                echo "<div id='numcommentaire' style='margin-top:12em'><strong>Aucun commentaire</strong></div><br/>";
-            }
-            else if ($numComs==1){
-                echo "<div id='numcommentaire' style='margin-top:12em'><strong>1 commentaire</strong></div><br/>";
-            } else {
-                echo "<div id='numcommentaire' style='margin-top:12em'><strong>" . $numComs . " commentaires</strong></div><br/>";
-            }
-
-            while($resultat=$requete -> fetch()){?>
-                <div id="commentaires">
-                    <p><?php echo $resultat['nom']." ".$resultat['prenom'] ?></p>
-                    <p><?php echo $resultat['date']?></p>
-                    <p><?php echo $resultat['commentaire']?></p>
-                    <p>-----------------------------------------------------</p>
-                </div>
-            <?php } ?>
-
-                <a style="padding:0;width: 12em;height: 2em;line-height: 36px;" onclick="Commenter()" id="postercom" class="button">Ajouter un commentaire</a>
-                <!-- <form id="comms" method="POST" action="projet.php?id_projet=<?php echo $id_projet ?>">-->
-                    <form id="comms" method="POST" action="add-commentaire.php">
-                    <input type="hidden" id="idProjet" name="idProjet" value="<?php echo $id_projet ?>">
-                    <input type="hidden" id="idClient" name="idClient" value="<?php echo $_SESSION['id'] ?>">
-                    <label style='display:none; color:purple' for='commentaire' id='labelcom'>Votre commentaire</label><br/>
-                    <textarea style='display:none' name='commentaire' id='commentaire' rows='4'></textarea><br/>
-                    <input style='display:none' id='submitcom' type="submit" class='button alt' value='Ok'/>
-                </form>
-                <span class="right"></span>
-                <span class="error"></span>
-
-                <script>
-                    function Commenter(){
-                        document.getElementById('commentaire').style.display = "block";
-                        document.getElementById('labelcom').style.display = "block";
-                        document.getElementById('submitcom').style.display = "block";
-                        document.getElementById('postercom').style.display = "none";
                     }
 
-                    $('#submitcom').click(function() {
-                        var commentaire = $('#commentaire').val();
-                        if (commentaire == '') {
-                            alert('Vous devez écrire un commentaire !');
+                    $requete=$bdd -> query("SELECT * FROM Commentaires, Client WHERE Commentaires.idProjet=$id_projet AND Commentaires.idClient=Client.id");
+                    $numComs=$requete -> rowCount();
+                    if ($numComs==0){
+                        echo "<div id='numcommentaire' style='margin-top:14em'><strong>Aucun commentaire</strong></div><br/>";
+                    }
+                    else if ($numComs==1){
+                        echo "<div id='numcommentaire' style='margin-top:14em'><strong>1 commentaire</strong></div><br/>";
+                    } else {
+                        echo "<div id='numcommentaire' style='margin-top:14em'><strong>" . $numComs . " commentaires</strong></div><br/>";
+                    }
+
+                while($resultat=$requete -> fetch()){?>
+                    <div id="commentaires">
+                        <p style="border-bottom: 2px solid black; margin-bottom: 1em; background-color: gainsboro"><?php echo $resultat['nom']." ".$resultat['prenom'] ?><span style="font-size: 14px; color: darkgrey"><?php echo " le ".$resultat['date']?></span></p>
+                        <p><?php echo $resultat['commentaire']?></p>
+                    </div>
+                <?php } ?>
+
+                <p><a href="connexion.php">Connectez-vous</a> si vous voulez poster un commentaire </p>
+
+                <?php } else if (empty($_SESSION['mail'])) { // compte entreprise
+
+                    $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
+
+                    $req=$bdd -> query("SELECT * FROM Projet WHERE id=$id_projet");
+                    while($res=$req -> fetch()){
+                        echo"<div id=".$res['titre']."><h3>".$res['titre']."</h3></div>
+                <img style='width:50%; display:flex; float:left;' src=".$res['image']."/>
+                <div style='margin-left:33em' ><p><strong>Année de réalisation : </strong>".$res['anneeRealisation']."</p>
+                <p><strong>Description</strong><br/>
+                    ".$res['description']."</p></div>";
+                    } ?>
+
+                    <a style="padding:0; margin-left:2em" href="update-projet.php?id_projet=<?php echo $id_projet ?>" class="button">Modifier ce projet</a><br/><br/>
+                    <a style="padding:0; margin-left:2em" href="delete-projet.php?id_projet=<?php echo $id_projet ?>" onclick="confirm('Êtes-vous sûr de vouloir supprimer le projet <?php $res['titre'] ?> ?')" class="button">Supprimer ce projet</a>
+
+                    <?php
+                    $requete=$bdd -> query("SELECT * FROM Commentaires, Client WHERE Commentaires.idProjet=$id_projet AND Commentaires.idClient=Client.id");
+                    $numComs=$requete -> rowCount();
+                    if ($numComs==0){
+                        echo "<div id='numcommentaire' style='margin-top:14em'><strong>Aucun commentaire</strong></div><br/>";
+                    }
+                    else if ($numComs==1){
+                        echo "<div id='numcommentaire' style='margin-top:14em'><strong>1 commentaire</strong></div><br/>";
+                    } else {
+                        echo "<div id='numcommentaire' style='margin-top:14em'><strong>" . $numComs . " commentaires</strong></div><br/>";
+                    }
+
+                while($resultat=$requete -> fetch()){?>
+                    <div id="commentaires">
+                        <p style="border-bottom: 2px solid black; margin-bottom: 1em; background-color: gainsboro"><?php echo $resultat['nom']." ".$resultat['prenom'] ?><span style="font-size: 14px; color: darkgrey"><?php echo $resultat['date']?></span></p>
+                        <p><?php echo $resultat['commentaire']?></p>
+                    </div>
+                <?php }
+
+                } else { // compte client
+
+                    $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
+
+                    $req=$bdd -> query("SELECT * FROM Projet WHERE id=$id_projet");
+                    while($res=$req -> fetch()){
+                        echo"<div id=".$res['titre']."><h3>".$res['titre']."</h3></div>
+                <img style='width:50%; display:flex; float:left;' src=".$res['image']."/>
+                <div style='margin-left:33em' ><p><strong>Année de réalisation : </strong>".$res['anneeRealisation']."</p>
+                <p><strong>Description</strong><br/>
+                    ".$res['description']."</p></div>";
+                    }
+
+                    $requete=$bdd -> query("SELECT * FROM Commentaires, Client WHERE Commentaires.idProjet=$id_projet AND Commentaires.idClient=Client.id");
+                    $numComs=$requete -> rowCount();
+                    if ($numComs==0){
+                        echo "<div id='numcommentaire' style='margin-top:14em'><strong>Aucun commentaire</strong></div><br/>";
+                    }
+                    else if ($numComs==1){
+                        echo "<div id='numcommentaire' style='margin-top:14em'><strong>1 commentaire</strong></div><br/>";
+                    } else {
+                        echo "<div id='numcommentaire' style='margin-top:14em'><strong>" . $numComs . " commentaires</strong></div><br/>";
+                    }
+
+                while($resultat=$requete -> fetch()){?>
+                    <div id="commentaires">
+                        <p style="border-bottom: 2px solid black; margin-bottom: 1em; background-color: gainsboro"><?php echo $resultat['nom']." ".$resultat['prenom']." " ?><span style="font-size: 14px; color: darkgrey"><?php echo" le ".$resultat['date']?></span></p>
+                        <p><?php echo $resultat['commentaire']?></p>
+                    </div>
+                <?php } ?>
+
+                    <a style="padding:0;width: 12em;height: 2em;line-height: 36px;" onclick="Commenter()" id="postercom" class="button">Ajouter un commentaire</a>
+                    <!-- <form id="comms" method="POST" action="projet.php?id_projet=<?php echo $id_projet ?>">-->
+                    <form id="comms" method="POST" action="add-commentaire.php">
+                        <input type="hidden" id="idProjet" name="idProjet" value="<?php echo $id_projet ?>">
+                        <input type="hidden" id="idClient" name="idClient" value="<?php echo $_SESSION['id'] ?>">
+                        <label style='display:none; color:purple' for='commentaire' id='labelcom'>Votre commentaire</label><br/>
+                        <textarea style='display:none' name='commentaire' id='commentaire' rows='4'></textarea><br/>
+                        <input style='display:none' id='submitcom' type="submit" class='button alt' value='Ok'/>
+                    </form>
+                    <span class="right"></span>
+                    <span class="error"></span>
+
+                    <script>
+                        function Commenter(){
+                            document.getElementById('commentaire').style.display = "block";
+                            document.getElementById('labelcom').style.display = "block";
+                            document.getElementById('submitcom').style.display = "block";
+                            document.getElementById('postercom').style.display = "none";
                         }
-                        else {
-                            $.ajax({
-                                url: 'add-commentaire.php',
-                                type: 'POST',
-                                data : {
-                                    commentaire: commentaire
-                                },
-                                success: function (data) {
-                                    console.log(data);
-                                    if (data = 'success') {
-                                        document.getElementById('comms').style.display = "none";
-                                        document.getElementById('postercom').style.display = "none";
-                                    } else {
-                                        document.getElementById('comms').style.display = "none";
-                                        document.getElementById('postercom').style.display = "none";
-                                     }
-                                }
-                            });
-                        }
-                    });
+
+                        $('#submitcom').click(function() {
+                            var commentaire = $('#commentaire').val();
+                            if (commentaire == '') {
+                                alert('Vous devez écrire un commentaire !');
+                            }
+                            else {
+                                $.ajax({
+                                    url: 'add-commentaire.php',
+                                    type: 'POST',
+                                    data : {
+                                        commentaire: commentaire
+                                    },
+                                    success: function (data) {
+                                        console.log(data);
+                                        if (data = 'success') {
+                                            document.getElementById('comms').style.display = "none";
+                                            document.getElementById('postercom').style.display = "none";
+                                        } else {
+                                            document.getElementById('comms').style.display = "none";
+                                            document.getElementById('postercom').style.display = "none";
+                                        }
+                                    }
+                                });
+                            }
+                        });
 
 
-                </script>
+                    </script>
 
+                <?php } ?>
 
             </article>
         </div>

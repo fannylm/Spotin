@@ -394,9 +394,11 @@
 	}
 
 	.\38 u, .\38 u\24 {
-		width: 66.6666666667%;
+		/*width: 66.6666666667%;*/
+        width:100%;
 		clear: none;
-		margin-left: 0;
+		margin-left: auto;
+        margin-right: auto;
 	}
 
 	.\37 u, .\37 u\24 {
@@ -520,7 +522,7 @@
 
 		.row.\32 00\25 > * {
             /* padding: 80px 0 0 80px;*/
-			padding: 40px 0 0 0;
+			/*padding: 40px 0 0 0;*/
 		}
 
 		.row.\32 00\25 {
@@ -3341,13 +3343,13 @@ input#inputCompte{
     height: 1.6em;
 }
 
-#pencil{
+#pencil, #times{
     margin-left: 18px;
     margin-top: 3px;
     cursor: pointer;
 }
 
-#pencil:hover{
+#pencil:hover, #times:hover{
     background-color: #eeeeee;
     border:solid 4px #eeeeee;
     margin-left: 18px;

@@ -50,6 +50,8 @@ $num3=$req3 -> rowCount();
 
 $numTotal=$num+$num2+$num3;
 
+$destination = $_GET['destination'];
+
 ?>
 
 <style>
@@ -146,8 +148,9 @@ $numTotal=$num+$num2+$num3;
     </div>
 
     <!-- Main -->
-    <section class="wrapper style1">
-        <div class="container">
+    <section style="padding: 3em 0 3em 0" class="wrapper style1">
+        <a style="margin-left:100px;" href="voyages.php">Retour à la liste des voyages</a>
+        <div class="container" style="padding-top: 60px">
             <div class="row 200%">
 
                 <div class="8u  12u(narrower) important(narrower)">
@@ -156,14 +159,19 @@ $numTotal=$num+$num2+$num3;
                         <!-- Content -->
                         <article>
 
+
                             <?php
 
                             if(empty($_SESSION['user'])){ // aucun utilisateur connecté
 
 
                             } else if (empty($_SESSION['mail'])) { // compte entreprise
-                                ?><a style="padding:0" href="add-voyage.php" class="button">Nouveau voyage</a>
-                                <br/><br/><?php
+                                ?><!--
+                                <a style="padding:0" href="update-voyage.php" class="button">Modifier ce voyage</a>
+                                <a style="padding:0" href="delete-voyage.php" class="button">Supprimer ce voyage</a>
+                                <br/><br/>-->
+
+                                <?php
                             } else { // compte client
 
                             }
@@ -173,16 +181,63 @@ $numTotal=$num+$num2+$num3;
 
                             $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
 
-                            $req=$bdd -> query("SELECT * FROM Voyage");
-                            while($res=$req -> fetch()){
+                            $req1=$bdd -> query("SELECT * FROM Voyage WHERE lieu='$destination'");
+                            $res1=$req1 -> fetch();
+
+                            $req=$bdd -> query("SELECT * FROM PhotosVoyage WHERE destination='".$res1['id']."'");
+
+                            echo "<h3>" . $destination . "</h3>";
+                            if (empty($_SESSION['mail'])) { // compte entreprise
                                 ?>
+                                <a style="padding:0" href="delete-voyage.php?destination=<?php echo $destination ?>" class="button">Supprimer ce voyage</a>
+                                <a id="buttonAd" style="padding:0" onclick="DisplayForm()" class="button">Ajouter une image à l'album</a>
+                                <br/><br/><br/>
+                                <form style="display: none" method="POST" id="addImage" action="add-image.php" enctype="multipart/form-data">
+                                    <input type="hidden" name="destination" id="destination" value="<?php echo $destination ?>">
+                                    <input type="hidden" name="id_destination" id="id_destination" value="<?php echo $res1['id'] ?>">
+                                    <label for="image">Choisissez une image (PDF,PNG ou JPG) :</label>
+                                    <input type="hidden" name="MAX_FILE_SIZE" value="102400000000"/>
+                                    <input style="text-align: center" type="file" style="width:75%;" name="image" id="image"/>
+                                    <br/>
+                                    <input id="submit" type="submit" class="button alt" value="Envoyer" style="line-height: 1.8em; background-color: #333" />
+                                </form>
+                                <br/>
 
-                                <div id="album" style="padding-bottom:30px;margin-right: auto; margin-left: auto; float:left;position:relative;width:50%">
-                                    <a style="margin-left: 240px;" href="voyage.php?destination=<?php echo $res['lieu'] ?>"><?php echo $res['lieu'] ?></a><br/><br/>
-                                    <img style="float:left;position:relative;width: 90%;border: 10px solid white;-webkit-box-shadow: 0 3px 10px #ccc;-moz-box-shadow: 0 3px 10px #ccc;" src="<?php echo $res ?>" alt="Photo" contenteditable='false'>
-                                <br/><br/></div>
+                                <script>
+                                    function DisplayForm(){
+                                        document.getElementById('buttonAd').style.display = "none";
+                                        document.getElementById('addImage').style.display = "block";
+                                    }
+                                </script>
 
-                               <?php } ?>
+                            <?php
+                            }
+
+                            while($res=$req -> fetch()) {
+                                echo "<div>
+                                            <figure tabindex=".$res['id']." contenteditable='true'>
+                                            <img style='padding-bottom:30px;' width=100%; src='".$res['lien']."' alt='jump, matey' contenteditable='false' />
+                                            <figcaption contenteditable='false'><a style='cursor:pointer' href='delete-image.php?id_image=".$res['id']."'>Supprimer cette photo</a></figcaption>
+                                            </figure>
+                                        </div>
+                                            ";
+
+                                /*for ($i = 1; $i <= $res['nbImages']; $i++) {
+                                    echo "<figure tabindex=".$i." contenteditable='true'>
+                                            <img style='padding-bottom:30px;' width=100%; src='images/Voyages/".$res['lieu']."/".$i.".jpg' alt='jump, matey' contenteditable='false' />
+                                            <i id='times' class='fa fa-times' aria-hidden='true' onclick='DeletePicture()'></i>
+                                            <figcaption contenteditable='false'></figcaption>
+                                            </figure>";
+                                }*/
+                            }
+
+                            ?>
+
+                            <script>
+                                function DeletePicture(){
+
+                                }
+                            </script>
 
                         </article>
 

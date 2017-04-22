@@ -42,6 +42,8 @@ $num3=$req3 -> rowCount();
 
 $numTotal=$num+$num2+$num3;
 
+$destination = $_GET['destination'];
+
 ?>
 
 <body>
@@ -100,32 +102,25 @@ $numTotal=$num+$num2+$num3;
         </nav>
 
     </div>
-    <?php if(empty($_SESSION['user'])){
 
-    } else if (empty($_SESSION['mail'])){ ?>
-    <!-- Main -->
     <section class="wrapper style1">
         <div class="container">
+            <article>
+
+
+                <?php
+                $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
+                $bdd->exec("DELETE FROM Voyage WHERE Voyage.lieu = '$destination'");
+                $res=$req -> fetch();
+
+                if(empty($_SESSION['user'])){
+                    echo 'ok';
+                } else if (empty($_SESSION['mail'])){ ?>
 
             <fieldset id="cadre" class="fieldsetform"><legend><h2 id="title" type="title">Modifier un voyage existant</h2></legend>
 
             <form method="POST" id="voyage" action="update-voyage.php">
-                <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
-                    <div class="12u">
-                <label for="lieu">Quel voyage souhaitez-vous modifier ?</label>
-                <select name="lieu" id="lieu">
-                    <?php
-                    $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
-                    $req=$bdd -> query("SELECT * FROM Voyage");
-                    while($res=$req -> fetch()){
-                        echo "<option value=".$res['lieu'].">".$res['lieu']."</option><br/>";
-                    }
-                    ?>
-                </select>
-                        </div>
-                    </div>
-                <br/><br/>
-                <!--<p>Ce voyage comporte actuellement 10 photos.</p>-->
+                <p>Ce voyage comporte actuellement <?php echo $res['nbImages'] ?> photos.</p>
                 <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
                     <div class="12u">
                 <label for="nbImages">Combien de photos voulez-vous mettre ?</label>
@@ -140,7 +135,7 @@ $numTotal=$num+$num2+$num3;
             <div id="resultat"></div>
 
             <script>
-
+/*
                 $('#submit').click(function() {
                     var lieu = $('#lieu').val();
                     var nbImages = $('#nbImages').val();
@@ -177,17 +172,18 @@ $numTotal=$num+$num2+$num3;
                         });
                     }
                 });
-
+*/
             </script>
 
-        </div>
-    </section>
     <?php } else {
     } ?>
+            </article>
+        </div>
+    </section>
+
     <?php require("footer.html"); ?>
 
 </div>
-
 
 
 </body>

@@ -133,7 +133,7 @@ $numTotal=$num+$num2+$num3;
                     </section>
 
                 </div>
-                <div class="8u  12u(narrower) important(narrower)">
+                <div class="8u  12u(narrower) important(narrower)" style="width: 66.6666666667%;padding: 40px 0 0 0;margin-left: -90px;">
                     <div id="content">
 
                         <!-- Content -->
@@ -148,15 +148,12 @@ $numTotal=$num+$num2+$num3;
                                 while($res=$req -> fetch()){
                                     echo"<div id=".$res['titre']."><h3>".$res['titre']."</h3>
                                     <span class='image featured'><img src=".$res['image']."/></span>
-                                    <p><strong>Année de réalisation : </strong>".$res['anneeRealisation']."</p>
-                                    <p><strong>Description</strong><br/>
-                                    ".$res['description']."</p></div>";
+                                    <a href='projet.php?id_projet=".$res['id']."'><i>En savoir plus sur ".$res['titre']."</i></a>
+                                    </div><br/><br/>";
                                 }
 
                             } else if (empty($_SESSION['mail'])) { // compte entreprise
                                 ?><a style="padding:0" href="add-projet.php" class="button">Nouveau projet</a>
-                                <a style="padding:0" href="update-projet.php" class="button">Modifier un projet</a>
-                                <a style="padding:0" href="delete-projet.php" class="button">Supprimer un projet</a>
                                 <br/><br/>
                             <?php
 
@@ -166,9 +163,8 @@ $numTotal=$num+$num2+$num3;
                                 while($res=$req -> fetch()){
                                     echo"<div id=".$res['titre']."><h3>".$res['titre']."</h3>
                                     <span class='image featured'><img src=".$res['image']."/></span>
-                                    <p><strong>Année de réalisation : </strong>".$res['anneeRealisation']."</p>
-                                    <p><strong>Description</strong><br/>
-                                    ".$res['description']."</p></div>";
+                                    <a href='projet.php?id_projet=".$res['id']."'><i>En savoir plus sur ".$res['titre']."</i></a>
+                                    </div><br/><br/>";
                                 }
 
 
@@ -184,16 +180,8 @@ $numTotal=$num+$num2+$num3;
                                     <span class='image featured'><img src=".$res['image']."/></span>
                                     <a href='projet.php?id_projet=".$res['id']."'><i>En savoir plus sur ".$res['titre']."</i></a>
                                     </div><br/><br/>";
-                                } ?>
-
-                                <!-- <div id=".$res['id'].">
-                                    <i style='color:purple' id='postercom' onclick='Display()'>Poster un commentaire</i><br/>
-                                    <label style='display:none; color:purple' for='commentaire' id='labelcom'>Votre commentaire</label><br/>
-                                    <textarea style='display:none' name='commentaire' id='commentaire' rows='4'></textarea><br/>
-                                    <input style='display:none' id='submitcom' class='button alt' value='Ok'/></div><br/><br/> -->
-
-
-                          <?php }
+                                }
+                            }
                             ?>
 
                             <script>

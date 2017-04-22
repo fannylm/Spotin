@@ -42,6 +42,8 @@ $num3=$req3 -> rowCount();
 
 $numTotal=$num+$num2+$num3;
 
+$id_projet = $_GET['id_projet'];
+
 ?>
 
 
@@ -106,62 +108,64 @@ $numTotal=$num+$num2+$num3;
     <!-- Main -->
     <section class="wrapper style1">
         <div class="container">
+            <article>
 
-            <fieldset id="cadre" class="fieldsetform"><legend><h2 id="title" type="title">Modifier un projet</h2></legend>
+            <?php
+
+            $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
+            $req=$bdd -> query("SELECT * FROM Projet WHERE id=$id_projet");
+            $res=$req -> fetch();
+
+            ?>
+
+            <fieldset id="cadre" class="fieldsetform"><legend><h2 id="title" type="title">Modifier le projet <?php echo $res['titre'] ?></h2></legend>
             <br/><br/>
             <form method="POST" id="projet" action="update-project.php">
-                <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
-                    <div class="12u">
-                <label for="id">Quel projet souhaitez-vous modifier ?</label>
-                <select name="id" id="id">
-                        <?php
-                        $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
-                        $req=$bdd -> query("SELECT * FROM Projet");
-                        while($res=$req -> fetch()){
-                            echo "<option value=".$res['id'].">".$res['titre']."</option><br/>";
-                        }
-                        ?>
-                </select>
-                        </div>
-                    </div>
-                <br/><br/>
-                <!--<label for="type">Que souhaitez-vous modifier ?</label>
-                <select name="type" id="type">
-                    <option value="titre">Titre</option>
-                    <option value="description">Description</option>
-                    <option value="tout">Les deux</option>
-                </select>
-                <br/><br/>-->
+                <input type="hidden" name="idProjet" id="idProjet" value="<?php echo $id_projet ?>">
                 <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
                     <div class="12u">
                 <label for="titre" id="labelTitre">Quel titre souhaitez-vous mettre ?</label>
-                <input id="titre" type="text">
+                <input id="titre" name="titre" type="text" value="<?php echo $res['titre'] ?>">
                         </div>
                     </div>
                 <br/>
                 <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
                     <div class="12u">
                 <label for="description">Quelle description souhaitez-vous mettre ?</label>
-                <textarea name="description" id="description"></textarea>
+                <textarea name="description" id="description" rows="6"><?php echo $res['description']?></textarea>
                         </div>
                     </div>
                 <br/><br/>
+                <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
+                    <div class="12u">
+                        <label for="date">Quelle est l'année de réalisation de ce projet ?</label>
+                        <select id=date name="date" size="1">
+                            <option value="<?php echo $res['anneeRealisation'] ?>" selected><?php echo $res['anneeRealisation'] ?></option>
+                            <option value="2012">2012
+                            <option value="2013">2013
+                            <option value="2014">2014
+                            <option value="2015">2015
+                            <option value="2016">2016
+                            <option value="2017">2017
+                        </select>
+                    </div>
+                </div>
+                <br/><br/>
+                <input id="submitProjet" type="submit" class="button alt" value="Envoyer" />
             </form>
-            <input id="submit" type="submit" class="button alt" value="Envoyer" />
                 <br/><br/>
                 </fieldset>
             <div id="resultat"></div>
 
             <script>
-
-                $('#submit').click(function() {
-                    var select = document.getElementById("id" );
-                    var id = select.options[select.selectedIndex].value;
-                    /*var selection = document.getElementById("type" );
-                    var type = selection.options[selection.selectedIndex].value;*/
+/*
+                $('#submitProjet').click(function() {
+                    var id = $('#id').val();
                     var titre = $('#titre').val();
                     var description = $('#description').val();
-                    if (id == '' || titre == '' || description == '') {
+                    var select = document.getElementById("date" );
+                    var date = select.options[select.selectedIndex].value;
+                    if (titre == '' || description == '' || date == '') {
                         alert('Vous devez remplir tous les champs !');
                     }
                     else {
@@ -171,25 +175,27 @@ $numTotal=$num+$num2+$num3;
                             data : {
                                 id: id,
                                 titre: titre,
-                                description: description
+                                description: description,
+                                date: date
                             },
                             success: function (data) {
                                 console.log(data);
                                 if (data == 'success') {
                                     // cacher le formulaire
                                     document.getElementById('projet').style.display = "none";
-                                    document.getElementById('submit').style.display = "none";
+                                    document.getElementById('submitProjet').style.display = "none";
                                     document.getElementById('title').style.display = "none";
                                     document.getElementById('cadre').style.display = "none";
-                                    $("#resultat").html("<p style='text-align: center'> Projet correctement modifié ! <br/>Vous allez être automatiquement redirigé vers la page des prestations. Si cela ne fonctionne pas veuillez cliquer <a href='prestations.php'>ici</a></p>");
+                                    $("#resultat").html("<p style='text-align: center'> Projet correctement modifié ! <br/>Vous allez être automatiquement redirigé vers la page du projet. Si cela ne fonctionne pas veuillez cliquer <a href='prestations.php'>ici</a></p>");
                                     function redirection(){
+                                        //self.location.href="projet.php?id_projet=<?php //echo $id_projet ?>";
                                         self.location.href="projets.php"
                                     }
-                                    setTimeout(redirection,3000);
+                                    setTimeout(redirection,2000);
                                 }
                                 else {
-                                    document.getElementById('prestation').style.display = "none";
-                                    document.getElementById('submit').style.display = "none";
+                                    document.getElementById('projet').style.display = "none";
+                                    document.getElementById('submitProjet').style.display = "none";
                                     document.getElementById('title').style.display = "none";
                                     document.getElementById('cadre').style.display = "none";
                                     $("#resultat").html("<p style='text-align: center'> Erreur lors de la modification du projet... Veuillez essayer à nouveau à partir d'<a href='projets.php'>ici</a>.</p>");
@@ -198,9 +204,9 @@ $numTotal=$num+$num2+$num3;
                         });
                     }
                 });
-
+*/
             </script>
-
+            </article>
         </div>
     </section>
     <?php } else {

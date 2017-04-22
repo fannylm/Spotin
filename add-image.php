@@ -6,15 +6,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root'
 
 $destination = $_POST['destination'];
 
-$bdd->exec("INSERT INTO Voyage (lieu) VALUES ('$destination')");
-
-if($bdd){
-    echo 'success';
-} else {
-    echo 'failed';
-}
-
-/*
+$id_destination=$_POST['id_destination'];
 
 // Test pour savoir si le fichier a bien été envoyé sans erreur
 if(isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
@@ -27,13 +19,11 @@ if(isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
         if(in_array($extension_upload, $extensions_autorisees))
         {
             $chemin = 'images/Voyages/'.$destination.basename($_FILES['image']['name']);
-            echo $chemin;
             $resultat = move_uploaded_file($_FILES['image']['tmp_name'], $chemin);
             if($resultat)
             {
                 //echo "L'envoi a bien été effectué !";
-                $req1 = $bdd->exec("INSERT INTO Voyage (lieu) VALUES ('$destination')");
-                $req2 = $bdd->exec("INSERT INTO PhotosVoyage (lien, destination) VALUES ('$chemin','$id_destination')");
+                $bdd->exec("INSERT INTO PhotosVoyage (lien, destination) VALUES ('$chemin','$id_destination')");
                 if ($bdd){ ?>
                     <script>
                         function redirection(){
@@ -60,6 +50,12 @@ if(isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
 }
 //else echo "Une erreur est survenue lors de l'envoi !";
 
-*/
-
 ?>
+
+<script>
+    function redirection(){
+        self.location.href="voyage.php?destination=<?php echo $destination ?>"
+    }
+    setTimeout(redirection,1);
+</script>
+

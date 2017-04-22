@@ -119,7 +119,7 @@ $numTotal=$num+$num2+$num3;
                 ?>
 
                 <p style="text-align: center" id="text"><i class="fa fa-paper-plane" aria-hidden="true"></i><strong>&nbsp;&nbsp;&nbsp;Envoyez-nous un message pour le moindre renseignement !</strong></p>
-                <form action="contact.php" method="POST" id="contact" onclick="console.log(this)" onsubmit="return checkform(this)">
+                <form action="contact.php" method="POST" id="contact" onsubmit="return checkform(this)">
                     <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
                         <div class=" 6u 12u(mobilep)">
                             <input type="text" name="nom" id="nom" placeholder="Nom" >
@@ -150,14 +150,6 @@ $numTotal=$num+$num2+$num3;
                 <br/><br/>
 
                 <script>
-                    // Fonction qui permet de changer la couleur de l'arrière plan pour faire ressortir les erreurs
-                    /*function underline(champ, erreur) {
-                        if(erreur)
-                            champ.style.backgroundColor = "#FDE3E3";
-                        else
-                            champ.style.backgroundColor = "";
-                    }*/
-
                     // Fonction qui vérifie que le format du mail est bien valide
                     function checkmail(mail) {
                         var regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
@@ -214,7 +206,6 @@ $numTotal=$num+$num2+$num3;
                             alert('Vous devez remplir tous les champs correctement!');
                         }
                         else {
-                            console.log("coucou");
                             $.ajax({
                                 url: 'trait-message.php',
                                 type: 'POST',
