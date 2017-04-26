@@ -176,10 +176,9 @@ $numTotal=$num+$num2+$num3;
                             $req=$bdd -> query("SELECT * FROM Voyage");
                             while($res=$req -> fetch()){
                                 ?>
-
                                 <div id="album" style="padding-bottom:30px;margin-right: auto; margin-left: auto; float:left;position:relative;width:50%">
                                     <a style="margin-left: 240px;" href="voyage.php?destination=<?php echo $res['lieu'] ?>"><?php echo $res['lieu'] ?></a><br/><br/>
-                                    <img style="float:left;position:relative;width: 90%;border: 10px solid white;-webkit-box-shadow: 0 3px 10px #ccc;-moz-box-shadow: 0 3px 10px #ccc;" src="<?php echo $res ?>" alt="Photo" contenteditable='false'>
+                                    <img style="float:left;position:relative;width: 90%;border: 10px solid white;-webkit-box-shadow: 0 3px 10px #ccc;-moz-box-shadow: 0 3px 10px #ccc;" src="<?php echo $res['image'] ?>" alt="Photo" contenteditable='false'>
                                 <br/><br/></div>
 
                                <?php } ?>

@@ -6,16 +6,6 @@ $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root'
 
 $destination = $_POST['destination'];
 
-$bdd->exec("INSERT INTO Voyage (lieu) VALUES ('$destination')");
-
-if($bdd){
-    echo 'success';
-} else {
-    echo 'failed';
-}
-
-/*
-
 // Test pour savoir si le fichier a bien été envoyé sans erreur
 if(isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
     // Test pour savoir si le fichier n'est pas trop gros
@@ -26,14 +16,14 @@ if(isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
         $extensions_autorisees = array('pdf', 'png', 'jpg');
         if(in_array($extension_upload, $extensions_autorisees))
         {
-            $chemin = 'images/Voyages/'.$destination.basename($_FILES['image']['name']);
-            echo $chemin;
+            $dossier='images/Voyages/'.$destination;
+            mkdir($dossier, 0700);
+            $chemin = $dossier.'/'.basename($_FILES['image']['name']);
             $resultat = move_uploaded_file($_FILES['image']['tmp_name'], $chemin);
             if($resultat)
             {
                 //echo "L'envoi a bien été effectué !";
-                $req1 = $bdd->exec("INSERT INTO Voyage (lieu) VALUES ('$destination')");
-                $req2 = $bdd->exec("INSERT INTO PhotosVoyage (lien, destination) VALUES ('$chemin','$id_destination')");
+                $req1 = $bdd->exec("INSERT INTO Voyage (lieu,image) VALUES ('$destination','$chemin')");
                 if ($bdd){ ?>
                     <script>
                         function redirection(){
@@ -60,6 +50,6 @@ if(isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
 }
 //else echo "Une erreur est survenue lors de l'envoi !";
 
-*/
+
 
 ?>

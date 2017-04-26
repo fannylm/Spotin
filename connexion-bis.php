@@ -98,9 +98,8 @@ if($_GET['deco']==true) {
                     <?php
                     if(!isset($_POST['pseudo'])) {
                         ?>
-                        <header>
-                            <h2 id="titre" style="text-align: center">Connexion</h2>
-                        </header>
+                        <fieldset class="fieldsetform"><legend><h2 id="titre" style="text-align: center">Connexion</h2></legend>
+                        <br/><br/>
                         <form name="mail" style="visibility: visible" action="connexion-bis.php" method="POST">
                             <table id="connexion" class="connexion">
                                 <tr>
@@ -147,6 +146,7 @@ if($_GET['deco']==true) {
                             <p style="text-align: center"><input id="submit" class="button alt" value="Envoyer"/></p>
                             <br/><br/>
                         </form>
+                        </fieldset>
 
                     <?php } ?>
                     <br/>

@@ -123,11 +123,10 @@ $id_projet = $_GET['id_projet'];
                     while($res=$req -> fetch()){
                         echo"<div id=".$res['titre']."><h3>".$res['titre']."</h3></div>
                 <img style='width:50%; display:flex; float:left;' src=".$res['image']."/>
-                <div style='margin-left:33em' ><p><strong>Année de réalisation : </strong>".$res['anneeRealisation']."</p>
-                <p><strong>Description</strong><br/>
+                <div style='margin-left:33em' ><p><strong>Année de réalisation : </strong>".$res['anneeRealisation']."</p></div>
+                <div style='margin-left:33em'><p><strong>Description</strong><br/>
                     ".$res['description']."</p></div>";
                     }
-
                     $requete=$bdd -> query("SELECT * FROM Commentaires, Client WHERE Commentaires.idProjet=$id_projet AND Commentaires.idClient=Client.id");
                     $numComs=$requete -> rowCount();
                     if ($numComs==0){
@@ -150,21 +149,23 @@ $id_projet = $_GET['id_projet'];
 
                 <?php } else if (empty($_SESSION['mail'])) { // compte entreprise
 
+                ?>
+                    <a style="min-width: 12em;padding:0" href="update-projet.php?id_projet=<?php echo $id_projet ?>" class="button">Modifier ce projet</a>
+                    <a id="buttonAd" style="min-width: 12em;padding:0" href="delete-projet.php?id_projet=<?php echo $id_projet ?>" onclick="confirm('Êtes-vous sûr de vouloir supprimer le projet <?php $res['titre'] ?> ?')" class="button">Supprimer ce projet</a>
+                    <br/><br/>
+                    <?php
+
                     $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
 
                     $req=$bdd -> query("SELECT * FROM Projet WHERE id=$id_projet");
                     while($res=$req -> fetch()){
                         echo"<div id=".$res['titre']."><h3>".$res['titre']."</h3></div>
                 <img style='width:50%; display:flex; float:left;' src=".$res['image']."/>
-                <div style='margin-left:33em' ><p><strong>Année de réalisation : </strong>".$res['anneeRealisation']."</p>
-                <p><strong>Description</strong><br/>
+                <div style='margin-left:33em' ><p><strong>Année de réalisation : </strong>".$res['anneeRealisation']."</p></div>
+                <div style='margin-left:33em'><p><strong>Description</strong><br/>
                     ".$res['description']."</p></div>";
-                    } ?>
+                    }
 
-                    <a style="padding:0; margin-left:2em" href="update-projet.php?id_projet=<?php echo $id_projet ?>" class="button">Modifier ce projet</a><br/><br/>
-                    <a style="padding:0; margin-left:2em" href="delete-projet.php?id_projet=<?php echo $id_projet ?>" onclick="confirm('Êtes-vous sûr de vouloir supprimer le projet <?php $res['titre'] ?> ?')" class="button">Supprimer ce projet</a>
-
-                    <?php
                     $requete=$bdd -> query("SELECT * FROM Commentaires, Client WHERE Commentaires.idProjet=$id_projet AND Commentaires.idClient=Client.id");
                     $numComs=$requete -> rowCount();
                     if ($numComs==0){
@@ -178,7 +179,7 @@ $id_projet = $_GET['id_projet'];
 
                 while($resultat=$requete -> fetch()){?>
                     <div id="commentaires">
-                        <p style="border-bottom: 2px solid black; margin-bottom: 1em; background-color: gainsboro"><?php echo $resultat['nom']." ".$resultat['prenom'] ?><span style="font-size: 14px; color: darkgrey"><?php echo $resultat['date']?></span></p>
+                        <p style="border-bottom: 2px solid black; margin-bottom: 1em; background-color: gainsboro"><?php echo $resultat['nom']." ".$resultat['prenom'] ?><span style="font-size: 14px; color: darkgrey"><?php echo ' le '.$resultat['date']?></span></p>
                         <p><?php echo $resultat['commentaire']?></p>
                     </div>
                 <?php }
@@ -191,8 +192,8 @@ $id_projet = $_GET['id_projet'];
                     while($res=$req -> fetch()){
                         echo"<div id=".$res['titre']."><h3>".$res['titre']."</h3></div>
                 <img style='width:50%; display:flex; float:left;' src=".$res['image']."/>
-                <div style='margin-left:33em' ><p><strong>Année de réalisation : </strong>".$res['anneeRealisation']."</p>
-                <p><strong>Description</strong><br/>
+                <div style='margin-left:33em' ><p><strong>Année de réalisation : </strong>".$res['anneeRealisation']."</p></div>
+                <div style='margin-left:33em'><p><strong>Description</strong><br/>
                     ".$res['description']."</p></div>";
                     }
 

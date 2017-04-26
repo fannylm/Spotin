@@ -8,10 +8,12 @@ $id_image = $_GET['id_image'];
 
 $req1 = $bdd -> query("SELECT * FROM PhotosVoyage, Voyage WHERE PhotosVoyage.id = '$id_image' AND PhotosVoyage.destination=Voyage.id ");
 $res = $req1 -> fetch();
+$image = $res['lien'];
 
 $req = $bdd->exec("DELETE FROM PhotosVoyage WHERE id = '$id_image'");
 
 if($req) {
+    unlink($image);
     ?>
     <script>
         function redirection(){

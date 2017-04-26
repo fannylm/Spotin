@@ -279,34 +279,36 @@ $numTotal=$num+$num2+$num3;
                         <label id='labelInfo'><strong>Numéro de téléphone</strong> : 0<?php echo $res['telephone'] ?></label><br/>
                         <label id='labelInfo'><strong>Date de naissance</strong> : <?php echo $res['birthday'] ?></label><br/>
                     </div><br/>
+                <script>
+
+                    function Display(){
+                        document.getElementById('clients').style.display = "block";
+                        document.getElementById('plus').style.display = "none";
+                        document.getElementById('minus').style.display = "block";
+                    }
+
+                    function Erase(){
+                        document.getElementById('clients').style.display = "none";
+                        document.getElementById('plus').style.display = "block";
+                        document.getElementById('minus').style.display = "none";
+                    }
+
+                    function Info(){
+                        document.getElementById('infos').style.display = "inline-block";
+                        document.getElementById('pencil').style.display = "inline-block";
+                    }
+
+                    function Hide(){
+                        document.getElementById('infos').style.display = "none";
+                        document.getElementById('pencil').style.display = "none";
+                    }
+
+                </script>
+
             <?php }
             ?>
 
-                    <script>
 
-                       function Display(){
-                           document.getElementById('clients').style.display = "block";
-                           document.getElementById('plus').style.display = "none";
-                           document.getElementById('minus').style.display = "block";
-                       }
-
-                       function Erase(){
-                           document.getElementById('clients').style.display = "none";
-                           document.getElementById('plus').style.display = "block";
-                           document.getElementById('minus').style.display = "none";
-                       }
-
-                       function Info(){
-                           document.getElementById('infos').style.display = "inline-block";
-                           document.getElementById('pencil').style.display = "inline-block";
-                       }
-
-                       function Hide(){
-                           document.getElementById('infos').style.display = "none";
-                           document.getElementById('pencil').style.display = "none";
-                       }
-
-                    </script>
             </div>
 
 
@@ -325,7 +327,7 @@ $numTotal=$num+$num2+$num3;
 
                         $req=$bdd -> query("SELECT * FROM Contact");
                         while($res=$req -> fetch()){
-                            echo "<strong> - ".$res['nom']." ".$res['prenom']."</strong> (".$res['departement']."), <a href='mailto:".$res['mail']."'>".$res['mail']."</a><br/>";
+                            echo "<strong> - ".$res['nom']." ".$res['prenom']."</strong>, <a href='mailto:".$res['mail']."'>".$res['mail']."</a><br/>";
                             echo "Message : ".$res['message']."<br/><br/>";
                             echo '<br/>';
                         }
@@ -368,7 +370,7 @@ $numTotal=$num+$num2+$num3;
 
                         $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
 
-                        $req=$bdd -> query("SELECT * FROM ContactBis");
+                        $req=$bdd -> query("SELECT * FROM ContactBis, Client WHERE ContactBis.idClient=Client.id");
                         while($res=$req -> fetch()){
                             echo "<strong> - ".$res['nom']." ".$res['prenom']."</strong>, <a href='mailto:".$res['mail']."'>".$res['mail']."</a><br/>";
                             echo "Message : ".$res['message']."<br/><br/>";
@@ -411,7 +413,7 @@ $numTotal=$num+$num2+$num3;
 
                         $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
 
-                        $req=$bdd -> query("SELECT * FROM Devis");
+                        $req=$bdd -> query("SELECT * FROM Devis, Client WHERE Devis.idExpediteur=Client.id");
                         while($res=$req -> fetch()){
                             echo "<strong> - ".$res['nom']." ".$res['prenom']."</strong>, <a href='mailto:".$res['mail']."'>".$res['mail']."</a><br/>";
                             echo "Message : ".$res['message']."<br/><br/>";

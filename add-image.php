@@ -18,7 +18,7 @@ if(isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
         $extensions_autorisees = array('pdf', 'png', 'jpg');
         if(in_array($extension_upload, $extensions_autorisees))
         {
-            $chemin = 'images/Voyages/'.$destination.basename($_FILES['image']['name']);
+            $chemin = 'images/Voyages/'.$destination.'/'.basename($_FILES['image']['name']);
             $resultat = move_uploaded_file($_FILES['image']['tmp_name'], $chemin);
             if($resultat)
             {

@@ -227,7 +227,7 @@
     <table name="Voyage" schema="" catalog="Spotin" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="lieu" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
-      <column name="nbImages" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="image" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="fk_destination_id" table="PhotosVoyage" schema="" catalog="Spotin" columns="destination"/>
     </table>

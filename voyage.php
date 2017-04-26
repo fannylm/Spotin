@@ -159,24 +159,6 @@ $destination = $_GET['destination'];
                         <!-- Content -->
                         <article>
 
-
-                            <?php
-
-                            if(empty($_SESSION['user'])){ // aucun utilisateur connecté
-
-
-                            } else if (empty($_SESSION['mail'])) { // compte entreprise
-                                ?><!--
-                                <a style="padding:0" href="update-voyage.php" class="button">Modifier ce voyage</a>
-                                <a style="padding:0" href="delete-voyage.php" class="button">Supprimer ce voyage</a>
-                                <br/><br/>-->
-
-                                <?php
-                            } else { // compte client
-
-                            }
-                            ?>
-
                             <?php
 
                             $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
@@ -187,11 +169,32 @@ $destination = $_GET['destination'];
                             $req=$bdd -> query("SELECT * FROM PhotosVoyage WHERE destination='".$res1['id']."'");
 
                             echo "<h3>" . $destination . "</h3>";
-                            if (empty($_SESSION['mail'])) { // compte entreprise
+
+                            if(empty($_SESSION['user'])) { // aucun utilisateur connecté
+
+                            echo "<div>
+                                            <figure tabindex=".$res1['id']." contenteditable='true'>
+                                            <img style='padding-bottom:30px;' width=100%; src='".$res1['image']."' alt='jump, matey' contenteditable='false' />
+                                            <figcaption contenteditable='false'></figcaption>
+                                            </figure>
+                                        </div>
+                                            ";
+
+
+                            while($res=$req -> fetch()) {
+                                ?><div>
+                                <figure tabindex='<?php $res['id'] ?>' contenteditable='true'>
+                                    <img style='padding-bottom:30px;' width=100%; src='<?php echo $res['lien'] ?>' alt='jump, matey' contenteditable='false' />
+                                    <figcaption contenteditable='false'></figcaption>
+                                </figure>
+                                </div><?php
+                                }
+                            } else if (empty($_SESSION['mail'])) { // compte entreprise
                                 ?>
-                                <a style="padding:0" href="delete-voyage.php?destination=<?php echo $destination ?>" class="button">Supprimer ce voyage</a>
-                                <a id="buttonAd" style="padding:0" onclick="DisplayForm()" class="button">Ajouter une image à l'album</a>
-                                <br/><br/><br/>
+                                <a style="min-width: 12em;padding:0" href="delete-voyage.php?destination=<?php echo $destination ?>" class="button">Supprimer ce voyage</a>
+                                <a id="buttonAd" style="min-width: 12em;padding:0" onclick="DisplayForm()" class="button">Ajouter une image à l'album</a>
+                               <!--<a id="buttonCouverture" style="min-width: 18em;padding:0" onclick="DisplayForm2()" class="button">Changer la photo de couverture</a>-->
+                                <br/><br/>
                                 <form style="display: none" method="POST" id="addImage" action="add-image.php" enctype="multipart/form-data">
                                     <input type="hidden" name="destination" id="destination" value="<?php echo $destination ?>">
                                     <input type="hidden" name="id_destination" id="id_destination" value="<?php echo $res1['id'] ?>">
@@ -201,43 +204,72 @@ $destination = $_GET['destination'];
                                     <br/>
                                     <input id="submit" type="submit" class="button alt" value="Envoyer" style="line-height: 1.8em; background-color: #333" />
                                 </form>
-                                <br/>
+
+                                <!--<form style="display: none" method="POST" id="couverture" action="update-couverture.php" enctype="multipart/form-data">
+                                    <input type="hidden" name="destination" id="destination" value="<?php //echo $destination ?>">
+                                    <input type="hidden" name="id_destination" id="id_destination" value="<?php //echo $res1['id'] ?>">
+                                    <label for="image">Choisissez une image (PDF,PNG ou JPG) :</label>
+                                    <input type="hidden" name="MAX_FILE_SIZE" value="102400000000"/>
+                                    <input style="text-align: center" type="file" style="width:75%;" name="image" id="image"/>
+                                    <br/>
+                                    <input id="submit" type="submit" class="button alt" value="Envoyer" style="line-height: 1.8em; background-color: #333" />
+                                </form>-->
+                                <br/><br/><br/>
 
                                 <script>
                                     function DisplayForm(){
-                                        document.getElementById('buttonAd').style.display = "none";
+                                        document.getElementById('buttonAd').style.backgroundColor = "grey";
                                         document.getElementById('addImage').style.display = "block";
+                                    }
+
+                                    function DisplayForm2(){
+                                        document.getElementById('buttonCouverture').style.backgroundColor = "grey";
+                                        document.getElementById('couverture').style.display = "block";
                                     }
                                 </script>
 
                             <?php
-                            }
 
-                            while($res=$req -> fetch()) {
-                                echo "<div>
-                                            <figure tabindex=".$res['id']." contenteditable='true'>
-                                            <img style='padding-bottom:30px;' width=100%; src='".$res['lien']."' alt='jump, matey' contenteditable='false' />
-                                            <figcaption contenteditable='false'><a style='cursor:pointer' href='delete-image.php?id_image=".$res['id']."'>Supprimer cette photo</a></figcaption>
+                            echo "<div>
+                                            <figure tabindex=".$res1['id']." contenteditable='true'>
+                                            <img style='padding-bottom:30px;' width=100%; src='".$res1['image']."' alt='jump, matey' contenteditable='false' />
+                                            <figcaption contenteditable='false'>Photo de couverture</figcaption>
                                             </figure>
                                         </div>
                                             ";
 
-                                /*for ($i = 1; $i <= $res['nbImages']; $i++) {
-                                    echo "<figure tabindex=".$i." contenteditable='true'>
-                                            <img style='padding-bottom:30px;' width=100%; src='images/Voyages/".$res['lieu']."/".$i.".jpg' alt='jump, matey' contenteditable='false' />
-                                            <i id='times' class='fa fa-times' aria-hidden='true' onclick='DeletePicture()'></i>
+
+                            while($res=$req -> fetch()) {
+                                ?><div>
+                                            <figure tabindex='<?php $res['id'] ?>' contenteditable='true'>
+                                            <img style='padding-bottom:30px;' width=100%; src='<?php echo $res['lien'] ?>' alt='jump, matey' contenteditable='false' />
+                                            <figcaption contenteditable='false'><a style='cursor:pointer' href='delete-image.php?id_image=<?php $res['id'] ?>'>Supprimer cette photo</a></figcaption>
+                                            </figure>
+                                        </div>
+                            <?php
+                                }
+                            } else { //compte client
+                                echo "<div>
+                                            <figure tabindex=".$res1['id']." contenteditable='true'>
+                                            <img style='padding-bottom:30px;' width=100%; src='".$res1['image']."' alt='jump, matey' contenteditable='false' />
                                             <figcaption contenteditable='false'></figcaption>
-                                            </figure>";
-                                }*/
+                                            </figure>
+                                        </div>
+                                            ";
+
+
+                                while($res=$req -> fetch()) {
+                                    ?><div>
+                                    <figure tabindex='<?php $res['id'] ?>' contenteditable='true'>
+                                        <img style='padding-bottom:30px;' width=100%; src='<?php echo $res['lien'] ?>' alt='jump, matey' contenteditable='false' />
+                                        <figcaption contenteditable='false'></figcaption>
+                                    </figure>
+                                    </div><?php
+                                }
+
                             }
 
                             ?>
-
-                            <script>
-                                function DeletePicture(){
-
-                                }
-                            </script>
 
                         </article>
 

@@ -116,7 +116,7 @@ if($_GET['deco']==true) {
                                     </td>
                                 </tr>
                             </table>
-                            <p style="text-align: center;"><a href="mdp-oublie.php" style="font-size: 16px;"><i>Mot de passe oublié ?</i></a></p>
+                            <!--<p style="text-align: center;"><a href="mdp-oublie.php" style="font-size: 16px;"><i>Mot de passe oublié ?</i></a></p>-->
                             <p style="text-align: center"><input id="submit" class="button alt" value="Envoyer"/></p>
 
                         </form>

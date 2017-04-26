@@ -106,7 +106,7 @@ $numTotal=$num+$num2+$num3;
     <!-- Main -->
 
 
-        <section class="wrapper style1">
+       <!-- <section class="wrapper style1">
             <div class="container">
 
                 <fieldset id="cadre" class="fieldsetform"><legend><h2 id="title" type="title">Ajouter un voyage</h2></legend>
@@ -166,46 +166,39 @@ $numTotal=$num+$num2+$num3;
                 </script>
 
             </div>
-        </section>
+        </section>-->
 
 
-    <!--<section class="wrapper style1">
+    <section class="wrapper style1">
         <div class="container">
 
             <fieldset id="cadre" class="fieldsetform"><legend><h2 id="title" type="title">Ajouter un nouveau voyage</h2></legend>
             <br/><br/>
-
-                <form method="POST" id="destination" action="add-voyage.php">
-                <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
-                    <div class="12u">
-                <label for="destination">Quelle est la destination de ce voyage ?</label>
-                <input id="destination" name="destination" type="text">
+                <form method="POST" id="voyage" action="add-trip.php" enctype="multipart/form-data">
+                    <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
+                        <div class="12u">
+                            <label for="destination">Quelle est la destination de ce voyage ?</label>
+                            <input id="destination" name="destination" type="text">
                         </div>
-                    </div>
-                <br/>
-                    <input id="submitDesination" type="submit" class="button alt" value="Envoyer" />
-                <br/>
-                    </form>
-
-                <!--<form method="POST" id="voyage" action="add-trip.php" enctype="multipart/form-data">
-                <div id="image" style="display:none" class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
+                    </div><br/>
+                <div id="image" class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
                     <div class="12u">
                         <label for="image">Ajoutez une photo de couverture pour l'album (PDF,PNG ou JPG) :</label>
                         <input type="hidden" name="MAX_FILE_SIZE" value="102400000000"/>
                         <input style="text-align: center" type="file" style="width:75%;" name="image" id="image"/>
                         <br/><br/>
                         </div>
-                    </div>
-                    <input style="display:none" id="submitImage" type="submit" class="button alt" value="Envoyer" />
+                    </div><br/>
+                    <input id="submitImage" type="submit" class="button alt" value="Envoyer" />
                 <br/>
-            </form>-->
+            </form>
 
-               <!--<br/><br/><br/>
+               <br/><br/><br/>
                 </fieldset>
             <div id="resultat"></div>
 
             <script>
-
+/*
                 $('#submitDestination').click(function() {
                     var destination = $('#destination').val();
                     if (destination == '') {
@@ -236,11 +229,11 @@ $numTotal=$num+$num2+$num3;
                     });
                     }
                 });
-
+*/
             </script>
 
         </div>
-    </section>-->
+    </section>
 
     <?php } else {
     } ?>
