@@ -156,32 +156,32 @@
       <index name="fk_projet_id" unique="false" columns="idProjet"/>
     </table>
     <table name="Contact" schema="" catalog="Spotin" type="TABLE">
-      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="idContact" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="nom" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
       <column name="prenom" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
       <column name="mail" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
       <column name="telephone" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="message" sqlType="VARCHAR" precision="2000" scale="0" nullable="false" jdbcType="12"/>
       <column name="statut" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
-      <primary-key name="PRIMARY" columns="id"/>
+      <primary-key name="PRIMARY" columns="idContact"/>
     </table>
     <table name="ContactBis" schema="" catalog="Spotin" type="TABLE">
-      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="idContact" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="idClient" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="message" sqlType="VARCHAR" precision="2000" scale="0" nullable="true" jdbcType="12"/>
       <column name="statut" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
-      <primary-key name="PRIMARY" columns="id"/>
+      <primary-key name="PRIMARY" columns="idContact"/>
       <foreign-key name="fk_client_id" columns="idClient" ref-table="Client" ref-schema="" ref-catalog="Spotin" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <index name="fk_client_id" unique="false" columns="idClient"/>
     </table>
     <table name="Devis" schema="" catalog="Spotin" type="TABLE">
-      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="idDevis" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="idExpediteur" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="idPrestation" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="date" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
       <column name="message" sqlType="VARCHAR" precision="2000" scale="0" nullable="true" jdbcType="12"/>
       <column name="statut" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
-      <primary-key name="PRIMARY" columns="id"/>
+      <primary-key name="PRIMARY" columns="idDevis"/>
       <foreign-key name="devis_ibfk_1" columns="idExpediteur" ref-table="Client" ref-schema="" ref-catalog="Spotin" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="devis_ibfk_3" columns="idPrestation" ref-table="Prestation" ref-schema="" ref-catalog="Spotin" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <index name="devis_ibfk_1" unique="false" columns="idExpediteur"/>

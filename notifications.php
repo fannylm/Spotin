@@ -126,13 +126,13 @@ $numTotal=$num+$num2+$num3;
                     echo $num.' nouveaux messages : <br/><br/>' ;
                 }
                 while($res=$req -> fetch()){
-                    echo "<strong> - ".$res['nom']." ".$res['prenom']."</strong> (".$res['departement']."), <a href='mailto:".$res['mail']."'>".$res['mail']."</a><br/>";
+                    echo "<strong> - ".$res['nom']." ".$res['prenom']."</strong>, <a href='mailto:".$res['mail']."'>".$res['mail']."</a><a style='color: darkslategrey; border-bottom: none;' href='update-notifbis.php?id_notif=".$res['idContact']."'><i id='times' class='fa fa-times' aria-hidden='true'></i></a><br/>";
                     echo "Message : ".$res['message']."<br/><br/>";
                     echo '<br/>';
                 }
 
                 if (!$num==0){
-                    echo '<a href="update-notif.php" class="button">Effacer</a>';
+                    echo '<a href="update-notif.php" class="button">Effacer tout</a>';
                 }
 
                 ?><br/><br/><h3>Messages des clients</h3><?php
@@ -141,18 +141,18 @@ $numTotal=$num+$num2+$num3;
                 if ($num2==0){
                     echo 'Aucun nouveau message <br/><br/>' ;
                 }
-                if ($num2==1){
+                else if ($num2==1){
                     echo 'Un nouveau message : <br/><br/>' ;
                 }
                 else {
                     echo $num2.' nouveaux messages : <br/><br/>' ;
                 }
                 while($res2=$req2 -> fetch()){
-                    echo "<strong> - ".$res2['nom']." ".$res2['prenom']."</strong>, <a href='mailto:".$res2['mail']."'>".$res2['mail']."</a><br/>";
+                    echo "<strong> - ".$res2['nom']." ".$res2['prenom']."</strong>, <a href='mailto:".$res2['mail']."'>".$res2['mail']."</a><a style='color: darkslategrey; border-bottom: none;' href='update-notif2bis.php?id_notif=".$res2['idContact']."'><i id='times' class='fa fa-times' aria-hidden='true'></i></a><br/>";
                     echo "Message : ".$res2['message']."<br/><br/>";
                 }
                 if (!$num2==0) {
-                    echo '<a href="update-notif2.php" class="button">Effacer</a>';
+                    echo '<a href="update-notif2.php" class="button">Effacer tout</a>';
                 }
 
                 ?><br/><br/><br/><h3>Demande de devis</h3><?php
@@ -162,20 +162,20 @@ $numTotal=$num+$num2+$num3;
                 if ($num3==0){
                     echo 'Aucune nouvelle demande <br/><br/>' ;
                 }
-                if ($num3==1){
+                else if ($num3==1){
                     echo 'Une nouvelle demande : <br/><br/>' ;
                 }
                 else {
                     echo $num3.' nouvelles demandes : <br/><br/>' ;
                 }
                 while($res3=$req3 -> fetch()){
-                    echo "<strong> - ".$res3['nom']." ".$res3['prenom']."</strong>, <a href='mailto:".$res3['mail']."'>".$res3['mail']."</a><br/>";
+                    echo "<strong> - ".$res3['nom']." ".$res3['prenom']."</strong>, <a href='mailto:".$res3['mail']."'>".$res3['mail']."</a><a style='color: darkslategrey; border-bottom: none;' href='update-notif3bis.php?id_notif=".$res3['idDevis']."'><i id='times' class='fa fa-times' aria-hidden='true'></i></a><br/>";
                     echo "Prestation : ".$res3['prestation']."<br/>";
                     echo "Date de livraison souhaitée : ".$res3['date']."<br/>";
                     echo "Message : ".$res3['message']."<br/><br/>";
                 }
                 if (!$num3==0) {
-                    echo '<a href="update-notif3.php" class="button">Effacer</a>';
+                    echo '<a href="update-notif3.php" class="button">Effacer tout</a>';
                 }
 
                 ?></div>
