@@ -1,10 +1,5 @@
 <?php require 'connect.php'; session_start(); ?>
 <!DOCTYPE HTML>
-<!--
-	Arcana by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 <head>
     <title>Spotin' - Projets</title>
@@ -46,6 +41,7 @@ $numTotal=$num+$num2+$num3;
 
 <body>
 <div id="page-wrapper">
+    <div id="titleBar"><a href="#navPanel" class="toggle"></a><span class="title"><em>Spotin</em> - Agence audiovisuel</span></div>
 
     <!-- Header -->
     <div id="header">
@@ -145,54 +141,6 @@ $numTotal=$num+$num2+$num3;
                     <br/><br/><br/>
                 </fieldset>
                 <div id="resultat"></div>
-
-                <script>
-/*
-                    $('#submit').click(function() {
-                        var select = document.getElementById("date" );
-                        var date = select.options[select.selectedIndex].value;
-                        var titre = $('#titre').val();
-                        var description = $('#description').val();
-                        var image = $('mon_fichier').val();
-                        if (date == '' || titre == '' || description == '') {
-                            alert('Vous devez remplir tous les champs !');
-                        }
-                        else {
-                            $.ajax({
-                                url: 'add-project.php',
-                                type: 'POST',
-                                data : {
-                                    date: date,
-                                    titre: titre,
-                                    description: description,
-                                    image: image
-                                },
-                                success: function (data) {
-                                    console.log("data="+data);
-                                    if (data = 'success') {
-                                        document.getElementById('projet').style.display = "none";
-                                        document.getElementById('submit').style.display = "none";
-                                        document.getElementById('title').style.display = "none";
-                                        document.getElementById('cadre').style.display = "none";
-                                        $("#resultat").html("<p style='text-align: center'> Projet ajouté ! <br/>Vous allez être automatiquement redirigé vers la page des projets. Si cela ne fonctionne pas veuillez cliquer <a href='prestations.php'>ici</a></p>");
-                                        function redirection(){
-                                            self.location.href="projets.php"
-                                        }
-                                        setTimeout(redirection,3000);
-                                    }
-                                    else {
-                                        document.getElementById('projet').style.display = "none";
-                                        document.getElementById('submit').style.display = "none";
-                                        document.getElementById('title').style.display = "none";
-                                        document.getElementById('cadre').style.display = "none";
-                                        $("#resultat").html("<p style='text-align: center'> Erreur lors de l'ajout du projet.. Veuillez essayer à nouveau à partir d'<a href='projets.php'>ici</a>.</p>");
-                                    }
-                                }
-                            });
-                        }
-                    });
-*/
-                </script>
 
             </div>
         </section>

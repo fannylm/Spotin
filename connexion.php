@@ -40,6 +40,7 @@ if($_GET['deco']==true) {
 </script>
 <?php } ?>
 <div id="page-wrapper">
+    <div id="titleBar"><a href="#navPanel" class="toggle"></a><span class="title"><em>Spotin</em> - Agence audiovisuel</span></div>
 
     <!-- Header -->
     <div id="header">

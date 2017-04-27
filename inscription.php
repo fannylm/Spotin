@@ -28,6 +28,7 @@
 </head>
 <body>
 <div id="page-wrapper">
+<div id="titleBar"><a href="#navPanel" class="toggle"></a><span class="title"><em>Spotin</em> - Agence audiovisuel</span></div>
 
     <!-- Header -->
     <div id="header">
@@ -128,14 +129,6 @@
                     <br/><br/>
 
                     <script>
-                        // Fonction qui permet de changer la couleur de l'arrière plan pour faire ressortir les erreurs
-                        /*function underline(champ, erreur) {
-                         if(erreur)
-                         champ.style.backgroundColor = "#FDE3E3";
-                         else
-                         champ.style.backgroundColor = "";
-                         }*/
-
 
                         // Fonction qui vérifie le format du nom
                         function checknom(nom){

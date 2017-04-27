@@ -1,10 +1,5 @@
 <?php require 'connect.php'; session_start(); ?>
 <!DOCTYPE HTML>
-<!--
-	Arcana by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 <head>
     <title>Spotin' - Contact</title>
@@ -27,6 +22,7 @@
 </head>
 <body onload="initialize()">
 <div id="page-wrapper">
+<div id="titleBar"><a href="#navPanel" class="toggle"></a><span class="title"><em>Spotin</em> - Agence audiovisuel</span></div>
 
 <!-- Header -->
 <div id="header">
@@ -175,56 +171,12 @@ else { ?>
          document.getElementById('form2').style.display = "block";
      }
 
-     /*$('#submitCompte').click(function() {
-         var name = $('#inputCompte').val();
-         console.log('...'+name);
-         /*if (name == '') { // si les champs sont vides
-             alert('Veuillez remplir ce champ !');
-         }
-         console.log(name);
-         else {*/
-             /*$.ajax({
-                 url: 'compte-name.php',
-                 type: 'POST',
-                 data : {
-                     name: name
-                 },
-                 success: function (data) {
-                     console.log(data);
-                     if (data == 'success') {
-                         document.getElementById('compte2').style.display = "none";
-                         document.getElementById('compte3').style.display = "flex";
-                         //$("#compte3").html('name:'.name);
-
-                     }
-                     else {
-                         document.getElementById('compte2').style.display = "none";
-                         document.getElementById('compte3').style.display = "flex";
-                         //$("#compte3").html("<p> Erreur lors de la modification du champ</p>");
-                     }
-                 }
-             });
-         //}
-     });*/
-
-
 
     </script>
-
-
 
 </div>
 </div>
 </section>
-
-
-
-
-
-
-
-
-
 
 <!-- Footer -->
 <div id="footer">

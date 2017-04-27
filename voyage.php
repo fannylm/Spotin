@@ -1,10 +1,5 @@
 <?php session_start(); ?>
 <!DOCTYPE HTML>
-<!--
-	Arcana by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 <head>
     <title>Spotin' - Voyages</title>
@@ -95,6 +90,7 @@ $destination = $_GET['destination'];
 
 <body>
 <div id="page-wrapper">
+    <div id="titleBar"><a href="#navPanel" class="toggle"></a><span class="title"><em>Spotin</em> - Agence audiovisuel</span></div>
 
     <!-- Header -->
     <div id="header">
@@ -193,7 +189,6 @@ $destination = $_GET['destination'];
                                 ?>
                                 <a style="min-width: 12em;padding:0" href="delete-voyage.php?destination=<?php echo $destination ?>" class="button">Supprimer ce voyage</a>
                                 <a id="buttonAd" style="min-width: 12em;padding:0" onclick="DisplayForm()" class="button">Ajouter une image à l'album</a>
-                               <!--<a id="buttonCouverture" style="min-width: 18em;padding:0" onclick="DisplayForm2()" class="button">Changer la photo de couverture</a>-->
                                 <br/><br/>
                                 <form style="display: none" method="POST" id="addImage" action="add-image.php" enctype="multipart/form-data">
                                     <input type="hidden" name="destination" id="destination" value="<?php echo $destination ?>">
@@ -205,15 +200,6 @@ $destination = $_GET['destination'];
                                     <input id="submit" type="submit" class="button alt" value="Envoyer" style="line-height: 1.8em; background-color: #333" />
                                 </form>
 
-                                <!--<form style="display: none" method="POST" id="couverture" action="update-couverture.php" enctype="multipart/form-data">
-                                    <input type="hidden" name="destination" id="destination" value="<?php //echo $destination ?>">
-                                    <input type="hidden" name="id_destination" id="id_destination" value="<?php //echo $res1['id'] ?>">
-                                    <label for="image">Choisissez une image (PDF,PNG ou JPG) :</label>
-                                    <input type="hidden" name="MAX_FILE_SIZE" value="102400000000"/>
-                                    <input style="text-align: center" type="file" style="width:75%;" name="image" id="image"/>
-                                    <br/>
-                                    <input id="submit" type="submit" class="button alt" value="Envoyer" style="line-height: 1.8em; background-color: #333" />
-                                </form>-->
                                 <br/><br/><br/>
 
                                 <script>

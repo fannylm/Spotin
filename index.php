@@ -1,14 +1,9 @@
 <?php require 'connect.php'; session_start(); ?>
 <!DOCTYPE HTML>
-<!--
-	Arcana by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+
 <html>
 	<head>
-
-		<title>Spotin' - Accueil</title>
+        <title>Spotin' - Accueil</title>
         <link rel="icon" type="image/png" href="images/icon.png" />
         <meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -27,35 +22,6 @@
         
 
 	</head>
-
-    <div class="gr-top-z-index gr-top-zero" tabindex="-1">
-        <div class="_970ef1-hoverMenu" style="transform:translate(NaNpx, NaNpx);" data-grammarly-reactid=".2">
-            <div class="_970ef1-panel" data-grammarly-reactid=".2.0">
-                <div class="_970ef1-tooltip _970ef1-tooltip_hidden undefined" data-grammarly-reactid=".2.0.0"></div>
-                <div class="_970ef1-buttonArea" data-grammarly-reactid=".2.0.1">
-                    <div class="_970ef1-btn _970ef1-btn_disable" tabindex="-1" data-grammarly-reactid=".2.0.1.0"></div>
-                </div>
-                <div class="_970ef1-line" data-grammarly-reactid=".2.0.3"></div>
-                <div class="_970ef1-buttonArea" data-grammarly-reactid=".2.0.5">
-                    <div class="_970ef1-btn _970ef1-btn_grammarly" data-action="editor" tabindex="-1" data-grammarly-reactid=".2.0.5.0"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div style="visibility: hidden; top: -9999px; position: absolute; opacity: 0;">
-        <div class="_970ef1-hoverMenu" style="transform:translate(NaNpx, NaNpx);" data-grammarly-reactid=".1">
-            <div class="_970ef1-panel" data-grammarly-reactid=".1.0">
-                <div class="_970ef1-tooltip _970ef1-tooltip_hidden undefined" data-grammarly-reactid=".1.0.0"></div>
-                <div class="_970ef1-buttonArea" data-grammarly-reactid=".1.0.1">
-                    <div class="_970ef1-btn _970ef1-btn_disable" tabindex="-1" data-grammarly-reactid=".1.0.1.0"></div>
-                </div>
-                <div class="_970ef1-line" data-grammarly-reactid=".1.0.3"></div>
-                <div class="_970ef1-buttonArea" data-grammarly-reactid=".1.0.5">
-                    <div class="_970ef1-btn _970ef1-btn_grammarly" data-action="editor" tabindex="-1" data-grammarly-reactid=".1.0.5.0"></div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script>
         function load(){
@@ -101,6 +67,7 @@
 
     <body onload="start()">
 		<div id="page-wrapper">
+            <div id="titleBar"><a href="#navPanel" class="toggle"></a><span class="title"><em>Spotin</em> - Agence audiovisuel</span></div>
 
 			<!-- Header -->
 				<div id="header">
@@ -178,24 +145,6 @@
 					</header>
 				</section>
 
-                <!--<script>
-                    /*i = 1;
-
-                    function affiche(numero) {
-                        i = numero;
-                        img.src = 'images/banner/.'+i+'.jpg';
-                        text.value = i;
-                    }*/
-                </script>-->
-            <!--
-            <img name="img" src="images/banner/1.jpg"><br>
-            <input type="button" value="<" OnClick="affiche(i-1)">
-            <input type="text" name="text" value="1" OnChange="affiche(text.value)">
-            <input type="button" value=">" OnClick="affiche(i+1)">-->
-
-
-
-
 			<!-- Highlights -->
 				<section class="wrapper style1">
 					<div class="container">
@@ -224,67 +173,6 @@
 						</div>
 					</div>
 				</section>
-
-			<!-- Gigantic Heading -->
-            <!--<section class="wrapper style2">
-                <div class="container">
-                    <header class="major">
-                        <h2>A gigantic heading you can use for whatever</h2>
-                        <p>With a much smaller subtitle hanging out just below it</p>
-                    </header>
-                </div>
-            </section>-->
-
-        <!-- Posts -->
-            <!--<section class="wrapper style1">
-                <div class="container">
-                    <div class="row">
-                        <section class="6u 12u(narrower)">
-                            <div class="box post">
-                                <a href="#" class="image left"><img src="images/pic01.jpg" alt="" /></a>
-                                <div class="inner">
-                                    <h3>New York</h3>
-                                    <p>Aout 2014, blabla</p>
-                                </div>
-                            </div>
-                        </section>
-                        <section class="6u 12u(narrower)">
-                            <div class="box post">
-                                <a href="#" class="image left"><img src="images/pic02.jpg" alt="" /></a>
-                                <div class="inner">
-                                    <h3>Londres</h3>
-                                    <p>Duis neque nisi, dapibus sed mattis et quis, nibh. Sed et dapibus nisl amet mattis, sed a rutrum accumsan sed. Suspendisse eu.</p>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                    <div class="row">
-                        <section class="6u 12u(narrower)">
-                            <div class="box post">
-                                <a href="#" class="image left"><img src="images/pic03.jpg" alt="" /></a>
-                                <div class="inner">
-                                    <h3>Nom du projet</h3>
-                                    <p>Court-métrage de ..</p>
-                                </div>
-                            </div>
-                        </section>
-                        <section class="6u 12u(narrower)">
-                            <div class="box post">
-                                <a href="#" class="image left"><img src="images/pic04.jpg" alt="" /></a>
-                                <div class="inner">
-                                    <h3>Singapour</h3>
-                                    <p>Duis neque nisi, dapibus sed mattis et quis, nibh. Sed et dapibus nisl amet mattis, sed a rutrum accumsan sed. Suspendisse eu.</p>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-            </section>-->
-
-
-
-
-
 
         <!-- CTA -->
 				<section id="cta" class="wrapper style3">

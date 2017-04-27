@@ -15,7 +15,7 @@
 		border: 0;
 		font-size: 100%;
 		font: inherit;
-		/*vertical-align: baseline;*/
+		vertical-align: baseline;
 	}
 
 	article, aside, details, figcaption, figure, footer, header, menu, nav, section {
@@ -3081,7 +3081,7 @@
 				transform: translateX(275px);
 			}
 
-			body.navPanel-visible #titleBar {
+			body.PaPanel-visible #titleBar {
 				-moz-transform: translateX(275px);
 				-webkit-transform: translateX(275px);
 				-ms-transform: translateX(275px);
@@ -3246,6 +3246,12 @@
 
 	}
 
+
+
+
+
+
+
 /* Formulaire de connexion */
 
 table.connexion{
@@ -3383,7 +3389,15 @@ label#labelInfo{
     font-weight: 100;
 }
 
+div.container{
+    z-index: 2000;
+}
+
 /* Sidebar */
+
+section#sidebar {
+    z-index: 0;
+}
 
 #sidebar {
     padding: 2.5em 2.5em 0.5em 2.5em ;
@@ -3395,10 +3409,10 @@ label#labelInfo{
     overflow-y: auto;
     position: fixed;
     text-align: right;
-    top: 308px;
+    top: 312px;
     width: 18em;
     z-index: 1;
-    margin-left: 80px;
+    margin-left: 50px;
 }
 
 #sidebar > .inner {

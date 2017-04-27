@@ -1,10 +1,5 @@
 <?php require 'connect.php'; session_start(); ?>
 <!DOCTYPE HTML>
-<!--
-	Arcana by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 <head>
     <title>Spotin' - Projets</title>
@@ -157,55 +152,6 @@ $id_projet = $_GET['id_projet'];
                 </fieldset>
             <div id="resultat"></div>
 
-            <script>
-/*
-                $('#submitProjet').click(function() {
-                    var id = $('#id').val();
-                    var titre = $('#titre').val();
-                    var description = $('#description').val();
-                    var select = document.getElementById("date" );
-                    var date = select.options[select.selectedIndex].value;
-                    if (titre == '' || description == '' || date == '') {
-                        alert('Vous devez remplir tous les champs !');
-                    }
-                    else {
-                        $.ajax({
-                            url: 'update-project.php',
-                            type: 'POST',
-                            data : {
-                                id: id,
-                                titre: titre,
-                                description: description,
-                                date: date
-                            },
-                            success: function (data) {
-                                console.log(data);
-                                if (data == 'success') {
-                                    // cacher le formulaire
-                                    document.getElementById('projet').style.display = "none";
-                                    document.getElementById('submitProjet').style.display = "none";
-                                    document.getElementById('title').style.display = "none";
-                                    document.getElementById('cadre').style.display = "none";
-                                    $("#resultat").html("<p style='text-align: center'> Projet correctement modifié ! <br/>Vous allez être automatiquement redirigé vers la page du projet. Si cela ne fonctionne pas veuillez cliquer <a href='prestations.php'>ici</a></p>");
-                                    function redirection(){
-                                        //self.location.href="projet.php?id_projet=<?php //echo $id_projet ?>";
-                                        self.location.href="projets.php"
-                                    }
-                                    setTimeout(redirection,2000);
-                                }
-                                else {
-                                    document.getElementById('projet').style.display = "none";
-                                    document.getElementById('submitProjet').style.display = "none";
-                                    document.getElementById('title').style.display = "none";
-                                    document.getElementById('cadre').style.display = "none";
-                                    $("#resultat").html("<p style='text-align: center'> Erreur lors de la modification du projet... Veuillez essayer à nouveau à partir d'<a href='projets.php'>ici</a>.</p>");
-                                }
-                            }
-                        });
-                    }
-                });
-*/
-            </script>
             </article>
         </div>
     </section>

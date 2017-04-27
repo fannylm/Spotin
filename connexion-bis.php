@@ -40,6 +40,7 @@ if($_GET['deco']==true) {
     </script>
 <?php } ?>
 <div id="page-wrapper">
+    <div id="titleBar"><a href="#navPanel" class="toggle"></a><span class="title"><em>Spotin</em> - Agence audiovisuel</span></div>
 
     <!-- Header -->
     <div id="header">
@@ -69,32 +70,6 @@ if($_GET['deco']==true) {
 
                 <!-- Content -->
                 <article id="connect">
-                    <script>
-                        // Fonction ajax qui permet d'afficher instantanément si le pseudo est déjà utilisé ou non
-                        $(function(){
-
-                            $('#pseudo').keyup(function(){ // à chaque fois qu'on "lache" le clavier
-
-                                var pseudo=$('#pseudo').val(); // on récupère la valeur du pseudo
-                                $.ajax({
-                                    url : 'inscrit.php', // La ressource ciblée
-                                    type : 'POST', // Le type de la requête HTTP.
-                                    data : 'pseudo=' + pseudo,
-                                    success:function(data){ // dès qu'on est bien rentré dans le fichier php
-                                        if(data==1){ // si le php retourne 1 le pseudo existe déjà
-                                            $('#pseudo').next('#correct').fadeIn().text('Correct');
-                                            $('#correct').next('#incorrect').fadeOut(); // pour eviter d'écrire deux textes à la suite
-                                        } else if(data==0){
-                                            $('#correct').next('#incorrect').fadeIn().text('Pseudo innexistant');
-                                            $('#pseudo').next('#correct').fadeOut();
-                                        }
-                                    }
-                                });
-
-                            });
-
-                        });
-                    </script>
                     <?php
                     if(!isset($_POST['pseudo'])) {
                         ?>
@@ -118,7 +93,7 @@ if($_GET['deco']==true) {
                                     <td style="text-align: left">
                                         <div class="row 50%">
                                             <div class="6u 12u(mobilep)">
-                                                <input style="width: 60%;display: inline-block;" type="text" name="pseudo" id="pseudo"/><span style="display: inline-block;" id="correct"></span><span style="display: inline-block;" id="incorrect"></span>
+                                                <input style="width: 60%;display: inline-block;" type="text" name="pseudo" id="pseudo"/>
                                             </div>
                                         </div>
                                         <div class="row 50%">

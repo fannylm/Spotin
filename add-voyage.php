@@ -1,10 +1,5 @@
 <?php require 'connect.php'; session_start(); ?>
 <!DOCTYPE HTML>
-<!--
-	Arcana by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 <head>
     <title>Spotin' - Voyages</title>
@@ -46,6 +41,7 @@ $numTotal=$num+$num2+$num3;
 
 <body>
 <div id="page-wrapper">
+    <div id="titleBar"><a href="#navPanel" class="toggle"></a><span class="title"><em>Spotin</em> - Agence audiovisuel</span></div>
 
     <!-- Header -->
     <div id="header">
@@ -104,71 +100,6 @@ $numTotal=$num+$num2+$num3;
 
     } else if (empty($_SESSION['mail'])){ ?>
     <!-- Main -->
-
-
-       <!-- <section class="wrapper style1">
-            <div class="container">
-
-                <fieldset id="cadre" class="fieldsetform"><legend><h2 id="title" type="title">Ajouter un voyage</h2></legend>
-                    <br/><br/>
-                    <form method="POST" id="voyage" action="add-voyage.php">
-                        <div class="row 50%" style="width: 60%; margin-right: auto; margin-left: auto;">
-                            <div class="12u">
-                                <label for="destination">Quelle est la destination de ce voyage ?</label>
-                                <input type="text" name="destination" id="destination">
-                            </div>
-                        </div>
-                        <br/><br/>
-                    </form>
-                    <input id="submit" type="submit" class="button alt" value="Envoyer" />
-                    <br/><br/><br/>
-                </fieldset>
-                <div id="resultat"></div>
-
-                <script>
-
-                    $('#submit').click(function() {
-                        var destination = $('#destination').val();
-                        if (destination == '') {
-                            alert('Vous devez remplir tous les champs !');
-                        }
-                        else {
-                            $.ajax({
-                                url: 'add-trip.php',
-                                type: 'POST',
-                                data : {
-                                    destination: destination
-                                },
-                                success: function (data) {
-                                    if (data = 'success') {
-                                        document.getElementById('voyage').style.display = "none";
-                                        document.getElementById('submit').style.display = "none";
-                                        document.getElementById('title').style.display = "none";
-                                        document.getElementById('cadre').style.display = "none";
-                                        $("#resultat").html("<p style='text-align: center'> Voyage ajouté ! <br/>Vous allez être automatiquement redirigé vers la page de ce voyage où vous pourrez ajouter des photos. Si cela ne fonctionne pas veuillez cliquer <a href='voyages.php'>ici</a></p>");
-                                        function redirection(){
-                                            self.location.href="voyages.php"
-                                        }
-                                        setTimeout(redirection,3000);
-                                    }
-                                    else {
-                                        document.getElementById('prestation').style.display = "none";
-                                        document.getElementById('submit').style.display = "none";
-                                        document.getElementById('title').style.display = "none";
-                                        document.getElementById('cadre').style.display = "none";
-                                        $("#resultat").html("<p style='text-align: center'> Erreur lors de l'ajout du voyage.. Veuillez essayer à nouveau à partir d'<a href='voyages.php'>ici</a>.</p>");
-                                    }
-                                }
-                            });
-                        }
-                    });
-
-                </script>
-
-            </div>
-        </section>-->
-
-
     <section class="wrapper style1">
         <div class="container">
 
@@ -196,41 +127,6 @@ $numTotal=$num+$num2+$num3;
                <br/><br/><br/>
                 </fieldset>
             <div id="resultat"></div>
-
-            <script>
-/*
-                $('#submitDestination').click(function() {
-                    var destination = $('#destination').val();
-                    if (destination == '') {
-                     alert('Vous devez remplir tous les champs !');
-                     }
-                     else {
-                    $.ajax({
-                        url: 'add-trip.php',
-                        type: 'POST',
-                        data : {
-                            destination: destination
-                        },
-                        success: function (data) {
-                            if (data == 'success') {
-                                // cacher le formulaire
-                                document.getElementById('destination').style.display = "none";
-                                $("#resultat").html("<p style='text-align: center'> Destination ajoutée !</p>");
-                                function redirection(){
-                                    self.location.href="voyages.php"
-                                }
-                                setTimeout(redirection,100);
-                            }
-                            else {
-                                document.getElementById('destination').style.display = "none";
-                                $("#resultat").html("<p style='text-align: center'> Erreur lors de l'ajout du voyage... Veuillez essayer à nouveau à partir d'<a href='voyages.php'>ici</a>.</p>");
-                            }
-                        }
-                    });
-                    }
-                });
-*/
-            </script>
 
         </div>
     </section>

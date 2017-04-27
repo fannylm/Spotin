@@ -2,7 +2,7 @@
 
 $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
 
-$req=$bdd -> query("SELECT identifiant, mdp FROM Client");
+$req=$bdd -> query("SELECT pseudo, mdp FROM Client");
 $res=$req -> fetch();
 $username = $res['identifiant'];
 $password = $res['mdp'];
@@ -19,8 +19,6 @@ if( isset($_POST['username']) && isset($_POST['password']) ) {
         echo "Failed";
     }
 }
-
-/*header('Location: connexion.php');*/
 
 ?>
 

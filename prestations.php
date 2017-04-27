@@ -1,10 +1,5 @@
 <?php require 'connect.php'; session_start(); ?>
 <!DOCTYPE HTML>
-<!--
-	Arcana by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 <head>
     <title>Spotin' - Prestations</title>
@@ -46,7 +41,7 @@ $numTotal=$num+$num2+$num3;
 
 <body>
 <div id="page-wrapper">
-
+    <div id="titleBar"><a href="#navPanel" class="toggle"></a><span class="title"><em>Spotin</em> - Agence audiovisuel</span></div>
     <!-- Header -->
     <div id="header">
         <p style="text-align:right; margin-bottom: 3em; margin-right: 10px; font-size: 12px; margin-top: 0;"><a href="connexion-bis.php" style="border-bottom: solid 1px lightgray; color: darkgrey;">Admin</a></p>
@@ -101,67 +96,129 @@ $numTotal=$num+$num2+$num3;
     <!-- Main -->
     <section class="wrapper style1">
         <div class="container">
-
+            <article>
             <p><i>Les prix des prestations varient selon le profil, pour connaître les tarifs d'une prestation que vous souhaitez faire réaliser demander un devis gratuitement !</i></p><br/>
-            <div id="photo">
-                <i class="icon2 major2 fa fa-camera" style="font-size: 14pt; before: font-size: 16px;"></i><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prestations photographiques</strong>
-            <br/>
-
-            <?php
-
-            $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
-
-            $req=$bdd -> query("SELECT * FROM Prestation WHERE type='photo'");
-            while($res=$req -> fetch()){
-                echo "- ".$res['prestation']."<br/>";
-
-                /*echo "<div id='compte3'>- ".$res['nom']."<i id='pencil' class='fa fa-pencil' aria-hidden='true' onclick='Update()'></i></div>
-                    <div id='compte2' style='display: none;'><input type='text' name='nom' id='inputCompte' value=".$res['nom']."><input id='submitCompte' type='submit' class='button alt' value='Ok' /></div><br/>";
-                */
-            }
-
-            ?>
-            </div>
-            <br/>
-            <div id="video">
-            <i class="icon2 major2 fa fa-video-camera"></i><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prestations audiovisuelles</strong>
-            <br/>
-
-            <?php
-
-            $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
-
-            $req=$bdd -> query("SELECT * FROM Prestation WHERE type='video'");
-            while($res=$req -> fetch()){
-                echo "- ".$res['prestation']."<br/>";
-            }
-
-            ?>
-            </div>
-            <br/><br/>
-
-            <script>
-                function Update(){
-                    document.getElementById('compte3').style.display = "none";
-                    document.getElementById('compte2').style.display = "flex";
-                }
-            </script>
 
             <?php
             if(empty($_SESSION['user'])){ // si la variable de session identifiant est nulle ou inexistante
-                ?><a href="contact.php#devis" class="button">Devis gratuit</a><?php
+                ?>
+                <div id="photo">
+                    <i class="icon2 major2 fa fa-camera" style="font-size: 14pt; before: font-size: 16px;"></i><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prestations photographiques</strong>
+                    <br/>
+
+                    <?php
+
+                    $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
+
+                    $req=$bdd -> query("SELECT * FROM Prestation WHERE type='photo'");
+                    while($res=$req -> fetch()){
+                        echo "- ".$res['prestation']."<br/>";
+
+                    }
+
+                    ?>
+                </div>
+                <br/>
+                <div id="video">
+                    <i class="icon2 major2 fa fa-video-camera"></i><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prestations audiovisuelles</strong>
+                    <br/>
+
+                    <?php
+
+                    $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
+
+                    $req=$bdd -> query("SELECT * FROM Prestation WHERE type='video'");
+                    while($res=$req -> fetch()){
+                        echo "- ".$res['prestation']."<br/>";
+                    }
+
+                    ?>
+                </div>
+                <br/><br/>
+
+
+
+
+                <a href="contact.php#devis" class="button">Devis gratuit</a><?php
             } else if (empty($_SESSION['mail'])) {
-                ?><a style="padding:0; min-width: 11em" href="add-prestation.php" class="button">Nouvelle prestation</a>
+                ?>
+                <div id="photo">
+                    <i class="icon2 major2 fa fa-camera" style="font-size: 14pt; before: font-size: 16px;"></i><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prestations photographiques</strong>
+                    <br/>
+
+                    <?php
+
+                    $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
+
+                    $req=$bdd -> query("SELECT * FROM Prestation WHERE type='photo'");
+                    while($res=$req -> fetch()){
+                        echo "- ".$res['prestation']."<a style='color: darkslategrey; border-bottom: none;' href='delete-prestation.php?id_presta=".$res['id']."'><i id='times' class='fa fa-times' aria-hidden='true'></i></a><br/>";
+
+                    }
+
+                    ?>
+                </div>
+                <br/>
+                <div id="video">
+                    <i class="icon2 major2 fa fa-video-camera"></i><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prestations audiovisuelles</strong>
+                    <br/>
+
+                    <?php
+
+                    $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
+
+                    $req=$bdd -> query("SELECT * FROM Prestation WHERE type='video'");
+                    while($res=$req -> fetch()){
+                        echo "- ".$res['prestation']."<a style='color: darkslategrey; border-bottom: none;' href='delete-prestation.php?id_presta=".$res['id']."'><i id='times' class='fa fa-times' aria-hidden='true'></i></a><br/>";
+                    }
+
+                    ?>
+                </div>
+                <br/><br/>
+
+                <a style="padding:0; min-width: 11em" href="add-prestation.php" class="button">Nouvelle prestation</a>
                 <a style="padding:0; min-width: 11em" href="update-prestation.php" class="button">Modifier une prestation</a>
-                <a style="padding:0; min-width: 11em" href="delete-prestation.php" class="button">Supprimer une prestation</a>
             <?php
             } else {
-                ?><a href="contact.php#devis" class="button">Devis gratuit</a><?php
+                ?>
+                <div id="photo">
+                    <i class="icon2 major2 fa fa-camera" style="font-size: 14pt; before: font-size: 16px;"></i><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prestations photographiques</strong>
+                    <br/>
+
+                    <?php
+
+                    $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
+
+                    $req=$bdd -> query("SELECT * FROM Prestation WHERE type='photo'");
+                    while($res=$req -> fetch()){
+                        echo "- ".$res['prestation']."<br/>";
+
+                    }
+
+                    ?>
+                </div>
+                <br/>
+                <div id="video">
+                    <i class="icon2 major2 fa fa-video-camera"></i><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prestations audiovisuelles</strong>
+                    <br/>
+
+                    <?php
+
+                    $bdd = new PDO('mysql:host=localhost;dbname=Spotin;charset=utf8', 'root', 'root');
+
+                    $req=$bdd -> query("SELECT * FROM Prestation WHERE type='video'");
+                    while($res=$req -> fetch()){
+                        echo "- ".$res['prestation']."<br/>";
+                    }
+
+                    ?>
+                </div>
+                <br/><br/>
+
+                <a href="contact.php#devis" class="button">Devis gratuit</a><?php
             }
             ?>
-
-            <!--<a href="contact.php#devis" class="button">Devis gratuit</a>-->
-
+            </article>
         </div>
     </section>
 
